@@ -1,0 +1,332 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=Inter:wght@300;400;500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Barlow+Condensed:wght@600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 150 10% 97%;
+    --foreground: 160 10% 8%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 160 10% 8%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 160 10% 8%;
+
+    --primary: 151 100% 50%;
+    --primary-foreground: 0 0% 0%;
+
+    --secondary: 150 8% 93%;
+    --secondary-foreground: 160 10% 15%;
+
+    --muted: 150 8% 93%;
+    --muted-foreground: 155 6% 45%;
+
+    --accent: 151 100% 42%;
+    --accent-foreground: 0 0% 0%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 150 10% 89%;
+    --input: 150 10% 89%;
+    --ring: 151 100% 50%;
+
+    --radius: 0.75rem;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 160 12% 3%;
+    --foreground: 150 10% 92%;
+
+    --card: 160 10% 6%;
+    --card-foreground: 150 10% 92%;
+
+    --popover: 160 10% 6%;
+    --popover-foreground: 150 10% 92%;
+
+    --primary: 151 100% 50%;
+    --primary-foreground: 0 0% 0%;
+
+    --secondary: 160 8% 10%;
+    --secondary-foreground: 150 10% 85%;
+
+    --muted: 160 8% 10%;
+    --muted-foreground: 155 6% 50%;
+
+    --accent: 151 100% 42%;
+    --accent-foreground: 0 0% 0%;
+
+    --destructive: 0 62% 30%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 160 8% 12%;
+    --input: 160 8% 12%;
+    --ring: 151 100% 50%;
+
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
+  }
+
+  .heading-display {
+    @apply font-condensed uppercase leading-[0.9] tracking-tight;
+  }
+
+  .heading-editorial {
+    @apply font-editorial font-medium tracking-tight text-balance;
+  }
+
+  /* Official FluxFom brand tokens — public marketing surfaces */
+  .public-editorial-world {
+    --flux-deep-forest: #103b1b;
+    --flux-green: #2baa36;
+    --flux-growth-green: #64d83a;
+    --flux-warm-ivory: #f7f2e8;
+    --flux-soft-sand: #e7dcc6;
+    --flux-clay: #a66a3f;
+    --flux-signal-gold: #f4b400;
+    --flux-warm-amber: #e7a300;
+    --flux-editorial-black: #111111;
+    --flux-charcoal: #2a2a2a;
+    --flux-cool-gray: #707070;
+    --flux-light-gray: #e9e9e9;
+
+    color: var(--flux-editorial-black);
+    background:
+      radial-gradient(circle at 10% 0%, rgba(43, 170, 54, 0.07), transparent 28rem),
+      radial-gradient(circle at 92% 12%, rgba(166, 106, 63, 0.08), transparent 30rem),
+      radial-gradient(circle at 88% 96%, rgba(244, 180, 0, 0.07), transparent 22rem),
+      linear-gradient(180deg, var(--flux-warm-ivory) 0%, #f3ede3 50%, var(--flux-warm-ivory) 100%);
+  }
+
+  .public-editorial-world .heading-editorial {
+    color: var(--flux-deep-forest);
+  }
+
+  .bg-flux-forest .heading-editorial,
+  .public-surface-dark .heading-editorial {
+    color: var(--flux-warm-ivory);
+  }
+
+  .public-section {
+    @apply scroll-mt-24 py-20 md:py-28;
+  }
+
+  .public-section-alt {
+    background-color: color-mix(in srgb, var(--flux-soft-sand) 38%, var(--flux-warm-ivory));
+  }
+
+  .public-kicker {
+    @apply text-[11px] font-bold uppercase tracking-[0.3em];
+    color: var(--flux-clay);
+  }
+
+  .public-kicker::before {
+    content: "";
+    display: block;
+    width: 2.25rem;
+    height: 2px;
+    margin-bottom: 0.7rem;
+    border-radius: 999px;
+    background: linear-gradient(
+      90deg,
+      var(--flux-signal-gold),
+      color-mix(in srgb, var(--flux-warm-amber) 72%, var(--flux-signal-gold))
+    );
+  }
+
+  .public-kicker-accent {
+    @apply text-[11px] font-bold uppercase tracking-[0.3em];
+    color: var(--flux-signal-gold);
+  }
+
+  .public-kicker-accent::before {
+    content: "";
+    display: block;
+    width: 3.5rem;
+    height: 2px;
+    margin-bottom: 0.85rem;
+    border-radius: 999px;
+    background: linear-gradient(
+      90deg,
+      var(--flux-signal-gold),
+      color-mix(in srgb, var(--flux-warm-amber) 80%, var(--flux-signal-gold))
+    );
+  }
+
+  .public-brand-tagline {
+    @apply text-[10px] font-bold uppercase tracking-[0.34em];
+    color: var(--flux-green);
+  }
+
+  .public-accent {
+    color: var(--flux-signal-gold);
+  }
+
+  .bg-flux-forest .public-kicker::before,
+  .public-surface-dark .public-kicker::before {
+    background: linear-gradient(
+      90deg,
+      var(--flux-signal-gold),
+      color-mix(in srgb, var(--flux-growth-green) 55%, var(--flux-signal-gold))
+    );
+  }
+
+  .public-body {
+    color: color-mix(in srgb, var(--flux-editorial-black) 82%, transparent);
+  }
+
+  .public-card {
+    border: 1px solid color-mix(in srgb, var(--flux-soft-sand) 70%, var(--flux-clay) 30%);
+    background: color-mix(in srgb, white 58%, var(--flux-warm-ivory));
+    box-shadow: 0 24px 70px -52px rgba(16, 59, 27, 0.22);
+  }
+
+  .public-button-primary {
+    @apply inline-flex items-center justify-center rounded-full px-8 py-3.5 text-sm font-semibold transition;
+    background: var(--flux-green);
+    color: #ffffff;
+    box-shadow: 0 16px 40px -24px rgba(43, 170, 54, 0.55);
+  }
+
+  .public-button-primary:hover {
+    background: #24932e;
+    transform: translateY(-1px);
+  }
+
+  .public-button-secondary {
+    @apply inline-flex items-center justify-center rounded-full border px-8 py-3.5 text-sm font-semibold transition;
+    border-color: color-mix(in srgb, var(--flux-clay) 40%, var(--flux-soft-sand));
+    background: color-mix(in srgb, white 62%, var(--flux-warm-ivory));
+    color: var(--flux-deep-forest);
+  }
+
+  .public-button-secondary:hover {
+    border-color: color-mix(in srgb, var(--flux-clay) 65%, var(--flux-soft-sand));
+    background: #ffffff;
+    transform: translateY(-1px);
+  }
+
+  .public-surface-dark {
+    background: var(--flux-deep-forest);
+    color: var(--flux-warm-ivory);
+  }
+
+  /** Subtle film grain for premium marketing surfaces */
+  .flux-grain {
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+  }
+
+  /** Marketing “single world” backdrop — deep black + warm tungsten + hint of emerald */
+  .flux-marketing-world {
+    background-color: #09090b;
+    background-image:
+      radial-gradient(120% 80% at 50% -20%, rgba(251, 191, 36, 0.07), transparent 55%),
+      radial-gradient(ellipse 90% 60% at 100% 40%, rgba(20, 184, 166, 0.04), transparent 50%),
+      radial-gradient(ellipse 70% 50% at 0% 80%, rgba(120, 53, 15, 0.06), transparent 45%);
+    background-attachment: fixed;
+  }
+
+  /** Warm practical-light wash over photography */
+  .flux-tungsten-photo {
+    filter: saturate(0.92) contrast(1.05) brightness(0.97);
+  }
+
+  /** Brand Intelligence Operating System palette — warm, editorial, operational */
+  .flux-ops {
+    --background: 34 44% 96%;
+    --foreground: 145 23% 14%;
+    --card: 36 45% 98%;
+    --card-foreground: 145 23% 14%;
+    --popover: 36 45% 98%;
+    --popover-foreground: 145 23% 14%;
+    --primary: 18 55% 45%;
+    --primary-foreground: 34 44% 96%;
+    --secondary: 39 38% 84%;
+    --secondary-foreground: 145 23% 14%;
+    --muted: 39 38% 88%;
+    --muted-foreground: 28 18% 38%;
+    --accent: 12 54% 51%;
+    --accent-foreground: 34 44% 96%;
+    --border: 38 31% 82%;
+    --input: 38 31% 82%;
+    --ring: 18 55% 45%;
+    color-scheme: light;
+    background:
+      radial-gradient(circle at top left, rgba(200, 90, 61, 0.12), transparent 32rem),
+      linear-gradient(135deg, #faf7f2 0%, #f3eadb 48%, #e7dcc6 100%);
+  }
+
+  .flux-ops-glass {
+    background: linear-gradient(145deg, rgba(250, 247, 242, 0.92), rgba(231, 220, 198, 0.78));
+    border: 1px solid rgba(166, 106, 63, 0.16);
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.65) inset,
+      0 24px 64px -28px rgba(27, 43, 34, 0.35);
+    backdrop-filter: blur(10px);
+  }
+}
+
+/* TipTap Editor */
+.tiptap p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  color: hsl(var(--muted-foreground));
+  pointer-events: none;
+  height: 0;
+}
+
+.tiptap:focus {
+  outline: none;
+}
+
+.tiptap img {
+  max-width: 100%;
+  border-radius: 0.5rem;
+  margin: 0.5rem auto;
+}
+
+.tiptap a {
+  color: hsl(var(--primary));
+  text-decoration: underline;
+  cursor: pointer;
+}
