@@ -75,24 +75,23 @@ export function HomeHero() {
                 variants={fadeInView}
                 className="heading-editorial max-w-5xl text-5xl font-semibold leading-[0.98] text-flux-editorial sm:text-6xl md:text-7xl lg:text-[5.7rem]"
               >
-                Making your brand Standout &{" "}
-                <span className="text-flux-gold">Always In Motion.</span>
+                Make your brand Standout{" "}
+                <span className="text-flux-gold">in Motion</span>.
               </motion.h1>
               <motion.p
                 variants={fadeInView}
                 className="mt-7 max-w-2xl rounded-[1.25rem] border border-flux-sand/90 bg-flux-ivory/92 px-5 py-4 text-base font-medium leading-relaxed text-flux-editorial shadow-[0_18px_60px_-42px_rgba(16,59,27,0.18)] backdrop-blur sm:text-lg"
               >
                 Your brand deserves strategy, creative systems, and digital marketing that actually converts to sales.
-                <br/>
                 Start your profile and begin communicating clearly, launching better & always growing with intention.
               </motion.p>
               <motion.div variants={fadeInView} className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
                 <Link to="/start" className="public-button-primary">
                   Start Profile
                 </Link>
-                <Link to="/projects" className="public-button-secondary">
+                {/* <Link to="/projects" className="public-button-secondary">
                   View Our Work
-                </Link>
+                </Link> */}
               </motion.div>
               <motion.div variants={fadeInView} className="mt-12 grid max-w-xl grid-cols-3 gap-3 border-y border-flux-sand py-5 text-flux-editorial">
                 {[
@@ -168,7 +167,7 @@ export function HomeHero() {
         </div>
       </div>
 
-      <ScrollNudge targetId="home-after-hero" variant="hero" />
+      {/* <ScrollNudge targetId="home-after-hero" variant="hero" /> */}
     </section>
   );
 }
