@@ -26,14 +26,15 @@ export function HomeTrust() {
       <div className="container mx-auto max-w-6xl px-5 sm:px-6">
         <div className="grid gap-12 lg:grid-cols-12 lg:items-end lg:gap-14">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} variants={fadeInView} className="lg:col-span-6">
-            <p className="public-kicker">Full-service marketing management</p>
+            <p className="public-kicker">We will proudly take you to the next level!</p>
             <h2 id="trust-heading" className="heading-editorial mt-4 text-4xl font-semibold leading-tight text-flux-editorial sm:text-5xl">
-              Branding is one wing. Marketing growth is the full mission.
+              7+ Years of helping you communicate clearly, launch better, & grow with intention.
             </h2>
             <p className="mt-6 max-w-xl text-base leading-relaxed text-flux-editorial/80">
-              FluxFom manages the brand journey from identity and positioning to creative production, launch execution,
-              customer engagement, and market penetration. Branded materials still matter, but they serve the wider
-              marketing system.
+            With Brand Clarity as the wing & Marketing growth as the nose, 
+            <br/>
+            FluxFom has created numerous marketing ecosystems across multiple fields which has allowed us to work with
+            both Creatives &<br/> SAAS software clients to help their brands take flight.
             </p>
           </motion.div>
 

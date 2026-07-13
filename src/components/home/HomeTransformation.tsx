@@ -7,28 +7,28 @@ import { HOME_TRANSFORMATION_BEFORE_ALT, HOME_TRANSFORMATION_BEFORE_IMAGE } from
 
 const JOURNEY = [
   {
-    title: "Client starts a Flux profile",
+    title: "You are awarded a Flux profile",
     detail: "A guided intake captures the business, audience, current brand state, goals, and marketing gaps.",
     icon: QrCode,
   },
   {
-    title: "Receives a marketing overview",
-    detail: "Flux turns the profile into a clear view of positioning, content needs, channel priorities, and growth opportunities.",
+    title: "You receive a marketing overview",
+    detail: "We turn your profile into a clear view of positioning, content needs, channel priorities, and growth opportunities.",
     icon: BadgeCheck,
   },
   {
-    title: "Builds the brand foundation",
+    title: "We build your brand foundation",
     detail: "Identity, messaging, visual direction, and brand rules become the foundation for consistent marketing.",
     icon: Lightbulb,
   },
   {
-    title: "Produces market-ready assets",
+    title: "You get market-ready assets",
     detail: "Motion, digital, social, campaign, web, and supporting branded materials are produced for the strategy.",
     icon: Megaphone,
   },
   {
-    title: "Penetrates the market",
-    detail: "The brand moves from setup to launch, campaign management, customer engagement, and growth intelligence.",
+    title: "We strategically help you penetrate your desired market",
+    detail: "We move your brand clearly from setup to launch, campaign management, customer engagement, and ultimately clear growth intelligence which we will vevrify and communicate your brand's presence eternally.",
     icon: TrendingUp,
   },
 ] as const;

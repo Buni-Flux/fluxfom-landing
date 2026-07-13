@@ -13,7 +13,7 @@ describe('dispatchEmailEvent', () => {
         { name: 'Northstar Labs', description: 'A focused design consultancy' },
         { name: 'Brightline', description: 'A content-led growth agency' },
       ],
-      dashboardUrl: 'https://fluxfom.app/insights',
+      dashboardUrl: 'https://app.fluxfom.com/insights',
     });
 
     expect(result.subject).toContain('Brand Intelligence');
