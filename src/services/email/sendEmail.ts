@@ -1,4 +1,4 @@
-import { resend } from './resend';
+import { getResendApiKey, resend } from './resend';
 import { dispatchEmailEvent, type EmailEventName, type EmailPropsMap } from './email.events';
 import type { EmailRecipients } from './email.types';
 
@@ -20,7 +20,7 @@ export interface SendEmailResult {
   error?: string;
 }
 
-const DEFAULT_FROM = 'FluxFom <hello@fluxfom.io>';
+const DEFAULT_FROM = process.env.RESEND_FROM_EMAIL || import.meta.env.VITE_RESEND_FROM_EMAIL || 'FluxFom <onboarding@resend.dev>';
 
 function normalizeRecipients(recipients: EmailRecipients): string[] {
   if (Array.isArray(recipients)) {
@@ -37,7 +37,9 @@ export async function sendEmail<T extends EmailEventName>(options: SendEmailOpti
   try {
     const rendered = await dispatchEmailEvent(event, props);
 
-    if (preview || !import.meta.env.VITE_RESEND_API_KEY) {
+    const apiKey = getResendApiKey();
+
+    if (preview || !apiKey || !resend) {
       console.info(`[email:preview] ${event}`, rendered.subject);
       return {
         success: true,

@@ -75,15 +75,16 @@ export function HomeHero() {
                 variants={fadeInView}
                 className="heading-editorial max-w-5xl text-5xl font-semibold leading-[0.98] text-flux-editorial sm:text-6xl md:text-7xl lg:text-[5.7rem]"
               >
-                Marketing That Moves Brands From Identity To{" "}
-                <span className="text-flux-gold">Market Penetration.</span>
+                Making your brand Standout &{" "}
+                <span className="text-flux-gold">Always In Motion.</span>
               </motion.h1>
               <motion.p
                 variants={fadeInView}
                 className="mt-7 max-w-2xl rounded-[1.25rem] border border-flux-sand/90 bg-flux-ivory/92 px-5 py-4 text-base font-medium leading-relaxed text-flux-editorial shadow-[0_18px_60px_-42px_rgba(16,59,27,0.18)] backdrop-blur sm:text-lg"
               >
-                FluxFom manages your brand&apos;s marketing end to end: identity, creative production, motion, digital assets,
-                campaigns, customer engagement, and growth intelligence.
+                Your brand deserves strategy, creative systems, and digital marketing that actually converts to sales.
+                <br/>
+                Start your profile and begin communicating clearly, launching better & always growing with intention.
               </motion.p>
               <motion.div variants={fadeInView} className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
                 <Link to="/start" className="public-button-primary">
