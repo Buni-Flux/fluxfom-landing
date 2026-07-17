@@ -3,9 +3,9 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
 export const LandingLayout = ({ children }: { children: ReactNode }) => (
-  <div className="public-editorial-world flex min-h-screen flex-col text-flux-editorial">
+  <div className="flux-landing-world flex min-h-screen flex-col">
     <Navbar />
-    <main className="flex-1 pt-20">{children}</main>
+    <main className="flex-1 pt-[72px]">{children}</main>
     <Footer />
   </div>
 );
