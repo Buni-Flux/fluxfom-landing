@@ -81,28 +81,25 @@ const ResetPassword = () => {
 
   if (!ready) {
     return (
-      <div className="flex min-h-[calc(100dvh-5rem)] items-center justify-center">
-        <div
-          className="h-8 w-8 animate-spin rounded-full border-2 border-flux-green/50 border-t-transparent"
-          aria-label="Loading"
-        />
+      <div className="flex min-h-[calc(100dvh-5rem)] items-center justify-center bg-flux-void">
+        <div className="h-8 w-8 animate-spin rounded-full border-2 border-flux-neon/50 border-t-transparent" aria-label="Loading" />
       </div>
     );
   }
 
   const inputClass =
-    "w-full rounded-xl border border-flux-sand/90 bg-white/72 px-4 py-3 text-sm text-flux-editorial placeholder:text-flux-cool-gray transition-colors focus:border-flux-green/55 focus:outline-none focus:ring-1 focus:ring-flux-clay/20";
+    "w-full rounded-xl border border-white/10 bg-white/[0.06] px-4 py-3 text-sm text-white placeholder:text-white/45 transition-colors focus:border-flux-neon/55 focus:outline-none focus:ring-1 focus:ring-flux-neon/25";
 
   if (requestMode) {
     return (
-      <div className="flex min-h-[calc(100dvh-5rem)] items-center justify-center bg-flux-ivory px-6">
-        <div className="w-full max-w-sm space-y-8 rounded-[1.5rem] border border-flux-sand bg-white/60 p-8 shadow-sm">
+      <div className="flex min-h-[calc(100dvh-5rem)] items-center justify-center bg-flux-void px-6">
+        <div className="w-full max-w-sm space-y-8 rounded-[1.5rem] border border-white/10 bg-white/[0.04] p-8 shadow-[0_24px_90px_-48px_rgba(0,0,0,0.8)] backdrop-blur-xl">
           <div className="text-center">
-            <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl border border-flux-clay/25 bg-flux-sand/35 text-flux-clay">
+            <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl border border-flux-neon/20 bg-flux-neon/10 text-flux-neon">
               <KeyRound size={24} aria-hidden />
             </div>
-            <h1 className="heading-editorial mt-5 text-2xl font-semibold text-flux-editorial">Forgot password</h1>
-            <p className="mt-2 text-sm text-flux-cool-gray">Enter your email and we will send a reset link.</p>
+            <h1 className="heading-editorial mt-5 text-2xl font-semibold text-white">Forgot password</h1>
+            <p className="mt-2 text-sm text-white/70">Enter your email and we will send a reset link.</p>
           </div>
           <div className="space-y-4">
             <input
@@ -117,7 +114,7 @@ const ResetPassword = () => {
               type="button"
               onClick={handleSendResetLink}
               disabled={saving || !email}
-              className="w-full rounded-full bg-flux-green px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#24932E] disabled:opacity-50"
+              className="w-full rounded-full bg-flux-neon px-6 py-3 text-sm font-semibold text-flux-void transition hover:bg-[#b8ff33] disabled:opacity-50"
             >
               {saving ? "Sending..." : "Send reset link"}
             </button>
@@ -128,14 +125,14 @@ const ResetPassword = () => {
   }
 
   return (
-    <div className="flex min-h-[calc(100dvh-5rem)] items-center justify-center bg-flux-ivory px-6">
-      <div className="w-full max-w-sm space-y-8 rounded-[1.5rem] border border-flux-sand bg-white/60 p-8 shadow-sm">
+    <div className="flex min-h-[calc(100dvh-5rem)] items-center justify-center bg-flux-void px-6">
+      <div className="w-full max-w-sm space-y-8 rounded-[1.5rem] border border-white/10 bg-white/[0.04] p-8 shadow-[0_24px_90px_-48px_rgba(0,0,0,0.8)] backdrop-blur-xl">
         <div className="text-center">
-          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl border border-flux-clay/25 bg-flux-sand/35 text-flux-clay">
+          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl border border-flux-neon/20 bg-flux-neon/10 text-flux-neon">
             <KeyRound size={24} aria-hidden />
           </div>
-          <h1 className="heading-editorial mt-5 text-2xl font-semibold text-flux-editorial">Reset password</h1>
-          <p className="mt-2 text-sm text-flux-cool-gray">Choose a new password for your account.</p>
+          <h1 className="heading-editorial mt-5 text-2xl font-semibold text-white">Reset password</h1>
+          <p className="mt-2 text-sm text-white/70">Choose a new password for your account.</p>
         </div>
         <div className="space-y-4">
           <PasswordInput
@@ -156,7 +153,7 @@ const ResetPassword = () => {
             type="button"
             onClick={handleReset}
             disabled={saving || !password}
-            className="w-full rounded-full bg-flux-green px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#24932E] disabled:opacity-50"
+            className="w-full rounded-full bg-flux-neon px-6 py-3 text-sm font-semibold text-flux-void transition hover:bg-[#b8ff33] disabled:opacity-50"
           >
             {saving ? "Updating..." : "Update password"}
           </button>

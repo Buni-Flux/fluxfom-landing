@@ -78,9 +78,9 @@ const Projects = () => {
   }, []);
 
   return (
-    <div>
-      <section className="relative overflow-hidden border-b border-flux-sand bg-flux-ivory pb-14 pt-12 md:pb-20 md:pt-16">
-        <div className="absolute -right-32 top-10 h-80 w-80 rounded-full bg-flux-growth/10 blur-3xl" aria-hidden />
+    <div className="min-h-full bg-flux-void text-white">
+      <section className="landing-page-shell relative overflow-hidden border-b border-white/10 pb-14 pt-12 md:pb-20 md:pt-16">
+        <div className="absolute -right-32 top-10 h-80 w-80 rounded-full bg-flux-neon/10 blur-3xl" aria-hidden />
         <div className="container relative mx-auto max-w-6xl px-5 sm:px-6">
           <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-12">
             <motion.div
@@ -89,11 +89,11 @@ const Projects = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.55 }}
             >
-              <p className="public-kicker">Client work</p>
-              <h1 className="heading-editorial mt-4 text-5xl font-semibold leading-[1.02] text-flux-editorial sm:text-6xl md:text-7xl">
+              <p className="landing-page-kicker">Client work</p>
+              <h1 className="heading-editorial mt-4 text-5xl font-semibold leading-[1.02] text-white sm:text-6xl md:text-7xl">
                 Brands we have built end to end.
               </h1>
-              <p className="mt-6 max-w-xl text-base leading-relaxed text-flux-editorial/80">
+              <p className="landing-page-copy mt-6 max-w-xl">
                 Each client opens a single profile — brand brief through launch templates — organized like a living brand
                 book.
               </p>
@@ -112,23 +112,20 @@ const Projects = () => {
               />
             </motion.div>
           </div>
-          <ScrollNudge targetId="clients-index" />
+          <ScrollNudge targetId="clients-index" tone="dark" />
         </div>
       </section>
 
-      <section id="clients-index" className="bg-flux-ivory py-16 md:py-24">
+      <section id="clients-index" className="bg-flux-void py-16 md:py-24">
         <div className="container mx-auto max-w-6xl px-5 sm:px-6">
           {loading ? (
-            <div className="py-16 text-center text-sm font-medium text-flux-cool-gray">Loading clients...</div>
+            <div className="py-16 text-center text-sm font-medium text-white/70">Loading clients...</div>
           ) : (
             <div className="columns-1 gap-5 sm:columns-2 lg:columns-3">
               <AnimatePresence mode="popLayout">
                 {clients.map((client, i) => {
                   const h = heights[i % heights.length];
-                  const hasCardMedia = !!(
-                    client.preview_image_url?.trim() ||
-                    client.image_url?.trim()
-                  );
+                  const hasCardMedia = !!(client.preview_image_url?.trim() || client.image_url?.trim());
                   const subtitle = clientCardSubtitle(client);
                   const summary = stripHtml(client.description);
                   const isDemo = client.id.startsWith("demo-");
@@ -153,7 +150,7 @@ const Projects = () => {
                       }}
                       role={isDemo ? undefined : "button"}
                       tabIndex={isDemo ? undefined : 0}
-                      className={`group relative mb-5 overflow-hidden rounded-[1.45rem] border border-flux-sand bg-white/60 break-inside-avoid outline-none ring-flux-green/40 transition duration-300 hover:-translate-y-1 hover:border-flux-green/35 hover:bg-white/85 hover:shadow-[0_24px_70px_-48px_rgba(27,43,34,0.45)] focus-visible:ring-2 ${
+                      className={`group relative mb-5 overflow-hidden rounded-[1.45rem] border border-white/10 bg-white/[0.04] break-inside-avoid outline-none ring-flux-neon/40 transition duration-300 hover:-translate-y-1 hover:border-flux-neon/35 hover:bg-white/[0.06] hover:shadow-[0_24px_70px_-48px_rgba(0,0,0,0.75)] focus-visible:ring-2 ${
                         isDemo ? "opacity-80" : "cursor-pointer"
                       }`}
                     >
@@ -166,36 +163,35 @@ const Projects = () => {
                             frameClassName={h}
                           />
                         ) : (
-                          <div className={`flex w-full items-center justify-center bg-flux-sand/70 ${h}`}>
-                            <ImageIcon className="h-9 w-9 text-flux-clay/60" strokeWidth={1} aria-hidden />
+                          <div className={`flex w-full items-center justify-center bg-white/[0.06] ${h}`}>
+                            <ImageIcon className="h-9 w-9 text-white/50" strokeWidth={1} aria-hidden />
                           </div>
                         )}
-                        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-flux-forest/65 via-transparent to-transparent" />
-                        <div className="absolute left-4 top-4 rounded-full border border-white/55 bg-flux-ivory/95 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.22em] text-flux-clay backdrop-blur">
+                        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-flux-forest/70 via-transparent to-transparent" />
+                        <div className="absolute left-4 top-4 rounded-full border border-white/30 bg-black/30 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.22em] text-flux-neon backdrop-blur">
                           Client profile
                         </div>
                       </div>
                       <div className="p-6">
                         <div className="flex items-start justify-between gap-4">
                           <div>
-                            <h2 className="heading-editorial text-2xl font-semibold leading-tight text-flux-editorial">
+                            <h2 className="heading-editorial text-2xl font-semibold leading-tight text-white">
                               {client.title}
                             </h2>
-                            <p className="mt-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-flux-clay">
+                            <p className="mt-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-flux-neon/90">
                               {subtitle}
                             </p>
                           </div>
                           {!isDemo ? (
-                            <span className="mt-1 rounded-full border border-flux-sand bg-flux-ivory p-2 text-flux-clay transition group-hover:bg-flux-forest group-hover:text-flux-ivory">
+                            <span className="mt-1 rounded-full border border-white/10 bg-white/[0.06] p-2 text-flux-neon transition group-hover:bg-flux-neon/10 group-hover:text-flux-neon">
                               <ArrowUpRight className="h-4 w-4" aria-hidden />
                             </span>
                           ) : null}
                         </div>
-                        <p className="mt-4 line-clamp-3 text-sm leading-relaxed text-flux-cool-gray">
-                          {summary ||
-                            "Open the full brand book — brief, strategy, creative direction, identity, and launch templates."}
+                        <p className="mt-4 line-clamp-3 text-sm leading-relaxed text-white/70">
+                          {summary || "Open the full brand book — brief, strategy, creative direction, identity, and launch templates."}
                         </p>
-                        <p className="mt-4 text-[10px] font-bold uppercase tracking-[0.2em] text-flux-editorial/50">
+                        <p className="mt-4 text-[10px] font-bold uppercase tracking-[0.2em] text-white/40">
                           7 sections · Brand brief to launch
                         </p>
                       </div>

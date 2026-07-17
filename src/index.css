@@ -270,6 +270,27 @@
     color: var(--flux-warm-ivory);
   }
 
+  .landing-page-shell {
+    background: linear-gradient(180deg, #07140b 0%, #051005 100%);
+    color: #f7f2e8;
+  }
+
+  .landing-page-card {
+    @apply rounded-[1.5rem] border border-white/10 bg-white/[0.04] shadow-[0_24px_90px_-48px_rgba(0,0,0,0.8)] backdrop-blur-xl;
+  }
+
+  .landing-page-kicker {
+    @apply text-[11px] font-bold uppercase tracking-[0.32em] text-flux-neon;
+  }
+
+  .landing-page-copy {
+    @apply text-base leading-relaxed text-white/70;
+  }
+
+  .landing-page-heading {
+    @apply font-monument text-white;
+  }
+
   /** Subtle film grain for premium marketing surfaces */
   .flux-grain {
     pointer-events: none;
