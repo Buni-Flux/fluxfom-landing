@@ -96,7 +96,7 @@ export function HomeHero() {
 
         {/* Right — services & video */}
         <motion.div
-          className="flex flex-col text-right lg:col-span-3 lg:col-start-10"
+          className="hidden lg:flex h-full flex-col justify-between text-right lg:col-span-3 lg:col-start-10"
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.7, delay: 0.3 }}
@@ -112,7 +112,7 @@ export function HomeHero() {
             ))}
           </ul>
 
-          <div className="mt-8 lg:mt-10">
+          <div className="w-full flex justify-end">
             <NeonPlayFrame size="lg" />
           </div>
         </motion.div>
