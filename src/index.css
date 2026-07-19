@@ -1,4 +1,28 @@
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=Inter:wght@300;400;500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Barlow+Condensed:wght@600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=Inter:wght@300;400;500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Barlow+Condensed:wght@600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap');
+
+@font-face {
+  font-family: "Monument Extended";
+  src: url("/assets/fonts/MonumentExtended-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Bebas Neue";
+  src: url("/assets/fonts/BebasNeue-Regular.ttf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Monument Extended";
+  src: url("/assets/fonts/MonumentExtended-Ultrabold.otf") format("opentype");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
 
 @tailwind base;
 @tailwind components;
@@ -93,6 +117,10 @@
 
   body {
     @apply bg-background text-foreground font-body antialiased;
+  }
+
+  .flux-landing-world {
+    background-color: #051005;
   }
 
   html {
@@ -250,6 +278,27 @@
     color: var(--flux-warm-ivory);
   }
 
+  .landing-page-shell {
+    background: linear-gradient(180deg, #07140b 0%, #051005 100%);
+    color: #f7f2e8;
+  }
+
+  .landing-page-card {
+    @apply rounded-[1.5rem] border border-white/10 bg-white/[0.04] shadow-[0_24px_90px_-48px_rgba(0,0,0,0.8)] backdrop-blur-xl;
+  }
+
+  .landing-page-kicker {
+    @apply text-[11px] font-bold uppercase tracking-[0.32em] text-flux-neon;
+  }
+
+  .landing-page-copy {
+    @apply text-base leading-relaxed text-white/70;
+  }
+
+  .landing-page-heading {
+    @apply font-monument text-white;
+  }
+
   /** Subtle film grain for premium marketing surfaces */
   .flux-grain {
     pointer-events: none;
@@ -303,6 +352,78 @@
       0 1px 0 rgba(255, 255, 255, 0.65) inset,
       0 24px 64px -28px rgba(27, 43, 34, 0.35);
     backdrop-filter: blur(10px);
+  }
+
+  /* Landing page — dark neon world */
+  .flux-landing-world {
+    --flux-void: #051005;
+    --flux-neon: #a2ff00;
+    --flux-neon-bright: #99ff33;
+    --flux-cta-gold: #ffcc00;
+    color: #ffffff;
+    background-color: var(--flux-void);
+  }
+
+  .heading-monument {
+    @apply font-monument font-black uppercase leading-[0.92] tracking-tight;
+  }
+
+  .heading-accent {
+    @apply font-accent font-medium italic leading-[0.95] tracking-tight;
+  }
+
+  .neon-glow {
+    box-shadow:
+      0 0 18px rgba(162, 255, 0, 0.45),
+      0 0 48px rgba(162, 255, 0, 0.18),
+      inset 0 0 24px rgba(162, 255, 0, 0.06);
+  }
+
+  .neon-glow-strong {
+    box-shadow:
+      0 0 24px rgba(162, 255, 0, 0.55),
+      0 0 72px rgba(162, 255, 0, 0.28),
+      0 0 120px rgba(162, 255, 0, 0.12);
+  }
+
+  .liquid-green {
+    background:
+      radial-gradient(ellipse 80% 60% at 25% 35%, rgba(162, 255, 0, 0.85) 0%, transparent 55%),
+      radial-gradient(ellipse 70% 55% at 75% 65%, rgba(100, 216, 58, 0.75) 0%, transparent 50%),
+      radial-gradient(ellipse 90% 70% at 50% 50%, rgba(43, 170, 54, 0.9) 0%, rgba(16, 59, 27, 0.95) 45%, #051005 100%);
+    background-size: 200% 200%;
+    animation: liquid-shift 10s ease-in-out infinite;
+  }
+
+  .btn-neon-outline {
+    @apply inline-flex items-center justify-center rounded-full border border-flux-neon px-7 py-3 text-sm font-semibold text-white transition;
+    background: rgba(5, 16, 5, 0.72);
+  }
+
+  .btn-neon-outline:hover {
+    background: rgba(162, 255, 0, 0.08);
+    box-shadow: 0 0 24px rgba(162, 255, 0, 0.2);
+  }
+
+  .btn-neon-solid {
+    @apply inline-flex items-center justify-center rounded-full bg-flux-neon px-7 py-3 text-sm font-bold text-flux-void transition;
+  }
+
+  .btn-neon-solid:hover {
+    background: #b8ff33;
+    box-shadow: 0 0 32px rgba(162, 255, 0, 0.35);
+  }
+
+  .btn-gold {
+    @apply inline-flex items-center justify-center rounded-md bg-flux-cta-gold px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-flux-void transition;
+  }
+
+  .btn-gold:hover {
+    background: #ffd633;
+  }
+
+  .landing-section {
+    @apply scroll-mt-24 px-5 py-24 sm:px-6 md:py-32 lg:py-36;
   }
 }
 

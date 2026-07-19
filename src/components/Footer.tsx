@@ -1,37 +1,50 @@
 import { Link } from "react-router-dom";
-import logo from "@/assets/fluxfom-logo.png";
-import { BrandTagline } from "@/components/marketing/BrandTagline";
+import { Facebook, Linkedin, Music2 } from "lucide-react";
+import { FluxLogo } from "@/components/marketing/FluxLogo";
+
+const footerLinks = [
+  { label: "Terms", to: "/terms" },
+  { label: "Privacy", to: "/terms" },
+  { label: "Cookies", to: "/terms" },
+];
+
+const socialLinks = [
+  { label: "LinkedIn", icon: Linkedin, href: "https://linkedin.com" },
+  { label: "Facebook", icon: Facebook, href: "https://facebook.com" },
+  { label: "Music", icon: Music2, href: "https://instagram.com" },
+];
 
 const Footer = () => (
-  <footer className="relative border-t border-flux-sand bg-flux-ivory text-flux-cool-gray before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-flux-gold/55 before:to-transparent">
-    <div className="container mx-auto flex max-w-6xl flex-col items-center justify-between gap-8 px-5 py-12 sm:px-6 md:flex-row">
-      <div className="flex flex-col items-center gap-2 md:items-start">
-        <Link to="/" className="flex items-center gap-2 font-display text-lg font-semibold tracking-tight text-flux-forest">
-          <img src={logo} alt="" className="h-6 w-6 rounded-md" width={24} height={24} />
-          <span>
-            Flux<span className="text-flux-green">Fom</span>
-          </span>
-        </Link>
-        <BrandTagline />
-      </div>
+  <footer className="border-t border-white/[0.06] bg-flux-void">
+    <div className="mx-auto flex max-w-[1400px] flex-col items-center justify-between gap-8 px-5 py-10 sm:px-8 md:flex-row lg:px-12">
+      <FluxLogo size="sm" />
+
       <div className="flex flex-wrap items-center justify-center gap-8">
-        {[
-          { label: "Work", to: "/projects" },
-          { label: "Approach", to: "/how-it-works" },
-          { label: "About", to: "/about" },
-          { label: "Terms", to: "/terms" },
-          { label: "Start profile", to: "/start" },
-        ].map((l) => (
+        {footerLinks.map((link) => (
           <Link
-            key={l.to}
-            to={l.to}
-            className="text-[11px] font-medium uppercase tracking-[0.18em] text-flux-cool-gray transition-colors hover:text-flux-forest"
+            key={link.label}
+            to={link.to}
+            className="text-xs font-medium text-white/60 transition-colors hover:text-flux-neon"
           >
-            {l.label}
+            {link.label}
           </Link>
         ))}
       </div>
-      <p className="text-xs text-flux-cool-gray">© {new Date().getFullYear()} FluxFom · Nairobi</p>
+
+      <div className="flex items-center gap-5">
+        {socialLinks.map(({ label, icon: Icon, href }) => (
+          <a
+            key={label}
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={label}
+            className="text-white/50 transition hover:text-flux-neon"
+          >
+            <Icon size={16} strokeWidth={1.5} />
+          </a>
+        ))}
+      </div>
     </div>
   </footer>
 );

@@ -69,28 +69,28 @@ const Terms = () => {
   }, []);
 
   return (
-    <div>
-      <section className="border-b border-flux-sand bg-flux-ivory pb-16 pt-12 md:pb-20 md:pt-16">
+    <div className="min-h-full bg-flux-void text-white">
+      <section className="landing-page-shell border-b border-white/10 pb-16 pt-12 md:pb-20 md:pt-16">
         <div className="container mx-auto max-w-6xl px-5 text-center sm:px-6">
-          <motion.p initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="public-kicker">
+          <motion.p initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="landing-page-kicker">
             Legal
           </motion.p>
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.55 }}
-            className="heading-editorial mt-4 text-4xl font-semibold text-flux-editorial sm:text-5xl md:text-6xl"
+            className="heading-editorial mt-4 text-4xl font-semibold text-white sm:text-5xl md:text-6xl"
           >
             Terms of Service
           </motion.h1>
-          <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.15 }} className="mt-4 text-sm font-medium text-flux-cool-gray">
+          <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.15 }} className="mt-4 text-sm font-medium text-white/70">
             Last updated: March 2026
           </motion.p>
-          <ScrollNudge targetId="terms-body" />
+          <ScrollNudge targetId="terms-body" tone="dark" />
         </div>
       </section>
 
-      <figure className="border-y border-flux-sand bg-flux-sand/35">
+      <figure className="border-y border-white/10 bg-[#07140b]">
         <div className="relative mx-auto aspect-[21/9] max-h-[200px] w-full max-w-6xl overflow-hidden sm:max-h-[240px] md:max-h-[280px]">
           <img
             src={PAGE_EDITORIAL_WIDE}
@@ -101,14 +101,14 @@ const Terms = () => {
             decoding="async"
             className="h-full w-full object-cover object-[center_55%] opacity-70 saturate-[0.9]"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-flux-forest/42 via-transparent to-flux-ivory/20" aria-hidden />
+          <div className="absolute inset-0 bg-gradient-to-t from-flux-forest/50 via-transparent to-flux-void/30" aria-hidden />
         </div>
-        <figcaption className="container mx-auto max-w-6xl px-5 py-3 text-center text-[10px] font-bold uppercase tracking-[0.22em] text-flux-clay sm:px-6">
+        <figcaption className="container mx-auto max-w-6xl px-5 py-3 text-center text-[10px] font-bold uppercase tracking-[0.22em] text-flux-neon sm:px-6">
           Studio rooted in Nairobi
         </figcaption>
       </figure>
 
-      <section id="terms-body" className="scroll-mt-24 bg-flux-ivory py-16 pb-28 md:py-20 md:pb-32">
+      <section id="terms-body" className="scroll-mt-24 bg-flux-void py-16 pb-28 md:py-20 md:pb-32">
         <div className="container mx-auto max-w-6xl px-5 sm:px-6">
           <motion.div
             initial={{ opacity: 0, y: 16 }}
@@ -117,9 +117,9 @@ const Terms = () => {
             className="mx-auto max-w-3xl space-y-5"
           >
             {sections.map((section) => (
-              <article key={section.section_title} className="rounded-[1.25rem] border border-flux-sand bg-white/58 p-6">
-                <h2 className="heading-editorial text-xl font-semibold text-flux-editorial">{section.section_title}</h2>
-                <p className="mt-4 text-sm leading-relaxed text-flux-editorial/78 sm:text-base">{section.content}</p>
+              <article key={section.section_title} className="landing-page-card p-6">
+                <h2 className="heading-editorial text-xl font-semibold text-white">{section.section_title}</h2>
+                <p className="mt-4 text-sm leading-relaxed text-white/72 sm:text-base">{section.content}</p>
               </article>
             ))}
           </motion.div>

@@ -90,19 +90,19 @@ const HowItWorks = () => {
   }, []);
 
   return (
-    <div>
-      <section className="relative overflow-hidden border-b border-flux-sand bg-flux-ivory pb-16 pt-12 md:pb-24 md:pt-16">
-        <div className="absolute -right-28 top-20 h-96 w-96 rounded-full bg-flux-growth/10 blur-3xl" aria-hidden />
+    <div className="min-h-full bg-flux-void text-white">
+      <section className="landing-page-shell relative overflow-hidden border-b border-white/10 pb-16 pt-12 md:pb-24 md:pt-16">
+        <div className="absolute -right-28 top-20 h-96 w-96 rounded-full bg-flux-neon/10 blur-3xl" aria-hidden />
         <div className="absolute -left-20 top-32 h-64 w-64 rounded-full bg-flux-gold/10 blur-3xl" aria-hidden />
         <div className="container relative mx-auto max-w-6xl px-5 sm:px-6">
           <div className="grid items-center gap-10 md:gap-12 lg:grid-cols-2 lg:gap-16">
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55 }}>
-              <BrandTagline className="mb-3" />
-              <p className="public-kicker">Approach</p>
-              <h1 className="heading-editorial mt-4 max-w-4xl text-5xl font-semibold leading-[1.02] text-flux-editorial sm:text-6xl md:text-7xl">
+              <BrandTagline className="mb-3" tone="on-dark" />
+              <p className="landing-page-kicker">Approach</p>
+              <h1 className="heading-editorial mt-4 max-w-4xl text-5xl font-semibold leading-[1.02] text-white sm:text-6xl md:text-7xl">
                 A practical path from brand identity to market penetration.
               </h1>
-              <p className="mt-6 max-w-2xl text-base leading-relaxed text-flux-editorial/78 sm:text-lg">
+              <p className="landing-page-copy mt-6 max-w-2xl sm:text-lg">
                 We diagnose what exists, sharpen how the brand should be understood, then build the marketing overview,
                 creative assets, campaigns, and customer-growth path needed to keep momentum moving.
               </p>
@@ -117,11 +117,11 @@ const HowItWorks = () => {
               />
             </motion.div>
           </div>
-          <ScrollNudge targetId="how-inside-work" />
+          <ScrollNudge targetId="how-inside-work" tone="dark" />
         </div>
       </section>
 
-      <section id="how-inside-work" className="scroll-mt-24 border-b border-flux-sand bg-flux-sand/35 py-16 md:py-24">
+      <section id="how-inside-work" className="scroll-mt-24 border-b border-white/10 bg-[#07140b] py-16 md:py-24">
         <div className="container mx-auto max-w-6xl px-5 sm:px-6">
           <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
             <MarketingStoryImage
@@ -131,21 +131,21 @@ const HowItWorks = () => {
               treatment="portrait"
             />
             <div>
-              <p className="public-kicker">Inside the work</p>
-              <p className="heading-editorial mt-4 text-3xl font-semibold leading-snug text-flux-editorial sm:text-4xl">
+              <p className="landing-page-kicker">Inside the work</p>
+              <p className="heading-editorial mt-4 text-3xl font-semibold leading-snug text-white sm:text-4xl">
                 Strategy stays close to the craft, so what we recommend is what your team can actually ship.
               </p>
-              <p className="mt-5 text-base leading-relaxed text-flux-editorial/78">
+              <p className="landing-page-copy mt-5">
                 From identity systems to content, motion, digital experiences, and campaign journeys, we keep judgment,
                 narrative, and execution in one conversation.
               </p>
             </div>
           </div>
-          <ScrollNudge targetId="how-steps" />
+          <ScrollNudge targetId="how-steps" tone="dark" />
         </div>
       </section>
 
-      <section id="how-steps" className="scroll-mt-24 bg-flux-ivory py-20 md:py-28">
+      <section id="how-steps" className="scroll-mt-24 bg-flux-void py-20 md:py-28">
         <div className="container mx-auto max-w-6xl px-5 sm:px-6">
           <div className="space-y-20 md:space-y-28">
             {steps.map((step, i) => {
@@ -159,25 +159,25 @@ const HowItWorks = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-60px" }}
                   transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                  className="grid items-start gap-10 rounded-[2rem] border border-flux-sand bg-white/55 p-6 shadow-sm md:grid-cols-2 md:gap-14 md:p-9"
+                  className="grid items-start gap-10 rounded-[2rem] border border-white/10 bg-white/[0.04] p-6 shadow-[0_24px_90px_-48px_rgba(0,0,0,0.8)] backdrop-blur-xl md:grid-cols-2 md:gap-14 md:p-9"
                 >
                   <div className={i % 2 === 1 ? "md:order-2" : ""}>
                     <div className="flex items-center gap-4">
-                      <span className="font-condensed text-6xl font-bold text-flux-growth md:text-7xl">{num}</span>
-                      <span className="flex h-11 w-11 items-center justify-center rounded-full bg-flux-forest text-flux-ivory">
+                      <span className="font-condensed text-6xl font-bold text-flux-neon md:text-7xl">{num}</span>
+                      <span className="flex h-11 w-11 items-center justify-center rounded-full bg-flux-neon text-flux-void">
                         <Icon size={20} aria-hidden />
                       </span>
                     </div>
-                    <h2 className="heading-editorial mt-6 text-3xl font-semibold text-flux-editorial md:text-4xl">{step.title}</h2>
-                    <p className="mt-4 leading-relaxed text-flux-editorial/78">{step.description}</p>
+                    <h2 className="heading-editorial mt-6 text-3xl font-semibold text-white md:text-4xl">{step.title}</h2>
+                    <p className="mt-4 leading-relaxed text-white/72">{step.description}</p>
                   </div>
                   <div className={i % 2 === 1 ? "md:order-1" : ""}>
-                    <h3 className="mb-6 text-[11px] font-bold uppercase tracking-[0.22em] text-flux-clay">Deliverables</h3>
+                    <h3 className="mb-6 text-[11px] font-bold uppercase tracking-[0.22em] text-flux-neon">Deliverables</h3>
                     <ul className="space-y-3">
                       {details.map((d) => (
-                        <li key={d} className="flex items-start gap-3 rounded-2xl border border-flux-sand bg-flux-ivory/70 p-4">
-                          <CheckCircle2 size={16} className="mt-0.5 shrink-0 text-flux-clay" aria-hidden />
-                          <span className="text-sm font-medium text-flux-editorial">{d}</span>
+                        <li key={d} className="flex items-start gap-3 rounded-2xl border border-white/10 bg-white/[0.04] p-4">
+                          <CheckCircle2 size={16} className="mt-0.5 shrink-0 text-flux-neon" aria-hidden />
+                          <span className="text-sm font-medium text-white">{d}</span>
                         </li>
                       ))}
                     </ul>
@@ -186,11 +186,11 @@ const HowItWorks = () => {
               );
             })}
           </div>
-          <ScrollNudge targetId="how-cta" />
+          <ScrollNudge targetId="how-cta" tone="dark" />
         </div>
       </section>
 
-      <section id="how-cta" className="scroll-mt-24 relative overflow-hidden border-t border-flux-sand bg-flux-forest py-20 text-flux-ivory md:py-28">
+      <section id="how-cta" className="scroll-mt-24 relative overflow-hidden border-t border-white/10 bg-gradient-to-br from-flux-forest to-flux-void py-20 text-white md:py-28">
         <img
           src={HOME_FINAL_CTA_IMAGE}
           alt=""
@@ -201,7 +201,7 @@ const HowItWorks = () => {
           className="pointer-events-none absolute inset-0 h-full w-full object-cover object-[center_60%] opacity-[0.18]"
           aria-hidden
         />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-flux-forest via-flux-forest/94 to-flux-forest/88" aria-hidden />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-flux-forest/80 via-flux-forest/90 to-flux-void/80" aria-hidden />
         <div className="container relative mx-auto max-w-6xl px-5 sm:px-6">
           <div className="grid items-center gap-10 md:grid-cols-2 md:gap-16">
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
@@ -223,12 +223,12 @@ const HowItWorks = () => {
                 Ready to turn your brand touchpoints into a system?
               </motion.h2>
               <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.08 }}>
-                <p className="mt-5 leading-relaxed text-flux-ivory/78">
+                <p className="mt-5 leading-relaxed text-white/72">
                   Share where you are, where you want the brand to go, and what must change for customers to choose you.
                 </p>
                 <Link
                   to="/start"
-                  className="group mt-8 inline-flex items-center gap-2 rounded-full bg-flux-green px-8 py-3.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-white transition hover:bg-[#24932E]"
+                  className="group mt-8 inline-flex items-center gap-2 rounded-full bg-flux-neon px-8 py-3.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-flux-void transition hover:bg-[#b8ff33]"
                 >
                   Start profile
                   <ArrowRight size={14} className="transition-transform group-hover:translate-x-0.5" aria-hidden />
