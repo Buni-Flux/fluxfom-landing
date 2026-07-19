@@ -3,17 +3,55 @@ import { Link } from "react-router-dom";
 import { ChevronRight } from "lucide-react";
 import { fadeInView } from "./homeMotion";
 import { NeonPlayFrame } from "@/components/marketing/NeonPlayFrame";
+import { useState } from "react";
 
 const SERVICES = [
-  "Marketing Campaigns",
-  "Digital Products",
-  "User Generated Content",
-  "Marketing Results",
-  "Brand ID's",
-  "Music Videos",
+  {
+    id: 1,
+    name:"Marketing Campaigns",
+    src: "/assets/images/hero-bg-face.png",
+  },
+  {
+    id: 2,
+    name:"Brand Positioning",
+    src: "/assets/images/hero-bg-face.png",
+  },
+  {
+    id: 3,
+    name:"Digital Products",
+    src: "/assets/images/hero-bg-face.png",
+  },
+  {
+    id: 4,
+    name:"User Generated Content",
+    src: "/assets/images/hero-bg-face.png",
+  },
+  {
+    id: 5,
+    name:"Marketing Results",
+    src: "/assets/images/hero-bg-face.png",
+  },
+  {
+    id: 6,
+    name:"Brand ID's",
+    src: "/assets/images/hero-bg-face.png",
+  },
+  {
+    id: 7,
+    name: "Music Videos",
+    src:"/assets/images/hero-bg-face.png",
+  }
 ];
 
 export function HomeHero() {
+const [isVideoVisible, setIsVideoVisible] = useState(false);
+//what the player will play in usestate
+//fuction to handle click video switching
+function handleVideoClick(id: number) {
+  setIsVideoVisible(true);
+}
+
+
   return (
     <section
       id="hero"
@@ -103,18 +141,21 @@ export function HomeHero() {
         >
           <ul className="space-y-3 lg:space-y-4">
             {SERVICES.map((service) => (
-              <li
-                key={service}
+              <button
+                key={service.id}
+                onClick={() => handleVideoClick(service.id)}
                 className="text-[10px] font-bold uppercase tracking-[0.22em] text-flux-neon sm:text-[11px]"
               >
-                {service}
-              </li>
+                {service.name}
+              </button>
             ))}
           </ul>
-
-          <div className="w-full flex justify-end">
-            <NeonPlayFrame size="lg" />
+          {/* video */}
+          {isVideoVisible &&
+           <div className="fixed bottom-6 right-6 z-50 w-full max-w-[320px] shadow-2xl transition-all duration-300">
+            <NeonPlayFrame visible={false} size="lg" />
           </div>
+          }
         </motion.div>
       </div>
     </section>

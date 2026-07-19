@@ -2,14 +2,16 @@ import { Play } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 type NeonPlayFrameProps = {
+  visible?: boolean;
   className?: string;
   size?: "sm" | "lg";
   label?: string;
   onClick?: () => void;
 };
 
-export function NeonPlayFrame({ className, size = "lg", label, onClick }: NeonPlayFrameProps) {
+export function NeonPlayFrame({ visible, className, size = "lg", label, onClick }: NeonPlayFrameProps) {
   const isLarge = size === "lg";
+  const isVisible = visible ?? true;
 
   return (
     <button
@@ -17,7 +19,7 @@ export function NeonPlayFrame({ className, size = "lg", label, onClick }: NeonPl
       onClick={onClick}
       aria-label={label ?? "Play video"}
       className={cn(
-        "group relative overflow-hidden rounded-2xl border-[5px] border-flux-neon neon-glow transition-transform hover:scale-[1.01]",
+        `group [display-${isVisible ? "flex" : "none"}] relative overflow-hidden rounded-2xl border-[5px] border-flux-neon neon-glow transition-transform hover:scale-[1.01]`,
         isLarge ? "aspect-[16/9] w-full" : "aspect-[4/3] w-full max-w-[140px]",
         className,
       )}
