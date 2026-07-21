@@ -116,9 +116,9 @@ function handleVideoClick(id: number) {
 
           <motion.p
             variants={fadeInView}
-            className="mt-6 max-w-sm text-sm leading-relaxed text-[#0B2B12] md:text-[15px]"
+            className="mt-6 max-w-sm text-sm leading-relaxed font-black text-[#0B2B12] md:text-[15px]"
           >
-            Communicate clearly with your audience without losing focus of your business focus.
+            Communicate clearly with your audience without losing focus of your business.
           </motion.p>
 
           <motion.div variants={fadeInView} className="mt-8 flex flex-wrap items-center gap-3">
