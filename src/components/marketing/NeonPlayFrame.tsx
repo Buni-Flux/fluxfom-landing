@@ -27,7 +27,8 @@ export function NeonPlayFrame({ visible, className, size = "lg", label, onClick 
       <div className="liquid-green absolute inset-0" aria-hidden />
       <div className="flux-grain absolute inset-0 opacity-40 mix-blend-overlay" aria-hidden />
       <div className="absolute inset-0 flex items-center justify-center">
-        <span
+        Coming Soon
+        {/* <span
           className={cn(
             "flex items-center justify-center rounded-full bg-black/25 backdrop-blur-sm transition group-hover:scale-110",
             isLarge ? "h-16 w-16 md:h-20 md:w-20" : "h-10 w-10",
@@ -38,7 +39,7 @@ export function NeonPlayFrame({ visible, className, size = "lg", label, onClick 
             strokeWidth={0}
             aria-hidden
           />
-        </span>
+        </span> */}
       </div>
     </button>
   );
