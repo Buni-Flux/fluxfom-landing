@@ -141,6 +141,7 @@ function handleVideoClick(id: number) {
         >
           <ul className="space-y-3 lg:space-y-4">
             {SERVICES.map((service) => (
+              <li key={service.id} className="flex items-center justify-end gap-2">
               <button
                 key={service.id}
                 onClick={() => handleVideoClick(service.id)}
@@ -148,6 +149,7 @@ function handleVideoClick(id: number) {
               >
                 {service.name}
               </button>
+              </li>
             ))}
           </ul>
           {/* video */}
