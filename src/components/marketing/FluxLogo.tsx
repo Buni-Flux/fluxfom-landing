@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
-import logoPng from "@/assets/fluxfom-logo.png";
+import logoPng from "@/assets/fluxfom-logo-full.png";
 import logoSvg from "@/assets/fluxfom-logo.svg";
 
 type FluxLogoProps = {
@@ -12,10 +12,11 @@ export function FluxLogo({ className, size = "md" }: FluxLogoProps) {
   const isSmall = size === "sm";
   return (
     <Link to="/" className={cn("inline-flex items-center gap-3 leading-none", className)}>
-      {logoSvg ? (
+      {/*/replaced SVG for PNG*/}
+      <img src={logoPng} alt="FluxFom" className={isSmall ? "h-6 w-auto" : "h-8 w-auto"} />
+      {/* {logoSvg ? (
         <img src={logoSvg} alt="FluxFom" className={isSmall ? "h-6 w-auto" : "h-8 w-auto"} />
       ) : logoPng ? (
-        <img src={logoPng} alt="FluxFom" className={isSmall ? "h-6 w-auto" : "h-8 w-auto"} />
       ) : (
         <span className="inline-flex flex-col">
           <span
@@ -35,7 +36,7 @@ export function FluxLogo({ className, size = "md" }: FluxLogoProps) {
             Fom
           </span>
         </span>
-      )}
+      )} */}
     </Link>
   );
 }
