@@ -1,170 +1,87 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { ChevronRight } from "lucide-react";
 import { fadeInView } from "./homeMotion";
-import { NeonPlayFrame } from "@/components/marketing/NeonPlayFrame";
-import { useState } from "react";
-
-const SERVICES = [
-  {
-    id: 1,
-    name: "Marketing Campaigns",
-    src: "/assets/images/hero-bg-face.png",
-    projectUrl: "https://aeiwxzdygbrvmfeurref.supabase.co/rest/v1/cms_projects?select=*&id=eq.ceb2cd5d-f030-44af-818f-55f58df26afa&published=eq.true",
-  },
-  {
-    id: 2,
-    name: "Brand Positioning",
-    src: "/assets/images/hero-bg-face.png",
-    projectUrl: undefined,
-  },
-  {
-    id: 3,
-    name: "Digital Products",
-    src: "/assets/images/hero-bg-face.png",
-    projectUrl: undefined,
-  },
-  {
-    id: 4,
-    name: "User Generated Content",
-    src: "/assets/images/hero-bg-face.png",
-    projectUrl: undefined,
-  },
-  {
-    id: 5,
-    name: "Marketing Results",
-    src: "/assets/images/hero-bg-face.png",
-    projectUrl: "https://aeiwxzdygbrvmfeurref.supabase.co/rest/v1/cms_projects?select=*&id=eq.46459dc1-5292-478c-93bf-c3266389615c&published=eq.true",
-  },
-  {
-    id: 6,
-    name: "Brand ID's",
-    src: "/assets/images/hero-bg-face.png",
-    projectUrl: undefined,
-  },
-  {
-    id: 7,
-    name: "Music Videos",
-    src: "/assets/images/hero-bg-face.png",
-    projectUrl: undefined,
-  },
-];
 
 export function HomeHero() {
-const [isVideoVisible, setIsVideoVisible] = useState(false);
-const [activeProjectUrl, setActiveProjectUrl] = useState<string | undefined>(undefined);
-
-function handleVideoClick(id: number) {
-  const selectedService = SERVICES.find((service) => service.id === id);
-  setActiveProjectUrl(selectedService?.projectUrl);
-  setIsVideoVisible(true);
-}
-
-
   return (
-    <section
-      id="hero"
-      aria-labelledby="home-hero-heading"
-      className="relative min-h-[calc(100dvh-72px)] overflow-hidden bg-flux-void"
-    >
-      {/* Background image */}
-      <div className="pointer-events-none absolute inset-0" aria-hidden>
-        <img
-          src="/assets/images/hero-bg.png"
-          alt=""
-          fetchPriority="high"
-          decoding="async"
-          className="absolute left-1/2 top-1/2 h-[min(105vh,1020px)] w-auto max-w-none -translate-x-1/2 -translate-y-[48%] object-cover"
-        />
-      </div>
-        <img
-          src="/assets/images/hero-bg-face.png"
-          alt=""
-          fetchPriority="high"
-          decoding="async"
-          className="absolute left-1/2 top-1/2 h-[min(85vh,820px)] w-auto max-w-none -translate-x-1/2 -translate-y-[48%] object-contain"
-        />
-
-      {/* Overlays — keep text readable while image shows through center */}
-      <div className="pointer-events-none absolute inset-0 lg:hidden" aria-hidden>
-        <div className="absolute inset-0 bg-gradient-to-r from-flux-void via-flux-void/55 to-flux-void/90" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_60%_at_50%_45%,transparent_20%,rgba(5,16,5,0.55)_100%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_40%,rgba(162,255,0,0.1),transparent_65%)]" />
-        <div className="flux-grain absolute inset-0 opacity-[0.12] mix-blend-overlay" />
-      </div>
-
-      <div className="relative z-10 mx-auto grid min-h-[calc(100dvh-72px)] max-w-[1400px] grid-cols-1 items-center gap-10 px-5 py-16 sm:px-8 lg:grid-cols-12 lg:gap-6 lg:px-12 lg:py-20">
-        {/* Left — headline & CTAs */}
-        <motion.div
-          className="lg:col-span-5"
-          initial="hidden"
-          animate="visible"
-          variants={{ visible: { transition: { staggerChildren: 0.12 } } }}
-        >
-          <motion.h1
-            id="home-hero-heading"
-            variants={fadeInView}
-            className="text-[clamp(2.25rem,5vw,3.75rem)] leading-[1.02] text-[#0B2B12]"
+    <section id="hero" aria-labelledby="home-hero-heading" className="bg-white text-flux-void">
+      <div className="mx-auto max-w-[1400px] px-5 py-16 sm:px-8 lg:px-12 lg:py-24">
+        <div className="grid gap-10 items-top lg:grid-cols-[minmax(0,0.6fr)_minmax(0,0.4fr)]">
+          <motion.div
+            className="lg:pr-8"
+            initial="hidden"
+            animate="visible"
+            variants={{ visible: { transition: { staggerChildren: 0.12 } } }}
           >
-            <span className="font-monument text-[1.02em] font-black normal-case">Discover Your</span>
-            <span className="heading-accent text-[1.08em] text-[#0B2B12]">Brand </span>
-            <span className="font-monument text-[1.02em] font-black normal-case">Position </span>
-            <br />
-            {/* <span className="font-monument font-normal normal-case">to</span> */}
-            <span className="font-monument text-[1.02em] font-black normal-case">To</span>
-            <span className="heading-accent text-[1.08em] text-[#0B2B12]">Win</span>
-          </motion.h1>
-
-          <motion.p
-            variants={fadeInView}
-            className="mt-6 max-w-sm text-sm leading-relaxed font-black text-[#0B2B12] md:text-[15px]"
-          >
-            Communicate clearly with your audience without losing focus of your business.
-          </motion.p>
-
-          <motion.div variants={fadeInView} className="mt-8 flex flex-wrap items-center gap-3">
-            <Link to="/start" className="btn-neon-outline gap-1">
-              Get Started
-              <ChevronRight size={16} strokeWidth={2} aria-hidden />
-            </Link>
-            <Link to="/how-it-works" className="btn-neon-solid">
-              Find Out More
-            </Link>
+            <motion.h1
+              id="home-hero-heading"
+              variants={fadeInView}
+              className="text-[clamp(3rem,5vw,5.25rem)] font-monument font-black leading-[0.92] tracking-tight text-flux-void"
+            >
+              <span className="block"><span className="text-flux-accent">Discover<br/></span>your brand,</span>
+              <span className="block"><span>position </span> <br/> to win</span>
+              {/* <span className="block">
+                To <span className="heading-accent">Win</span>
+              </span> */}
+            </motion.h1>
           </motion.div>
-        </motion.div>
 
-        {/* Right — services & video */}
-        <motion.div
-          className="hidden lg:flex h-full flex-col justify-between text-right lg:col-span-3 lg:col-start-10"
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.7, delay: 0.3 }}
-        >
-          <ul className="space-y-3 lg:space-y-4">
-            {SERVICES.map((service) => (
-              <li key={service.id} className="flex items-center justify-end gap-2">
-              <button
-                key={service.id}
-                onClick={() => handleVideoClick(service.id)}
-                className="text-[10px] font-bold uppercase tracking-[0.22em] text-flux-neon sm:text-[11px]"
-              >
-                {service.name}
-              </button>
-              </li>
-            ))}
-          </ul>
-          {/* video */}
-          {isVideoVisible &&
-           <div className="fixed bottom-6 right-6 z-50 w-full max-w-[320px] shadow-2xl transition-all duration-300">
-            <NeonPlayFrame
-              visible={true}
-              size="lg"
-              onClose={() => setIsVideoVisible(false)}
-              projectUrl={activeProjectUrl}
+          <motion.div
+            className="flex flex-col items-start"
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.2 }}
+          >
+            <motion.p
+              variants={fadeInView}
+              className="max-w-xl text-base leading-relaxed text-flux-editorial/90 md:text-lg"
+            >
+              Marketing tools that help you communicate clearly & effectively with your audience without losing focus of your business.
+            </motion.p>
+
+            <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-end">
+              <Link to="/start" className="btn-neon-solid px-9 py-4 text-base">
+                Get Started
+              </Link>
+              <Link to="/how-it-works" className="btn-neon-outline px-9 py-4 text-base">
+                Find Out More
+              </Link>
+            </div>
+          </motion.div>
+        </div>
+
+        <div className="mt-14">
+          <div className="relative overflow-hidden rounded-[2rem] border border-flux-sand bg-flux-sand/10 shadow-[0_40px_120px_-55px_rgba(5,16,5,0.18)]">
+            <img
+              src="/assets/images/hero-bg.png"
+              alt="Creative team collaborating on a laptop"
+              fetchPriority="high"
+              decoding="async"
+              className="h-[420px] w-full object-cover sm:h-[520px]"
+            />
+            <img
+              src="/assets/images/hero-bg-face.png"
+              alt="Creative team collaborating on a laptop"
+              fetchPriority="high"
+              decoding="async"
+              className="pointer-events-none absolute left-1/2 top-1/2 h-[420px] w-auto max-w-none -translate-x-1/2 -translate-y-1/2 object-contain sm:h-[520px]"
             />
           </div>
-          }
-        </motion.div>
+
+          <div className="mt-8 flex flex-col items-center justify-between gap-3 border-t border-flux-sand/50 pt-8 text-center text-sm text-flux-editorial/70 sm:flex-row sm:text-left">
+            <p className="font-semibold uppercase tracking-[0.24em] text-flux-editorial/85">
+              Companies we've helped
+            </p>
+            <div className="flex flex-wrap items-center justify-center gap-5 text-xs uppercase tracking-[0.24em] text-flux-editorial/70 sm:justify-end">
+              <span>Lumina</span>
+              <span>Vortex</span>
+              <span>Velocity</span>
+              <span>Synergy</span>
+              <span>Enigma</span>
+              <span>Spectrum</span>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );
