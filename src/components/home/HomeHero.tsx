@@ -78,7 +78,7 @@ export function HomeHero() {
             />
           </div>
 
-          <div className="mt-8 space-y-4 border-t border-flux-sand/50 pt-8 text-sm text-flux-editorial/70">
+          <div className="my-4 space-y-4 border-t border-b border-flux-sand/50 py-4 text-sm text-flux-editorial/70">
             <div className="flex flex-col gap-3 mb-6 items-start justify-between">
               <p className="font-semibold uppercase tracking-[0.24em] text-flux-editorial/85">
                 Companies we've worked with
