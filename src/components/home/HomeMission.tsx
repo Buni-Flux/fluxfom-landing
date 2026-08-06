@@ -53,7 +53,7 @@ export function HomeMission() {
                 className="text-[clamp(2rem,3vw,3.5rem)] font-monument font-black leading-[0.92] tracking-tight text-flux-void"
               >
                 Understand where <br />
-                <span className="text-flux-accent">your brand wants to be, <br/> we help you get there.</span>
+                <span className="text-flux-accent">your brand should be, <br/> we help you get there.</span>
               </h3>
             </motion.div>
 
