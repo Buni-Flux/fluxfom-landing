@@ -3,8 +3,11 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ArrowLeft, ArrowRight, Check, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
+import { EMAIL_EVENTS } from "@/services/email/email.events";
+import { sendEmail } from "@/services/email/sendEmail";
 import { cn } from "@/lib/utils";
 import { isLikelyDirectVideoUrl, videoUrlToIframeSrc } from "@/lib/videoEmbed";
+import { buildVerificationUrl } from "./verification";
 import {
   BUSINESS_TYPES,
   CHALLENGES,
@@ -256,20 +259,59 @@ export function ElevateBrandWizard() {
     if (!canContinue()) return;
     setSubmitting(true);
     const summary = buildWizardSummary(answers);
-    await supabase.from("cms_submissions").insert({
-      company_name: answers.companyName.trim(),
-      industry: answers.businessType,
-      email: answers.email.trim(),
-      website: null,
-      brand_status: [answers.maturity, answers.vision, answers.team].filter(Boolean).join(" · ") || null,
-      existing_assets: answers.challenges.join("; ") || null,
-      business_goals: summary,
-      tone_preferences: answers.goals.join("; ") || null,
-      target_audience: opportunityAreas(answers).join("; "),
-      competitors: suggestServices(answers).join("; "),
-    });
-    setSubmitting(false);
-    setDone(true);
+    const email = answers.email.trim();
+
+    try {
+      const { error } = await supabase.from("cms_submissions").insert({
+        company_name: answers.companyName.trim(),
+        industry: answers.businessType,
+        email,
+        website: null,
+        brand_status: [answers.maturity, answers.vision, answers.team].filter(Boolean).join(" · ") || null,
+        existing_assets: answers.challenges.join("; ") || null,
+        business_goals: summary,
+        tone_preferences: answers.goals.join("; ") || null,
+        target_audience: opportunityAreas(answers).join("; "),
+        competitors: suggestServices(answers).join("; "),
+      });
+
+      if (error) {
+        throw error;
+      }
+
+      const baseUrl = import.meta.env.VITE_PUBLIC_SITE_URL || "https://fluxfom.com";
+      const verificationUrl = buildVerificationUrl(baseUrl, email);
+
+      const temporaryPassword = `fluxfom-${crypto.randomUUID().replace(/-/g, "").slice(0, 16)}`;
+      const { error: authError } = await supabase.auth.signUp({
+        email,
+        password: temporaryPassword,
+        options: {
+          emailRedirectTo: verificationUrl,
+        },
+      });
+
+      if (authError && !/already|registered|exists/i.test(authError.message)) {
+        console.warn("Supabase account creation was skipped", authError.message);
+      }
+
+      await sendEmail({
+        to: email,
+        event: EMAIL_EVENTS.VERIFY_EMAIL,
+        props: {
+          clientName: answers.companyName.trim() || "there",
+          verificationUrl,
+        },
+        preview: !import.meta.env.VITE_RESEND_API_KEY,
+      });
+
+      setDone(true);
+    } catch (error) {
+      console.error("Failed to submit start profile", error);
+      setDone(true);
+    } finally {
+      setSubmitting(false);
+    }
   }, [answers, canContinue]);
 
   const modules = useMemo(() => suggestServices(answers), [answers]);

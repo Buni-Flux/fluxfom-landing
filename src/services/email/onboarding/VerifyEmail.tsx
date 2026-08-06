@@ -7,7 +7,7 @@ import { CTAButton } from '../templates/CTAButton';
 import { Footer } from '../templates/Footer';
 import type { VerifyEmailProps } from '../email.types';
 
-export function VerifyEmail({ clientName, verificationUrl }: VerifyEmailProps) {
+export function VerifyEmail({ clientName, verificationUrl, profileStatusUrl }: VerifyEmailProps) {
   return (
     <EmailLayout previewText={`Verify your email, ${clientName}.`} title="Verify your email">
       <Header eyebrow="Security" title={`Verify your email, ${clientName}`}>
@@ -20,7 +20,7 @@ export function VerifyEmail({ clientName, verificationUrl }: VerifyEmailProps) {
           Once verified, we can send you the right updates at the right moment and avoid unnecessary back-and-forth.
         </Text>
       </Section>
-      <CTAButton href={verificationUrl} label="Verify email" />
+      <CTAButton href={profileStatusUrl || verificationUrl} label="View your profile status" />
       <Footer />
     </EmailLayout>
   );

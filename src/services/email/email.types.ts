@@ -47,11 +47,13 @@ export interface WelcomeEmailProps extends EmailTemplateBaseProps {
   clientName: string;
   workspaceName: string;
   dashboardUrl: string;
+  profileStatusUrl?: string;
 }
 
 export interface VerifyEmailProps extends EmailTemplateBaseProps {
   clientName: string;
   verificationUrl: string;
+  profileStatusUrl?: string;
 }
 
 export interface WorkspaceCreatedEmailProps extends EmailTemplateBaseProps {

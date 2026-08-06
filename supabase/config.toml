@@ -1,0 +1,24 @@
+project_id = "aeiwxzdygbrvmfeurref"
+
+# Validates Authorization in-function (admin + service role). Avoids gateway JWT quirks with invoke().
+[functions.admin-reset-password]
+verify_jwt = false
+
+[functions.admin-manage-users]
+verify_jwt = false
+
+# Flux AI: auth + admin checks run inside the function (same pattern as admin-reset-password).
+[functions.flux-ai-segment-clients]
+verify_jwt = false
+
+[functions.flux-ai-generate-brief]
+verify_jwt = false
+
+[functions.flux-ai-generate-campaign]
+verify_jwt = false
+
+[functions.flux-ai-run-automations]
+verify_jwt = false
+
+[functions.flux-ai-score-clients]
+verify_jwt = false

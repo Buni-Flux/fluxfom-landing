@@ -77,21 +77,13 @@ function handleVideoClick(id: number) {
         />
 
       {/* Overlays — keep text readable while image shows through center */}
-      {/* <div
-        className="pointer-events-none absolute inset-0 bg-gradient-to-r from-flux-void via-flux-void/55 to-flux-void/90"
-        aria-hidden
-      />
-      <div
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_70%_60%_at_50%_45%,transparent_20%,rgba(5,16,5,0.55)_100%)]"
-        aria-hidden
-      />
-      <div
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_40%,rgba(162,255,0,0.1),transparent_65%)]"
-        aria-hidden
-      />
-      <div className="flux-grain pointer-events-none absolute inset-0 opacity-[0.12] mix-blend-overlay" aria-hidden />
+      <div className="pointer-events-none absolute inset-0 lg:hidden" aria-hidden>
+        <div className="absolute inset-0 bg-gradient-to-r from-flux-void via-flux-void/55 to-flux-void/90" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_60%_at_50%_45%,transparent_20%,rgba(5,16,5,0.55)_100%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_40%,rgba(162,255,0,0.1),transparent_65%)]" />
+        <div className="flux-grain absolute inset-0 opacity-[0.12] mix-blend-overlay" />
+      </div>
 
-      <div className="relative z-10 mx-auto grid min-h-[calc(100dvh-72px)] max-w-[1400px] grid-cols-1 items-center gap-10 px-5 py-16 sm:px-8 lg:grid-cols-12 lg:gap-6 lg:px-12 lg:py-20"> */}
       <div className="relative z-10 mx-auto grid min-h-[calc(100dvh-72px)] max-w-[1400px] grid-cols-1 items-center gap-10 px-5 py-16 sm:px-8 lg:grid-cols-12 lg:gap-6 lg:px-12 lg:py-20">
         {/* Left — headline & CTAs */}
         <motion.div
