@@ -82,34 +82,53 @@ const Projects = () => {
       <section className="landing-page-shell relative overflow-hidden border-b border-white/10 pb-14 pt-12 md:pb-20 md:pt-16">
         <div className="absolute -right-32 top-10 h-80 w-80 rounded-full bg-flux-neon/10 blur-3xl" aria-hidden />
         <div className="container relative mx-auto max-w-6xl px-5 sm:px-6">
-          <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-12">
+          <div className="grid gap-10 lg:grid-cols-[minmax(0,0.55fr)_minmax(0,0.45fr)] lg:items-center">
             <motion.div
-              className="lg:col-span-6"
+              className="lg:pr-8"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.55 }}
             >
               <p className="landing-page-kicker">Client work</p>
               <h1 className="heading-editorial mt-4 text-5xl font-semibold leading-[1.02] text-white sm:text-6xl md:text-7xl">
-                Brands we have built end to end.
+                Turning Ideas Into Digital Success Stories.
               </h1>
               <p className="landing-page-copy mt-6 max-w-xl">
-                Each client opens a single profile — brand brief through launch templates — organized like a living brand
-                book.
+                Explore a collection of projects where creativity meets technology to solve real business challenges.
               </p>
+              <div className="mt-8 flex max-w-xs gap-3">
+                <span className="h-2 flex-1 rounded-full bg-flux-neon" />
+                <span className="h-2 flex-1 rounded-full bg-white/15" />
+                <span className="h-2 flex-1 rounded-full bg-white/15" />
+                <span className="h-2 flex-1 rounded-full bg-white/15" />
+              </div>
             </motion.div>
+
             <motion.div
               className="lg:col-span-6"
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.55, delay: 0.06 }}
             >
-              <MarketingStoryImage
-                src={PAGE_CREATIVE_WORKSPACE}
-                alt={PAGE_CREATIVE_WORKSPACE_ALT}
-                aspectClassName="aspect-[16/10] max-lg:aspect-[16/11]"
-                treatment="portrait"
-              />
+              <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.05] shadow-[0_40px_120px_-60px_rgba(0,0,0,0.55)]">
+                <MarketingStoryImage
+                  src={PAGE_CREATIVE_WORKSPACE}
+                  alt={PAGE_CREATIVE_WORKSPACE_ALT}
+                  aspectClassName="aspect-[16/10] max-lg:aspect-[16/11]"
+                  treatment="portrait"
+                />
+                <div className="space-y-4 p-6">
+                  <p className="text-xs font-semibold uppercase tracking-[0.22em] text-flux-neon/80">
+                    Featured project
+                  </p>
+                  <h2 className="text-3xl font-semibold leading-tight text-white">
+                    Finova Banking Platform
+                  </h2>
+                  <p className="text-sm leading-relaxed text-white/70">
+                    A modern fintech platform designed to simplify digital banking with intuitive user experiences.
+                  </p>
+                </div>
+              </div>
             </motion.div>
           </div>
           <ScrollNudge targetId="clients-index" tone="dark" />

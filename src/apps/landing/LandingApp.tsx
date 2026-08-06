@@ -25,6 +25,7 @@ const LandingApp = () => (
           <Route path="/about" element={<About />} />
           <Route path="/terms" element={<Terms />} />
           <Route path="/start" element={<StartYourBrand />} />
+          <Route path="/portfolio" element={<Navigate to="/projects" replace />} />
           <Route path="/work/:token" element={<Navigate to="/projects" replace />} />
           <Route path="/profile-status/:userId" element={<ProfileStatus />} />
           <Route path="/reset-password" element={<ResetPassword />} />
