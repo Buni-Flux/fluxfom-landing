@@ -8,46 +8,55 @@ import { useState } from "react";
 const SERVICES = [
   {
     id: 1,
-    name:"Marketing Campaigns",
+    name: "Marketing Campaigns",
     src: "/assets/images/hero-bg-face.png",
+    projectUrl: "https://aeiwxzdygbrvmfeurref.supabase.co/rest/v1/cms_projects?select=*&id=eq.ceb2cd5d-f030-44af-818f-55f58df26afa&published=eq.true",
   },
   {
     id: 2,
-    name:"Brand Positioning",
+    name: "Brand Positioning",
     src: "/assets/images/hero-bg-face.png",
+    projectUrl: undefined,
   },
   {
     id: 3,
-    name:"Digital Products",
+    name: "Digital Products",
     src: "/assets/images/hero-bg-face.png",
+    projectUrl: undefined,
   },
   {
     id: 4,
-    name:"User Generated Content",
+    name: "User Generated Content",
     src: "/assets/images/hero-bg-face.png",
+    projectUrl: undefined,
   },
   {
     id: 5,
-    name:"Marketing Results",
+    name: "Marketing Results",
     src: "/assets/images/hero-bg-face.png",
+    projectUrl: "https://aeiwxzdygbrvmfeurref.supabase.co/rest/v1/cms_projects?select=*&id=eq.46459dc1-5292-478c-93bf-c3266389615c&published=eq.true",
   },
   {
     id: 6,
-    name:"Brand ID's",
+    name: "Brand ID's",
     src: "/assets/images/hero-bg-face.png",
+    projectUrl: undefined,
   },
   {
     id: 7,
     name: "Music Videos",
-    src:"/assets/images/hero-bg-face.png",
-  }
+    src: "/assets/images/hero-bg-face.png",
+    projectUrl: undefined,
+  },
 ];
 
 export function HomeHero() {
 const [isVideoVisible, setIsVideoVisible] = useState(false);
-//what the player will play in usestate
-//fuction to handle click video switching
+const [activeProjectUrl, setActiveProjectUrl] = useState<string | undefined>(undefined);
+
 function handleVideoClick(id: number) {
+  const selectedService = SERVICES.find((service) => service.id === id);
+  setActiveProjectUrl(selectedService?.projectUrl);
   setIsVideoVisible(true);
 }
 
@@ -77,21 +86,13 @@ function handleVideoClick(id: number) {
         />
 
       {/* Overlays — keep text readable while image shows through center */}
-      {/* <div
-        className="pointer-events-none absolute inset-0 bg-gradient-to-r from-flux-void via-flux-void/55 to-flux-void/90"
-        aria-hidden
-      />
-      <div
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_70%_60%_at_50%_45%,transparent_20%,rgba(5,16,5,0.55)_100%)]"
-        aria-hidden
-      />
-      <div
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_40%,rgba(162,255,0,0.1),transparent_65%)]"
-        aria-hidden
-      />
-      <div className="flux-grain pointer-events-none absolute inset-0 opacity-[0.12] mix-blend-overlay" aria-hidden />
+      <div className="pointer-events-none absolute inset-0 lg:hidden" aria-hidden>
+        <div className="absolute inset-0 bg-gradient-to-r from-flux-void via-flux-void/55 to-flux-void/90" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_60%_at_50%_45%,transparent_20%,rgba(5,16,5,0.55)_100%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_40%,rgba(162,255,0,0.1),transparent_65%)]" />
+        <div className="flux-grain absolute inset-0 opacity-[0.12] mix-blend-overlay" />
+      </div>
 
-      <div className="relative z-10 mx-auto grid min-h-[calc(100dvh-72px)] max-w-[1400px] grid-cols-1 items-center gap-10 px-5 py-16 sm:px-8 lg:grid-cols-12 lg:gap-6 lg:px-12 lg:py-20"> */}
       <div className="relative z-10 mx-auto grid min-h-[calc(100dvh-72px)] max-w-[1400px] grid-cols-1 items-center gap-10 px-5 py-16 sm:px-8 lg:grid-cols-12 lg:gap-6 lg:px-12 lg:py-20">
         {/* Left — headline & CTAs */}
         <motion.div
@@ -155,7 +156,12 @@ function handleVideoClick(id: number) {
           {/* video */}
           {isVideoVisible &&
            <div className="fixed bottom-6 right-6 z-50 w-full max-w-[320px] shadow-2xl transition-all duration-300">
-            <NeonPlayFrame visible={false} size="lg" />
+            <NeonPlayFrame
+              visible={true}
+              size="lg"
+              onClose={() => setIsVideoVisible(false)}
+              projectUrl={activeProjectUrl}
+            />
           </div>
           }
         </motion.div>

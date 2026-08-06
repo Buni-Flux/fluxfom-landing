@@ -58,9 +58,21 @@ export function HomeFinalCta() {
                 <div className="rounded-lg bg-black/60 px-8 py-4 backdrop-blur-sm">
                   <span className="heading-monument text-lg tracking-widest text-white md:text-xl">[PLACEHOLDER]</span>
                 </div>
-                <Link to="/start" className="btn-neon-solid px-10 py-3.5 text-base">
-                  Get Started
-                </Link>
+
+                <div className="relative w-full max-w-[260px]">
+                  <div className="absolute inset-0 -z-10 overflow-hidden rounded-xl">
+                    <img
+                      src="/assets/images/hero-bg-face.png"
+                      alt=""
+                      className="h-full w-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-black/40" aria-hidden />
+                  </div>
+
+                  <Link to="/start" className="relative z-10 btn-neon-solid px-10 py-3.5 text-base w-full text-center">
+                    Get Started
+                  </Link>
+                </div>
               </div>
             </div>
           </motion.div>

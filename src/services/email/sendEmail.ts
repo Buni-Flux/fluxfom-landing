@@ -20,7 +20,7 @@ export interface SendEmailResult {
   error?: string;
 }
 
-const DEFAULT_FROM = process.env.RESEND_FROM_EMAIL || import.meta.env.VITE_RESEND_FROM_EMAIL || 'FluxFom <onboarding@resend.dev>';
+const DEFAULT_FROM = import.meta.env.VITE_RESEND_FROM_EMAIL || 'FluxFom <onboarding@resend.dev>';
 
 function normalizeRecipients(recipients: EmailRecipients): string[] {
   if (Array.isArray(recipients)) {

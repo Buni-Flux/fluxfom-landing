@@ -7,7 +7,7 @@ import { CTAButton } from '../templates/CTAButton';
 import { Footer } from '../templates/Footer';
 import type { WelcomeEmailProps } from '../email.types';
 
-export function WelcomeEmail({ clientName, workspaceName, dashboardUrl }: WelcomeEmailProps) {
+export function WelcomeEmail({ clientName, workspaceName, dashboardUrl, profileStatusUrl }: WelcomeEmailProps) {
   return (
     <EmailLayout previewText={`Welcome to FluxFom, ${clientName}. We are preparing your workspace.`} title="Welcome to FluxFom">
       <Header eyebrow="Onboarding" title={`Welcome, ${clientName}`}>
@@ -23,7 +23,7 @@ export function WelcomeEmail({ clientName, workspaceName, dashboardUrl }: Welcom
           This gives you a calm place to review decisions, share context and move the work forward with less friction.
         </Text>
       </Section>
-      <CTAButton href={dashboardUrl} label="Open your workspace" />
+      <CTAButton href={profileStatusUrl || dashboardUrl} label="View your profile status" />
       <Footer />
     </EmailLayout>
   );

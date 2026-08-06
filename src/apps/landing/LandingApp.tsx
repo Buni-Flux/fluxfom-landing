@@ -7,7 +7,9 @@ import About from "@/pages/About";
 import Terms from "@/pages/Terms";
 import StartYourBrand from "@/pages/StartYourBrand";
 import ClientProfile from "@/pages/ClientProfile";
+import ProfileStatus from "@/pages/ProfileStatus";
 import ResetPassword from "@/pages/ResetPassword";
+import VerifyEmail from "@/pages/VerifyEmail";
 import { LandingLayout } from "./LandingLayout";
 import { LandingNotFound } from "./LandingNotFound";
 
@@ -24,7 +26,9 @@ const LandingApp = () => (
           <Route path="/terms" element={<Terms />} />
           <Route path="/start" element={<StartYourBrand />} />
           <Route path="/work/:token" element={<Navigate to="/projects" replace />} />
+          <Route path="/profile-status/:userId" element={<ProfileStatus />} />
           <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="/verify-email" element={<VerifyEmail />} />
           <Route path="/fom-core/*" element={<Navigate to="/" replace />} />
           <Route path="/flux-core/*" element={<Navigate to="/" replace />} />
           <Route path="*" element={<LandingNotFound />} />

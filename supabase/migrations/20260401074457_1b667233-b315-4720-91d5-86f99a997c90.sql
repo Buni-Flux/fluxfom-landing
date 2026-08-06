@@ -1,0 +1,1 @@
+ALTER TABLE public.cms_works ADD COLUMN project_id uuid REFERENCES public.cms_projects(id) ON DELETE SET NULL;

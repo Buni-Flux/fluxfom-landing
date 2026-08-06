@@ -5,8 +5,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { FluxLogo } from "@/components/marketing/FluxLogo";
 
 const navLinks = [
-  { label: "What is FluxFom", to: "/about", hash: "#what-is-fluxfom" },
-  { label: "What to expect", to: "/how-it-works", hash: "#what-to-expect" },
+  { label: "Portfolio", to: "/portfolio", hash: "#what-is-fluxfom" },
+  { label: "Abou Us", to: "/about", hash: "#what-to-expect" },
   { label: "Get in touch", to: "/start", hash: "#contact" },
 ];
 
