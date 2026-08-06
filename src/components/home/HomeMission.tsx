@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ChevronRight } from "lucide-react";
 import { fadeInView } from "./homeMotion";
-import { NeonPlayFrame } from "@/components/marketing/NeonPlayFrame";
+import { NeonPlayFrameStatic } from "@/components/marketing/NeonPlayFrameStatic";
 
 export function HomeMission() {
   return (
@@ -43,7 +43,7 @@ export function HomeMission() {
           </motion.p>
 
           <motion.div variants={fadeInView} className="mt-16 md:mt-20">
-            <NeonPlayFrame size="lg" className="mx-auto max-w-4xl animate-neon-pulse" />
+            <NeonPlayFrameStatic size="lg" className="mx-auto max-w-4xl animate-neon-pulse" />
           </motion.div>
         </motion.div>
       </div>

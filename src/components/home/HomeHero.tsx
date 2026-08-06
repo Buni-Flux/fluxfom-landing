@@ -8,46 +8,55 @@ import { useState } from "react";
 const SERVICES = [
   {
     id: 1,
-    name:"Marketing Campaigns",
+    name: "Marketing Campaigns",
     src: "/assets/images/hero-bg-face.png",
+    projectUrl: "https://aeiwxzdygbrvmfeurref.supabase.co/rest/v1/cms_projects?select=*&id=eq.ceb2cd5d-f030-44af-818f-55f58df26afa&published=eq.true",
   },
   {
     id: 2,
-    name:"Brand Positioning",
+    name: "Brand Positioning",
     src: "/assets/images/hero-bg-face.png",
+    projectUrl: undefined,
   },
   {
     id: 3,
-    name:"Digital Products",
+    name: "Digital Products",
     src: "/assets/images/hero-bg-face.png",
+    projectUrl: undefined,
   },
   {
     id: 4,
-    name:"User Generated Content",
+    name: "User Generated Content",
     src: "/assets/images/hero-bg-face.png",
+    projectUrl: undefined,
   },
   {
     id: 5,
-    name:"Marketing Results",
+    name: "Marketing Results",
     src: "/assets/images/hero-bg-face.png",
+    projectUrl: "https://aeiwxzdygbrvmfeurref.supabase.co/rest/v1/cms_projects?select=*&id=eq.46459dc1-5292-478c-93bf-c3266389615c&published=eq.true",
   },
   {
     id: 6,
-    name:"Brand ID's",
+    name: "Brand ID's",
     src: "/assets/images/hero-bg-face.png",
+    projectUrl: undefined,
   },
   {
     id: 7,
     name: "Music Videos",
-    src:"/assets/images/hero-bg-face.png",
-  }
+    src: "/assets/images/hero-bg-face.png",
+    projectUrl: undefined,
+  },
 ];
 
 export function HomeHero() {
 const [isVideoVisible, setIsVideoVisible] = useState(false);
-//what the player will play in usestate
-//fuction to handle click video switching
+const [activeProjectUrl, setActiveProjectUrl] = useState<string | undefined>(undefined);
+
 function handleVideoClick(id: number) {
+  const selectedService = SERVICES.find((service) => service.id === id);
+  setActiveProjectUrl(selectedService?.projectUrl);
   setIsVideoVisible(true);
 }
 
@@ -147,7 +156,12 @@ function handleVideoClick(id: number) {
           {/* video */}
           {isVideoVisible &&
            <div className="fixed bottom-6 right-6 z-50 w-full max-w-[320px] shadow-2xl transition-all duration-300">
-            <NeonPlayFrame visible={false} size="lg" />
+            <NeonPlayFrame
+              visible={true}
+              size="lg"
+              onClose={() => setIsVideoVisible(false)}
+              projectUrl={activeProjectUrl}
+            />
           </div>
           }
         </motion.div>
