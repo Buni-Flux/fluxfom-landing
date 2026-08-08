@@ -397,7 +397,8 @@
 
   .btn-neon-outline {
     @apply inline-flex items-center justify-center rounded-full border border-flux-neon px-7 py-3 text-sm font-semibold text-white transition;
-    background: rgba(5, 16, 5, 0.72);
+    background: rgba(240, 243, 240, 0.72);
+    color: #000000;
   }
 
   .btn-neon-outline:hover {

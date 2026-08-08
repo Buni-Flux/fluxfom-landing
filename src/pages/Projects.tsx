@@ -4,9 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { ArrowUpRight, Image as ImageIcon } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { ProjectGridPreview } from "@/components/ProjectGridPreview";
-import { MarketingStoryImage } from "@/components/marketing/MarketingStoryImage";
-import { ScrollNudge } from "@/components/marketing/ScrollNudge";
-import { PAGE_CREATIVE_WORKSPACE, PAGE_CREATIVE_WORKSPACE_ALT } from "@/lib/marketingImagery";
 import { clientCardSubtitle } from "@/lib/clientProfile";
 import type { ClientWorkRow } from "@/types/clientProfile";
 
@@ -46,6 +43,14 @@ const fallbackClients: ClientWorkRow[] = [
 ];
 
 const heights = ["h-[28rem]", "h-80", "h-96", "h-72", "h-[30rem]", "h-80"];
+const projectCardBackgrounds = [
+  "bg-[#ffe8d2]",
+  "bg-[#e9dbff]",
+  "bg-[#fbffcd]",
+  "bg-[#d9efff]",
+  "bg-[#ffd7ff]",
+  "bg-[#d3f9d8]",
+];
 
 const stripHtml = (value: string | null) =>
   (value ?? "")
@@ -78,50 +83,56 @@ const Projects = () => {
   }, []);
 
   return (
-    <div className="min-h-full bg-flux-void text-white">
-      <section className="landing-page-shell relative overflow-hidden border-b border-white/10 pb-14 pt-12 md:pb-20 md:pt-16">
-        <div className="absolute -right-32 top-10 h-80 w-80 rounded-full bg-flux-neon/10 blur-3xl" aria-hidden />
-        <div className="container relative mx-auto max-w-6xl px-5 sm:px-6">
-          <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-12">
+    <div className="min-h-full bg-white text-flux-void">
+      <section className="relative overflow-hidden border-b border-flux-sand/70 bg-white pb-14 pt-12 md:pb-20 md:pt-16">
+        <div className="mx-auto max-w-[1400px] px-5 sm:px-6 lg:px-8">
+          <div className="grid gap-12 xl:grid-cols-[minmax(0,0.58fr)_minmax(0,0.42fr)] xl:items-start">
             <motion.div
-              className="lg:col-span-6"
+              className="space-y-8"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.55 }}
             >
-              <p className="landing-page-kicker">Client work</p>
-              <h1 className="heading-editorial mt-4 text-5xl font-semibold leading-[1.02] text-white sm:text-6xl md:text-7xl">
-                Brands we have built end to end.
-              </h1>
-              <p className="landing-page-copy mt-6 max-w-xl">
-                Each client opens a single profile — brand brief through launch templates — organized like a living brand
-                book.
-              </p>
+              <div className="max-w-3xl">
+                <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-flux-clay">/Portfolio/</p>
+                <h1 className="mt-4 text-[clamp(3rem,5vw,5.25rem)] font-monument font-black leading-[0.92] tracking-tight text-flux-void">
+                  Work that connects strategy to launch.
+                </h1>
+                <p className="mt-6 max-w-xl text-base leading-relaxed text-flux-editorial/90 md:text-lg">
+                  Explore a collection of brand systems, launch experiences, and growth narratives shaped for ambitious teams.
+                </p>
+              </div>
             </motion.div>
+
             <motion.div
-              className="lg:col-span-6"
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.55, delay: 0.06 }}
             >
-              <MarketingStoryImage
-                src={PAGE_CREATIVE_WORKSPACE}
-                alt={PAGE_CREATIVE_WORKSPACE_ALT}
-                aspectClassName="aspect-[16/10] max-lg:aspect-[16/11]"
-                treatment="portrait"
-              />
+              <div className="rounded-[2rem] border border-flux-sand/70 bg-flux-ivory/90 p-10 shadow-[0_30px_80px_-50px_rgba(15,23,16,0.18)]">
+                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-flux-editorial/70">/Featured case study/</p>
+                <h2 className="mt-6 text-2xl font-semibold leading-tight text-flux-void">
+                  Finova Banking Platform
+                </h2>
+                <p className="mt-4 text-sm leading-relaxed text-flux-editorial/90">
+                  A modern fintech platform designed to simplify digital banking with intuitive user experiences.
+                </p>
+                <div className="mt-8 inline-flex items-center gap-3 rounded-full border border-flux-green/20 bg-white/70 px-4 py-2 text-sm font-semibold text-flux-green">
+                  <span className="h-2.5 w-2.5 rounded-full bg-flux-green" />
+                  Brand strategy · Identity · Launch system
+                </div>
+              </div>
             </motion.div>
           </div>
-          <ScrollNudge targetId="clients-index" tone="dark" />
         </div>
       </section>
 
-      <section id="clients-index" className="bg-flux-void py-16 md:py-24">
-        <div className="container mx-auto max-w-6xl px-5 sm:px-6">
+      <section id="clients-index" className="bg-white py-16 md:py-24">
+        <div className="mx-auto max-w-[1400px] px-5 sm:px-6 lg:px-8">
           {loading ? (
-            <div className="py-16 text-center text-sm font-medium text-white/70">Loading clients...</div>
+            <div className="py-16 text-center text-sm font-medium text-flux-editorial/70">Loading clients...</div>
           ) : (
-            <div className="columns-1 gap-5 sm:columns-2 lg:columns-3">
+            <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
               <AnimatePresence mode="popLayout">
                 {clients.map((client, i) => {
                   const h = heights[i % heights.length];
@@ -150,11 +161,11 @@ const Projects = () => {
                       }}
                       role={isDemo ? undefined : "button"}
                       tabIndex={isDemo ? undefined : 0}
-                      className={`group relative mb-5 overflow-hidden rounded-[1.45rem] border border-white/10 bg-white/[0.04] break-inside-avoid outline-none ring-flux-neon/40 transition duration-300 hover:-translate-y-1 hover:border-flux-neon/35 hover:bg-white/[0.06] hover:shadow-[0_24px_70px_-48px_rgba(0,0,0,0.75)] focus-visible:ring-2 ${
+                      className={`${projectCardBackgrounds[i % projectCardBackgrounds.length]} group relative flex flex-col overflow-hidden rounded-[2rem] border border-flux-sand/70 outline-none shadow-[0_25px_65px_-35px_rgba(15,23,16,0.25)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_35px_95px_-45px_rgba(15,23,16,0.28)] focus-visible:ring-2 focus-visible:ring-flux-green/20 ${
                         isDemo ? "opacity-80" : "cursor-pointer"
                       }`}
                     >
-                      <div className="relative overflow-hidden">
+                      <div className="relative overflow-hidden rounded-t-[2rem]">
                         {hasCardMedia ? (
                           <ProjectGridPreview
                             title={client.title}
@@ -163,35 +174,35 @@ const Projects = () => {
                             frameClassName={h}
                           />
                         ) : (
-                          <div className={`flex w-full items-center justify-center bg-white/[0.06] ${h}`}>
-                            <ImageIcon className="h-9 w-9 text-white/50" strokeWidth={1} aria-hidden />
+                          <div className={`flex w-full items-center justify-center bg-white/[0.55] ${h}`}>
+                            <ImageIcon className="h-9 w-9 text-flux-editorial/45" strokeWidth={1} aria-hidden />
                           </div>
                         )}
-                        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-flux-forest/70 via-transparent to-transparent" />
-                        <div className="absolute left-4 top-4 rounded-full border border-white/30 bg-black/30 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.22em] text-flux-neon backdrop-blur">
+                        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent" />
+                        <div className="absolute left-4 top-4 rounded-full border border-flux-void/10 bg-white/80 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.22em] text-flux-editorial/80 backdrop-blur">
                           Client profile
                         </div>
                       </div>
-                      <div className="p-6">
+                      <div className="flex flex-1 flex-col p-6">
                         <div className="flex items-start justify-between gap-4">
                           <div>
-                            <h2 className="heading-editorial text-2xl font-semibold leading-tight text-white">
+                            <h2 className="text-2xl font-semibold leading-tight text-flux-void">
                               {client.title}
                             </h2>
-                            <p className="mt-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-flux-neon/90">
+                            <p className="mt-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-flux-editorial/65">
                               {subtitle}
                             </p>
                           </div>
                           {!isDemo ? (
-                            <span className="mt-1 rounded-full border border-white/10 bg-white/[0.06] p-2 text-flux-neon transition group-hover:bg-flux-neon/10 group-hover:text-flux-neon">
+                            <span className="mt-1 rounded-full border border-flux-void/10 bg-white/70 p-2 text-flux-void transition group-hover:bg-white/90">
                               <ArrowUpRight className="h-4 w-4" aria-hidden />
                             </span>
                           ) : null}
                         </div>
-                        <p className="mt-4 line-clamp-3 text-sm leading-relaxed text-white/70">
+                        <p className="mt-4 line-clamp-3 text-sm leading-relaxed text-flux-editorial/85">
                           {summary || "Open the full brand book — brief, strategy, creative direction, identity, and launch templates."}
                         </p>
-                        <p className="mt-4 text-[10px] font-bold uppercase tracking-[0.2em] text-white/40">
+                        <p className="mt-6 text-[10px] font-bold uppercase tracking-[0.2em] text-flux-editorial/50">
                           7 sections · Brand brief to launch
                         </p>
                       </div>

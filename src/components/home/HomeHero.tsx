@@ -1,6 +1,16 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { Sparkles, Zap, Globe2, Layers, Package, Star } from "lucide-react";
 import { fadeInView } from "./homeMotion";
+
+const COMPANY_LOGOS = [
+  { name: "Lumina", icon: Sparkles },
+  { name: "Vortex", icon: Zap },
+  { name: "Velocity", icon: Globe2 },
+  { name: "Synergy", icon: Layers },
+  { name: "Enigma", icon: Package },
+  { name: "Spectrum", icon: Star },
+];
 
 export function HomeHero() {
   return (
@@ -51,7 +61,7 @@ export function HomeHero() {
         </div>
 
         <div className="mt-14">
-          <div className="relative overflow-hidden rounded-[2rem] border border-flux-sand bg-flux-sand/10 shadow-[0_40px_120px_-55px_rgba(5,16,5,0.18)]">
+          <div className="relative border-t border-flux-sand/50 overflow-hidden rounded-[2rem] border border-flux-sand bg-flux-sand/10 shadow-[0_40px_120px_-55px_rgba(5,16,5,0.18)]">
             <img
               src="/assets/images/hero-bg.png"
               alt="Creative team collaborating on a laptop"
@@ -68,17 +78,33 @@ export function HomeHero() {
             />
           </div>
 
-          <div className="mt-8 flex flex-col items-center justify-between gap-3 border-t border-flux-sand/50 pt-8 text-center text-sm text-flux-editorial/70 sm:flex-row sm:text-left">
-            <p className="font-semibold uppercase tracking-[0.24em] text-flux-editorial/85">
-              Companies we've helped
-            </p>
-            <div className="flex flex-wrap items-center justify-center gap-5 text-xs uppercase tracking-[0.24em] text-flux-editorial/70 sm:justify-end">
-              <span>Lumina</span>
-              <span>Vortex</span>
-              <span>Velocity</span>
-              <span>Synergy</span>
-              <span>Enigma</span>
-              <span>Spectrum</span>
+          <div className="my-4 space-y-4 border-t border-b border-flux-sand/50 py-4 text-sm text-flux-editorial/70">
+            <div className="flex flex-col gap-3 mb-6 items-start justify-between">
+              <p className="font-semibold uppercase tracking-[0.24em] text-flux-editorial/85">
+                Companies we've worked with
+              </p>
+              <p className="max-w-xl text-xs uppercase text-flux-editorial/60 sm:text-right">
+                Trusted partnerships with brand-led teams and fast-moving startups.
+              </p>
+            </div>
+
+            <div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-6">
+              {COMPANY_LOGOS.map((company) => {
+                const Icon = company.icon;
+                return (
+                  <div
+                    key={company.name}
+                    className="flex items-center gap-3 text-sm"
+                  >
+                    <div className="flex h-11 w-11 items-center justify-center text-flux-editorial/80">
+                      <Icon className="h-5 w-5" aria-hidden />
+                    </div>
+                    <div>
+                      <p className="font-semibold uppercase tracking-[0.18em] text-flux-editorial/90">{company.name}</p>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
