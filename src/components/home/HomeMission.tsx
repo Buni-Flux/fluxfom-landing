@@ -87,16 +87,18 @@ export function HomeMission() {
                   <motion.div
                     key={card.id}
                     variants={fadeItem}
-                    className={`${card.bg} group relative flex-shrink-0 overflow-hidden rounded-[2rem] p-8 shadow-[0_20px_50px_-30px_rgba(15,24,29,0.20)] min-w-[280px] sm:min-w-[320px] lg:min-w-[340px] min-h-[360px]`}
+                    className={`${card.bg} group relative flex flex-col justify-between overflow-hidden rounded-[2rem] p-8 shadow-[0_20px_50px_-30px_rgba(15,24,29,0.20)] min-w-[280px] sm:min-w-[320px] lg:min-w-[340px] min-h-[360px]`}
                   >
                     <span className="text-xs font-semibold uppercase tracking-[0.28em] text-flux-editorial/60">
                       {card.label}
                     </span>
-                    <h3 className="mt-8 whitespace-pre-line text-xl font-semibold leading-tight text-flux-void">
+                    <div className="flex flex-row items-center justify-between">
+                    <h3 className="mt-8 whitespace-pre-line text-xl font-semibold leading-tight text-flux-void w-11/12">
                       {card.title}
                     </h3>
-                    <div className="absolute right-6 bottom-6 flex h-12 w-12 items-center justify-center rounded-full bg-flux-void text-white transition group-hover:scale-105">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-flux-void text-white transition group-hover:scale-105">
                       <ChevronRight size={18} strokeWidth={3} aria-hidden />
+                    </div>
                     </div>
                   </motion.div>
                 ))}
