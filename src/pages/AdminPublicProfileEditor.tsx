@@ -6,6 +6,7 @@ export default function AdminPublicProfileEditor() {
   const navigate = useNavigate();
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [renderSidebar, setRenderSidebar] = useState(true);
+  const [shotTitle, setShotTitle] = useState("");
   const previewSrc = (location.state as any)?.previewSrc as string | null;
 
   useEffect(() => {
@@ -27,7 +28,7 @@ export default function AdminPublicProfileEditor() {
 
   return (
     <div className="min-h-screen bg-[#f8fafc] text-[#111827]">
-      <div className="mx-auto max-w-[1480px] px-4 py-6 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-[1280px] px-4 py-8 sm:px-6 lg:px-8">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
           <button
             onClick={handleClose}
@@ -46,14 +47,20 @@ export default function AdminPublicProfileEditor() {
           </div>
         </div>
 
-        <div className="mt-10 grid">
+        <div className="mt-14 grid">
           <main className="space-y-6">
             <div className="rounded-[1.75rem] border border-[#e5e7ef] bg-white px-6 py-6 shadow-sm sm:px-8 sm:py-8">
               <div className="max-w-2xl">
-                <p className="text-xs font-semibold uppercase tracking-[0.32em] text-[#6b7280]">Shot title</p>
-                <h1 className="mt-4 text-3xl font-semibold leading-tight text-[#111827] sm:text-4xl">
-                  Start by giving this shot a name
-                </h1>
+                <label htmlFor="shot-title" className="text-xs font-semibold uppercase tracking-[0.32em] text-[#6b7280]">
+                  Shot title
+                </label>
+                <input
+                  id="shot-title"
+                  value={shotTitle}
+                  onChange={(event) => setShotTitle(event.target.value)}
+                  placeholder="Start by giving this shot a name"
+                  className="mt-4 w-full border-0 bg-transparent text-3xl font-semibold leading-tight text-[#111827] outline-none placeholder:text-[#9ca3af] sm:text-4xl"
+                />
               </div>
 
               <div className="mt-8 overflow-hidden rounded-[2rem] border border-[#e5e7ef] bg-[#f8fafc] shadow-sm">
@@ -77,15 +84,6 @@ export default function AdminPublicProfileEditor() {
               </div>
             </div>
 
-            <div className="rounded-[1.75rem] border border-[#e5e7ef] bg-white p-6 shadow-sm">
-              <label className="mb-3 block text-xs font-semibold uppercase tracking-[0.24em] text-[#6b7280]">
-                Shot title
-              </label>
-              <input
-                placeholder="Give me a name"
-                className="w-full rounded-[2rem] border border-[#e5e7ef] bg-[#f8fafc] px-5 py-4 text-sm text-[#111827] outline-none transition focus:border-[#111827] focus:bg-white"
-              />
-            </div>
           </main>
         </div>
 
