@@ -96,7 +96,7 @@ const Projects = () => {
               <div className="max-w-3xl">
                 <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-flux-clay">/Portfolio/</p>
                 <h1 className="mt-4 text-[clamp(3rem,5vw,5.25rem)] font-monument font-black leading-[0.92] tracking-tight text-flux-void">
-                  Work that connects strategy to launch.
+                  Marketing that connects strategy to launch.
                 </h1>
                 <p className="mt-6 max-w-xl text-base leading-relaxed text-flux-editorial/90 md:text-lg">
                   Explore a collection of brand systems, launch experiences, and growth narratives shaped for ambitious teams.
@@ -104,7 +104,7 @@ const Projects = () => {
               </div>
             </motion.div>
 
-            <motion.div
+            {/* <motion.div
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.55, delay: 0.06 }}
@@ -122,7 +122,7 @@ const Projects = () => {
                   Brand strategy · Identity · Launch system
                 </div>
               </div>
-            </motion.div>
+            </motion.div> */}
           </div>
         </div>
       </section>

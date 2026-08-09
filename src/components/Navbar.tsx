@@ -6,7 +6,7 @@ import { FluxLogo } from "@/components/marketing/FluxLogo";
 
 const navLinks = [
   { label: "Portfolio", to: "/projects", hash: "#clients-index" },
-  { label: "Abou Us", to: "/about", hash: "#what-to-expect" },
+  { label: "About Us", to: "/about", hash: "#what-to-expect" },
   { label: "Get in touch", to: "/start", hash: "#contact" },
 ];
 
