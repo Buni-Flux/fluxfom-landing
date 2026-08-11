@@ -41,7 +41,7 @@ const Services = () => {
             </div>
           </div>
 
-          <div className="rounded-[2rem] border border-flux-sand/70 bg-flux-ivory/90 p-10 shadow-[0_30px_80px_-50px_rgba(15,23,16,0.18)]">
+          <div className="space-y-6">
             <p className="text-xs font-semibold uppercase tracking-[0.24em] text-flux-editorial/70">/Start from chat/</p>
             <p className="mt-6 text-sm leading-relaxed text-flux-editorial/90">
               Don't know where to specifically start? Let our AI assistanth help keep the full marketing journey connected so your next move is decisive and memorable.
