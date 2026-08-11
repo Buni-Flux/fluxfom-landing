@@ -1,30 +1,30 @@
 export const SERVICES = [
   {
-    title: "End-to-End Marketing Management",
-    description: "Strategy, production, launch, campaign management, and growth follow-through under one Flux profile.",
+    title: "Create",
+    description: "Socials · Posters · Campaigns · Design.",
   },
   {
-    title: "Brand Identity & Positioning",
-    description: "Naming, narrative, visual identity, differentiation, proof, and the story your market should remember.",
+    title: "Produce",
+    description: "Reels · Commercials · Events · Motion.",
   },
   {
-    title: "Creative Direction & Production",
-    description: "Visual worlds, content systems, shoots, design direction, and campaign-ready creative output.",
+    title: "Go Digital",
+    description: "Websites · E-commerce · UI/UX · Products.",
   },
   {
-    title: "Motion & Digital Assets",
-    description: "Motion graphics, social content, web assets, launch visuals, product explainers, and digital collateral.",
+    title: "Build a Brand",
+    description: "Identity · Positioning · Strategy · Rebranding",
   },
   {
-    title: "Campaign Strategy & Execution",
-    description: "Launch architecture, messaging arcs, media/channel logic, rollout calendars, and campaign management.",
+    title: "Get Noticed",
+    description: "Marketing · Campaigns · Content · Advertising",
   },
   {
-    title: "Market Penetration",
-    description: "Audience entry, offer positioning, activation ideas, customer journeys, and repeatable market traction.",
+    title: "Figure Out Your Next Move",
+    description: "Research · Intelligence · Strategy · Growth.",
   },
   {
-    title: "Branding & Physical Touchpoints",
-    description: "Print, packaging, merch, signage, and collateral as supporting touchpoints inside the marketing system.",
+    title: "Build Something Bigger",
+    description: "Launches · Transformations · Custom Projects.",
   },
 ] as const;
