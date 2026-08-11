@@ -15,7 +15,7 @@ const Navbar = () => {
   const [open, setOpen] = useState(false);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 border-b border-white/[0.06] bg-flux-void/90 backdrop-blur-xl">
+    <nav className="fixed top-0 left-0 right-0 z-[1100] border-b border-white/[0.06] bg-flux-void/90 backdrop-blur-xl">
       <div className="mx-auto flex h-[72px] max-w-[1400px] items-center justify-between px-5 sm:px-8 lg:px-12">
         <FluxLogo />
 

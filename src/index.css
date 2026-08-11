@@ -426,6 +426,33 @@
   .landing-section {
     @apply scroll-mt-24 px-5 py-24 sm:px-6 md:py-32 lg:py-36;
   }
+
+  .service-carousel {
+    overflow: hidden;
+    position: relative;
+  }
+
+  .service-carousel-track {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+    min-width: max-content;
+    animation: service-scroll 32s linear infinite;
+    will-change: transform;
+  }
+
+  .service-carousel:hover .service-carousel-track {
+    animation-play-state: paused;
+  }
+
+  @keyframes service-scroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
 }
 
 /* TipTap Editor */
