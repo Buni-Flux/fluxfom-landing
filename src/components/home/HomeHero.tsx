@@ -58,8 +58,8 @@ export function HomeHero() {
               <Link to="/start" className="btn-neon-solid px-9 py-4 text-base">
               Start a project →
               </Link>
-              <Link to="/how-it-works" className="btn-neon-outline px-9 py-4 text-base">
-                Find Out More
+              <Link to="/contact" className="btn-neon-outline px-9 py-4 text-base">
+                Contact Sales
               </Link>
             </div>
           </motion.div>
