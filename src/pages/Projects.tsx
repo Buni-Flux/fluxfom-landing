@@ -94,7 +94,6 @@ const Projects = () => {
               transition={{ duration: 0.55 }}
             >
               <div className="max-w-3xl">
-                <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-flux-clay">/Portfolio/</p>
                 <h1 className="mt-4 text-[clamp(3rem,5vw,5.25rem)] font-monument font-black leading-[0.92] tracking-tight text-flux-void">
                   Marketing that connects strategy to launch.
                 </h1>
