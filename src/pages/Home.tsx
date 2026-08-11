@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { HomeHero } from "../components/home/HomeHero";
-import { HomeMission } from "../components/home/HomeMission";
+import { HomeMission } from "../components/home/HomeService";
 import { HomeProcess } from "../components/home/HomeProcess";
 import { HomeFinalCta } from "../components/home/HomeFinalCta";
 
