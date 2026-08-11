@@ -1,6 +1,7 @@
 ﻿import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { AppProviders } from "@/apps/shared/AppProviders";
 import Home from "@/pages/Home";
+import Services from "@/pages/Services";
 import HowItWorks from "@/pages/HowItWorks";
 import Projects from "@/pages/Projects";
 import About from "@/pages/About";
@@ -23,6 +24,7 @@ const LandingApp = () => (
       <LandingLayout>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/services" element={<Services />} />
           <Route path="/how-it-works" element={<HowItWorks />} />
           <Route path="/projects" element={<Projects />} />
           <Route path="/projects/:id" element={<ClientProfile />} />

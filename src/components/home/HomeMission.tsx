@@ -51,9 +51,8 @@ export function HomeMission() {
               <h3
                 id="mission-heading"
                 className="text-[clamp(2rem,3vw,3.5rem)] font-monument font-black leading-[0.92] tracking-tight text-flux-void"
-              >
-                Understand where <br />
-                <span className="text-flux-accent">your brand should be, <br/> we help you get there.</span>
+              >You have a brand,<br />
+              <span className="text-flux-accent">now know what to do with it next.</span>
               </h3>
             </motion.div>
 
@@ -64,7 +63,7 @@ export function HomeMission() {
             transition={{ duration: 0.7, delay: 0.2 }}
           >
               <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.32em] text-flux-editorial/70">/About us/</p>
+                {/* <p className="text-xs font-semibold uppercase tracking-[0.32em] text-flux-editorial/70">/About us/</p> */}
                 <div className="mt-6 h-[1px] w-14 rounded-full bg-flux-editorial/20" />
                 <p className="mt-6 text-sm leading-relaxed text-flux-editorial/90 md:text-base">
                   From branding to digital strategy, we help creators, startups and businesses alike to stand out in their niche competitive markets.
