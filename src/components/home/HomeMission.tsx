@@ -86,7 +86,7 @@ export function HomeMission() {
                   <motion.div
                     key={card.id}
                     variants={fadeItem}
-                    className={`${card.bg} group relative flex flex-col justify-between overflow-hidden rounded-[2rem] p-8 shadow-[0_20px_50px_-30px_rgba(15,24,29,0.20)] min-w-[280px] sm:min-w-[320px] lg:min-w-[340px] min-h-[360px]`}
+                    className={`${card.bg} cursor-crosshair group relative flex flex-col justify-between overflow-hidden rounded-[2rem] p-8 shadow-[0_20px_50px_-30px_rgba(15,24,29,0.20)] min-w-[280px] sm:min-w-[320px] lg:min-w-[340px] min-h-[360px]`}
                   >
                     <span className="text-xs font-semibold uppercase tracking-[0.28em] text-flux-editorial/60">
                       {card.label}

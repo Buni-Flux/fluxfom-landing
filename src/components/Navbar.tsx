@@ -5,9 +5,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import { FluxLogo } from "@/components/marketing/FluxLogo";
 
 const navLinks = [
+  { label: "Services", to: "/services", hash: "#service-offerings" },
+  // { label: "About Us", to: "/about", hash: "#what-to-expect" },
   { label: "Portfolio", to: "/projects", hash: "#clients-index" },
-  { label: "About Us", to: "/about", hash: "#what-to-expect" },
-  { label: "Get in touch", to: "/start", hash: "#contact" },
+  { label: "Get in touch", to: "/contact", hash: "#contact" },
 ];
 
 const Navbar = () => {
