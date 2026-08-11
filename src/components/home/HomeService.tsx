@@ -7,33 +7,27 @@ const SERVICE_CARDS = [
   {
     id: 1,
     label: "(01)",
-    title: "Brand Identity\nSourcing.",
+    title: "Social & \nContent Strategy.",
     bg: "bg-[#ffe8d2]",
   },
   {
     id: 2,
     label: "(02)",
-    title: "UI/UX Design Audits\nOptimization.",
+    title: "Web & Digital",
     bg: "bg-[#e9dbff]",
   },
   {
     id: 3,
     label: "(03)",
-    title: "Web Development\nSolutions.",
+    title: "Video, Animation\n& Motion Design.",
     bg: "bg-[#fbffcd]",
   },
   {
     id: 4,
     label: "(04)",
-    title: "Campaign Launch\nStrategy.",
+    title: "Brand Marketing\n& Growth.",
     bg: "bg-[#d9efff]",
-  },
-  {
-    id: 5,
-    label: "(05)",
-    title: "Campaign Launch\nStrategy.",
-    bg: "bg-[#d9efff]",
-  },
+  }
 ];
 
 export function HomeMission() {
@@ -51,9 +45,7 @@ export function HomeMission() {
               <h3
                 id="mission-heading"
                 className="text-[clamp(2rem,3vw,3.5rem)] font-monument font-black leading-[0.92] tracking-tight text-flux-void"
-              >You have a brand,<br />
-              <span className="text-flux-accent">now know what to do with it next.</span>
-              </h3>
+              >What would you like to create with us today?</h3>
             </motion.div>
 
             <motion.div

@@ -51,7 +51,7 @@ export function HomeHero() {
             <motion.p
               variants={fadeInView}
               className="max-w-xl text-base leading-relaxed text-flux-editorial/90 md:text-lg"
-            >Whatever you're building, FluxFom helps turn the idea into something people can see, feel and remember.
+            >Every brand needs a growth partner, that's why we helps turn ideas into something people can see, feel and remember long after their purchase.
             </motion.p>
 
             <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-end">

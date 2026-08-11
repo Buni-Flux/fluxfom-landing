@@ -95,10 +95,10 @@ const Projects = () => {
             >
               <div className="max-w-3xl">
                 <h1 className="mt-4 text-[clamp(3rem,5vw,5.25rem)] font-monument font-black leading-[0.92] tracking-tight text-flux-void">
-                  Marketing that connects strategy to launch.
+                  Markets we have helped shape.
                 </h1>
                 <p className="mt-6 max-w-xl text-base leading-relaxed text-flux-editorial/90 md:text-lg">
-                  Explore a collection of brand systems, launch experiences, and growth narratives shaped for ambitious teams.
+                  Here are all potential growth areas we have helped various brands discover and explore in the making.
                 </p>
               </div>
             </motion.div>
