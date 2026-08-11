@@ -5,8 +5,8 @@ import { SectionDivider } from "@/components/marketing/SectionDivider";
 
 export function HomeFinalCta() {
   return (
-    <section id="contact" aria-labelledby="final-cta-heading" className="landing-section bg-flux-void">
-      <div className="mx-auto max-w-[1400px]">
+    <section id="contact" data-gsap-section aria-labelledby="final-cta-heading" className="landing-section bg-flux-void">
+      <div className="gsap-section-inner mx-auto max-w-[1400px]">
         <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
           <motion.div
             initial="hidden"

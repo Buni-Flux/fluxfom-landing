@@ -32,8 +32,8 @@ const SERVICE_CARDS = [
 
 export function HomeMission() {
   return (
-    <section id="what-is-fluxfom" aria-labelledby="mission-heading" className="landing-section bg-white text-flux-void">
-      <div className="mx-auto max-w-[1400px] px-0 sm:px-4">
+    <section id="what-is-fluxfom" data-gsap-section aria-labelledby="mission-heading" className="landing-section bg-white text-flux-void">
+      <div className="gsap-section-inner mx-auto max-w-[1400px] px-0 sm:px-4">
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -72,11 +72,11 @@ export function HomeMission() {
           </div>
 
           <motion.div variants={fadeInView} className="mt-14">
-            <div className="overflow-x-auto pb-6 pr-4 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
-              <div className="flex min-w-max gap-6">
-                {SERVICE_CARDS.map((card) => (
+            <div className="service-carousel mt-6 rounded-[2rem] bg-white/0">
+              <div className="service-carousel-track flex gap-6 py-6 px-4">
+                {[...SERVICE_CARDS, ...SERVICE_CARDS].map((card, idx) => (
                   <motion.div
-                    key={card.id}
+                    key={`${card.id}-${idx}`}
                     variants={fadeItem}
                     className={`${card.bg} cursor-crosshair group relative flex flex-col justify-between overflow-hidden rounded-[2rem] p-8 shadow-[0_20px_50px_-30px_rgba(15,24,29,0.20)] min-w-[280px] sm:min-w-[320px] lg:min-w-[340px] min-h-[360px]`}
                   >
@@ -84,12 +84,12 @@ export function HomeMission() {
                       {card.label}
                     </span>
                     <div className="flex flex-row items-center justify-between">
-                    <h3 className="mt-8 whitespace-pre-line text-xl font-semibold leading-tight text-flux-void w-11/12">
-                      {card.title}
-                    </h3>
-                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-flux-void text-white transition group-hover:scale-105">
-                      <ChevronRight size={18} strokeWidth={3} aria-hidden />
-                    </div>
+                      <h3 className="mt-8 whitespace-pre-line text-xl font-semibold leading-tight text-flux-void w-11/12">
+                        {card.title}
+                      </h3>
+                      <div className="flex h-12 w-12 items-center justify-center rounded-full bg-flux-void text-white transition group-hover:scale-105">
+                        <ChevronRight size={18} strokeWidth={3} aria-hidden />
+                      </div>
                     </div>
                   </motion.div>
                 ))}

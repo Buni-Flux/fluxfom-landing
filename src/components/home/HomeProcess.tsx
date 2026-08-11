@@ -22,8 +22,8 @@ const STEPS = [
 
 export function HomeProcess() {
   return (
-    <section id="what-to-expect" aria-labelledby="process-heading" className="landing-section bg-flux-neon text-flux-void">
-      <div className="mx-auto max-w-[1400px]">
+    <section id="what-to-expect" data-gsap-section aria-labelledby="process-heading" className="landing-section bg-flux-neon text-flux-void">
+      <div className="gsap-section-inner mx-auto max-w-[1400px]">
         <motion.div
           initial="hidden"
           whileInView="visible"

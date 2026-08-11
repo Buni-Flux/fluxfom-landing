@@ -14,8 +14,8 @@ const COMPANY_LOGOS = [
 
 export function HomeHero() {
   return (
-    <section id="hero" aria-labelledby="home-hero-heading" className="bg-[#C9FF6B] text-flux-void">
-      <div className="mx-auto max-w-[1400px] px-5 py-16 sm:px-8 lg:px-12 lg:py-24">
+    <section id="hero" data-gsap-section aria-labelledby="home-hero-heading" className="bg-[#C9FF6B] text-flux-void">
+      <div className="gsap-section-inner mx-auto max-w-[1400px] px-5 py-16 sm:px-8 lg:px-12 lg:py-24">
         <div className="grid gap-10 items-top lg:grid-cols-[minmax(0,0.6fr)_minmax(0,0.4fr)]">
           <motion.div
             className="lg:pr-8"
@@ -43,11 +43,7 @@ export function HomeHero() {
             transition={{ duration: 0.7, delay: 0.2 }}
           >
             <span className="text-sm font-bold w-full uppercase tracking-[0.24em] text-flux-editorial/70">Design | Video | Websites | Marketing</span>
-            
-            {/* <svg width="500" className="my-6" height="11" viewBox="0 0 636 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M10.6658 5.33398C10.6658 2.38847 8.27802 0.000650883 5.33252 0.000650883C2.38702 0.000650883 -0.000793457 2.38847 -0.000793457 5.33398C-0.000793457 8.2795 2.38702 10.6673 5.33252 10.6673C8.27802 10.6673 10.6658 8.2795 10.6658 5.33398ZM710.344 5.33398V4.33398L5.33252 4.33398V5.33398V6.33398L710.344 6.33398V5.33398Z" fill="#0B2B12" />
-            </svg> */}
-
+            <div className="mt-6 h-[1px] w-14 rounded-full bg-flux-editorial/20" />
             <motion.p
               variants={fadeInView}
               className="max-w-xl text-base leading-relaxed text-flux-editorial/90 md:text-lg"
