@@ -98,7 +98,7 @@ const Projects = () => {
                   Markets we have helped shape.
                 </h1>
                 <p className="mt-6 max-w-xl text-base leading-relaxed text-flux-editorial/90 md:text-lg">
-                  Here are all potential growth areas we have helped various brands discover and explore in the making.
+                  Here are the most effective growth areas we have helped various brands discover and explore in the making.
                 </p>
               </div>
             </motion.div>

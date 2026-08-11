@@ -45,7 +45,7 @@ export function HomeMission() {
               <h3
                 id="mission-heading"
                 className="text-[clamp(2rem,3vw,3.5rem)] font-monument font-black leading-[0.92] tracking-tight text-flux-void"
-              >What would you like to create with us today?</h3>
+              >What we can already handle for you:</h3>
             </motion.div>
 
             <motion.div
@@ -66,7 +66,7 @@ export function HomeMission() {
                 to="/services"
                 className="mt-8 inline-flex items-center justify-center rounded-full btn-neon-solid px-8 py-4 text-sm font-semibold text-white shadow-[0_20px_60px_-30px_rgba(47,103,255,0.55)] transition hover:brightness-110"
               >
-                Explore Our Services
+                Full Service List →
               </Link>
             </motion.div>
           </div>
