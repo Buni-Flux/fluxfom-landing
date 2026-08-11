@@ -42,7 +42,7 @@ const Services = () => {
           </div>
 
           <div className="space-y-6">
-            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-flux-editorial/70">/Start from chat/</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-flux-editorial/70">/Are you looking for something specific?/</p>
             <p className="mt-6 text-sm leading-relaxed text-flux-editorial/90">
               Don't know where to specifically start? Let our AI assistanth help keep the full marketing journey connected so your next move is decisive and memorable.
             </p>
@@ -50,7 +50,7 @@ const Services = () => {
               to="/start"
               className="mt-8 inline-flex items-center justify-center rounded-full btn-neon-solid px-8 py-4 text-sm font-semibold text-white shadow-[0_20px_60px_-30px_rgba(47,103,255,0.55)] transition hover:brightness-110"
             >
-              Start from Chat
+              Custom Marketing Plan
             </Link>
           </div>
         </div>
@@ -76,7 +76,7 @@ const Services = () => {
           {filteredServices.map((service, index) => (
             <article
               key={service.title}
-              className={`${serviceBackgrounds[index % serviceBackgrounds.length]} group relative flex flex-col justify-between overflow-hidden rounded-[2rem] p-8 shadow-[0_25px_65px_-35px_rgba(15,23,16,0.25)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_35px_95px_-45px_rgba(15,23,16,0.28)]`}
+              className={`${serviceBackgrounds[index % serviceBackgrounds.length]} cursor-crosshair group relative flex flex-col justify-between overflow-hidden rounded-[2rem] p-8 shadow-[0_25px_65px_-35px_rgba(15,23,16,0.25)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_35px_95px_-45px_rgba(15,23,16,0.28)]`}
             >
               <div className="text-sm uppercase tracking-[0.28em] text-flux-editorial/60">(0{index + 1})</div>
               <div>
