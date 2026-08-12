@@ -5,6 +5,7 @@ import { Search, GitCompare, Rocket, ArrowRight, CheckCircle2, type LucideIcon }
 import { supabase } from "@/integrations/supabase/client";
 import type { Json } from "@/integrations/supabase/types";
 import { MarketingStoryImage } from "@/components/marketing/MarketingStoryImage";
+import { updateSeoMeta } from "@/lib/seo";
 import {
   HOME_FINAL_CTA_IMAGE,
   PAGE_APPROACH_HERO,
@@ -73,12 +74,12 @@ const HowItWorks = () => {
   const [steps, setSteps] = useState<Step[]>(fallbackSteps);
 
   useEffect(() => {
-    document.title = "Approach — FluxFom";
-    const meta = document.querySelector('meta[name="description"]');
-    meta?.setAttribute(
-      "content",
-      "See how FluxFom connects brand diagnosis, positioning, creative production, campaign execution, market penetration, and growth intelligence.",
-    );
+    updateSeoMeta({
+      title: "How It Works | FluxFom",
+      description:
+        "Learn how FluxFom turns brand diagnosis, positioning, creative production, campaign execution, and market growth into a repeatable system for ambitious businesses.",
+      pathname: "/how-it-works",
+    });
 
     supabase
       .from("cms_how_it_works")

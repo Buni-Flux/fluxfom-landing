@@ -1,7 +1,8 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { Search, ChevronRight } from "lucide-react";
 import { SERVICES } from "@/lib/services";
+import { updateSeoMeta } from "@/lib/seo";
 
 const serviceBackgrounds = [
   "bg-[#ffe8d2]",
@@ -25,6 +26,15 @@ const filterServices = (query: string) => {
 const Services = () => {
   const [query, setQuery] = useState("");
   const filteredServices = useMemo(() => filterServices(query), [query]);
+
+  useEffect(() => {
+    updateSeoMeta({
+      title: "Services | FluxFom - Brand Strategy, Creative & Growth",
+      description:
+        "Explore FluxFom services for brand strategy, creative production, campaign planning, digital growth, and market positioning for ambitious businesses.",
+      pathname: "/services",
+    });
+  }, []);
 
   return (
     <section className="landing-section bg-white text-flux-void">

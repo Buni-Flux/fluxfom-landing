@@ -29,10 +29,6 @@ export function HomeHero() {
               className="text-[clamp(3rem,5vw,5.25rem)] font-monument font-black leading-[0.92] tracking-tight text-flux-void"
             >
               <span className="block text-[#0B2B12]">Got an idea? <br/>Let's make it make sense.</span>
-              {/* <span className="block"><span>position </span> <br/> to win</span> */}
-              {/* <span className="block">
-                To <span className="heading-accent">Win</span>
-              </span> */}
             </motion.h1>
           </motion.div>
 
@@ -47,14 +43,15 @@ export function HomeHero() {
             <motion.p
               variants={fadeInView}
               className="max-w-xl text-base leading-relaxed text-flux-editorial/90 md:text-lg"
-            >Every brand needs a growth partner, that's why we help turn ideas into something people can see, feel and remember long after their purchase.
+            >
+              Every brand needs a growth partner, that's why we help turn ideas into something people can see, feel and remember long after their purchase.
             </motion.p>
 
             <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-end">
               <Link to="/start" className="btn-neon-solid px-9 py-4 text-base">
-              Start a project →
+                Start a project →
               </Link>
-              <Link to="/contact" className="btn-neon-outline px-9 py-4 text-base">
+              <Link to="/start" className="btn-neon-outline px-9 py-4 text-base">
                 Contact Sales
               </Link>
             </div>

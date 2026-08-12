@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { ArrowRight } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { updateSeoMeta } from "@/lib/seo";
 import { MarketingStoryImage } from "@/components/marketing/MarketingStoryImage";
 import {
   HOME_HERO_IMAGE,
@@ -34,12 +35,12 @@ const About = () => {
   const [sections, setSections] = useState<Section[]>([]);
 
   useEffect(() => {
-    document.title = "About — FluxFom";
-    const meta = document.querySelector('meta[name="description"]');
-    meta?.setAttribute(
-      "content",
-      "FluxFom is a Nairobi-rooted full-service marketing agency managing brand identity, creative production, campaigns, market penetration, and growth intelligence.",
-    );
+    updateSeoMeta({
+      title: "About FluxFom | Brand Strategy & Growth Studio",
+      description:
+        "FluxFom is a Nairobi-rooted brand strategy, creative production, and growth studio helping ambitious businesses become clearer, stronger, and more memorable.",
+      pathname: "/about",
+    });
 
     supabase
       .from("cms_about")
