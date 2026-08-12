@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Globe, Menu, X } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FluxLogo } from "@/components/marketing/FluxLogo";
 
@@ -8,11 +8,60 @@ const navLinks = [
   { label: "Services", to: "/services", hash: "#service-offerings" },
   // { label: "About Us", to: "/about", hash: "#what-to-expect" },
   { label: "Portfolio", to: "/projects", hash: "#clients-index" },
-  { label: "Get in touch", to: "/start", hash: "#contact" },
+  { label: "Get in touch", to: "/contact", hash: "#contact" },
 ];
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const location = useLocation();
+  const animationFrameRef = useRef<number | null>(null);
+  const completionTimeoutRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    setIsLoading(true);
+    setProgress(18);
+
+    if (animationFrameRef.current) {
+      cancelAnimationFrame(animationFrameRef.current);
+    }
+
+    if (completionTimeoutRef.current) {
+      clearTimeout(completionTimeoutRef.current);
+    }
+
+    let nextProgress = 18;
+
+    const step = () => {
+      nextProgress = Math.min(nextProgress + Math.random() * 16 + 10, 92);
+      setProgress(nextProgress);
+
+      if (nextProgress < 92) {
+        animationFrameRef.current = requestAnimationFrame(step);
+      }
+    };
+
+    animationFrameRef.current = requestAnimationFrame(step);
+
+    completionTimeoutRef.current = window.setTimeout(() => {
+      setProgress(100);
+      window.setTimeout(() => {
+        setProgress(0);
+        setIsLoading(false);
+      }, 220);
+    }, 420);
+
+    return () => {
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
+
+      if (completionTimeoutRef.current) {
+        clearTimeout(completionTimeoutRef.current);
+      }
+    };
+  }, [location.pathname]);
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-[1100] border-b border-white/[0.06] bg-flux-void/90 backdrop-blur-xl">
@@ -69,6 +118,13 @@ const Navbar = () => {
           </motion.div>
         )}
       </AnimatePresence>
+
+      <div className="relative h-0.5 w-full overflow-hidden bg-white/10">
+        <div
+          className={`h-full bg-gradient-to-r from-flux-neon via-white to-flux-neon transition-[width] duration-200 ease-out ${isLoading ? "opacity-100" : "opacity-0"}`}
+          style={{ width: `${progress}%` }}
+        />
+      </div>
     </nav>
   );
 };
