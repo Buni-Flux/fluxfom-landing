@@ -115,23 +115,6 @@ const Contact = () => {
                 </Link>
               </div>
 
-              <div className="mt-10 grid gap-4 sm:grid-cols-3">
-                {contactDetails.map(({ icon: Icon, label, value, href }) => (
-                  <div key={label} className="rounded-[1.4rem] border border-flux-editorial/10 bg-white/55 p-4 shadow-[0_25px_50px_-30px_rgba(11,43,18,0.38)] backdrop-blur-sm">
-                    <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-[#0B2B12]/8 text-flux-editorial">
-                      <Icon size={18} />
-                    </div>
-                    <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-flux-editorial/60">{label}</p>
-                    {href ? (
-                      <a href={href} className="mt-2 block text-sm text-flux-editorial hover:text-[#0B2B12]">
-                        {value}
-                      </a>
-                    ) : (
-                      <p className="mt-2 text-sm text-flux-editorial">{value}</p>
-                    )}
-                  </div>
-                ))}
-              </div>
             </div>
 
             <div className="relative overflow-hidden rounded-[2rem] border border-flux-editorial/10 bg-white/45 p-5 shadow-[0_40px_120px_-45px_rgba(5,16,5,0.28)] backdrop-blur-sm sm:p-6">
@@ -140,9 +123,8 @@ const Contact = () => {
               <div className="relative">
                 <div className="mb-5 flex items-center gap-2 text-[#0B2B12]">
                   <MessageSquareText size={18} />
-                  <span className="text-[10px] font-bold uppercase tracking-[0.28em]">Send a brief</span>
+                  <span className="text-[10px] font-bold uppercase tracking-[0.28em]">we will get back to you as soon as possible</span>
                 </div>
-
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div className="grid gap-4 sm:grid-cols-2">
                     <label className="block">
@@ -175,25 +157,9 @@ const Contact = () => {
                       value={form.company}
                       onChange={(event) => handleChange("company", event.target.value)}
                       className="w-full rounded-xl border border-flux-editorial/10 bg-[#F4F7F1] px-3.5 py-3 text-sm text-flux-editorial placeholder:text-flux-editorial/40 focus:border-[#0B2B12]/30 focus:outline-none"
-                      placeholder="Brand or business name"
+                      placeholder="Your Brand or Business Name"
                     />
                   </label>
-
-                  <label className="block">
-                    <span className="mb-2 block text-[10px] font-bold uppercase tracking-[0.2em] text-flux-editorial/60">Budget range</span>
-                    <select
-                      value={form.budget}
-                      onChange={(event) => handleChange("budget", event.target.value)}
-                      className="w-full rounded-xl border border-flux-editorial/10 bg-[#F4F7F1] px-3.5 py-3 text-sm text-flux-editorial focus:border-[#0B2B12]/30 focus:outline-none"
-                    >
-                      <option value="" className="text-black">Select a range</option>
-                      <option value="Under $5k" className="text-black">Under $5k</option>
-                      <option value="$5k - $15k" className="text-black">$5k - $15k</option>
-                      <option value="$15k - $50k" className="text-black">$15k - $50k</option>
-                      <option value="$50k+" className="text-black">$50k+</option>
-                    </select>
-                  </label>
-
                   <label className="block">
                     <span className="mb-2 block text-[10px] font-bold uppercase tracking-[0.2em] text-flux-editorial/60">Project brief</span>
                     <textarea
@@ -201,7 +167,7 @@ const Contact = () => {
                       onChange={(event) => handleChange("message", event.target.value)}
                       rows={5}
                       className="w-full rounded-xl border border-flux-editorial/10 bg-[#F4F7F1] px-3.5 py-3 text-sm text-flux-editorial placeholder:text-flux-editorial/40 focus:border-[#0B2B12]/30 focus:outline-none"
-                      placeholder="Tell us the challenge, what you are building, and what success looks like."
+                      placeholder="Have any questions, concerns or suggestions? Write freely."
                       required
                     />
                   </label>
@@ -211,6 +177,24 @@ const Contact = () => {
                     <ArrowRight size={16} />
                   </button>
                 </form>
+
+                <div className="mt-6 grid gap-4 sm:grid-cols-3">
+                  {contactDetails.map(({ icon: Icon, label, value, href }) => (
+                    <div key={label} className="rounded-[1.4rem] border border-flux-editorial/10 bg-[#dff6b7] p-4 shadow-[0_25px_50px_-30px_rgba(11,43,18,0.38)] backdrop-blur-sm">
+                      <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-[#0B2B12]/8 text-flux-editorial">
+                        <Icon size={18} />
+                      </div>
+                      <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-flux-editorial/60">{label}</p>
+                      {href ? (
+                        <a href={href} className="mt-2 block text-sm text-flux-editorial hover:text-[#0B2B12]">
+                          {value}
+                        </a>
+                      ) : (
+                        <p className="mt-2 text-sm text-flux-editorial">{value}</p>
+                      )}
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
