@@ -98,7 +98,7 @@ const Contact = () => {
             <div className="pt-6">
               <span className="text-sm font-bold uppercase tracking-[0.24em] text-flux-editorial/70">Contact us</span>
               <h1 className="mt-5 max-w-xl font-monument text-[clamp(2.75rem,5vw,5.5rem)] leading-[0.9] tracking-tight text-[#0B2B12]">
-                Let&apos;s build something that feels right.
+                Let&apos;s build<br/>something<br/>that feels right.
               </h1>
 
               <p className="mt-6 max-w-xl text-base leading-relaxed text-flux-editorial/80 md:text-lg">
