@@ -159,10 +159,12 @@ const Projects = () => {
                           navigate(`/projects/${client.id}`);
                         }
                       }}
-                      role={isDemo ? undefined : "button"}
-                      tabIndex={isDemo ? undefined : 0}
-                      className={`${projectCardBackgrounds[i % projectCardBackgrounds.length]} group relative flex flex-col overflow-hidden rounded-[2rem] border border-flux-sand/70 outline-none shadow-[0_25px_65px_-35px_rgba(15,23,16,0.25)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_35px_95px_-45px_rgba(15,23,16,0.28)] focus-visible:ring-2 focus-visible:ring-flux-green/20 ${
-                        isDemo ? "opacity-80" : "cursor-pointer"
+                      role={isDemo ? undefined : "link"}
+                      tabIndex={isDemo ? -1 : 0}
+                      aria-label={isDemo ? `Preview for ${client.title}` : `Open project for ${client.title}`}
+                      aria-disabled={isDemo}
+                      className={`${projectCardBackgrounds[i % projectCardBackgrounds.length]} group relative flex flex-col overflow-hidden rounded-[2rem] border border-flux-sand/70 outline-none shadow-[0_25px_65px_-35px_rgba(15,23,16,0.25)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_35px_95px_-45px_rgba(15,23,16,0.28)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-flux-neon focus-visible:ring-offset-2 focus-visible:ring-offset-white ${
+                        isDemo ? "cursor-default opacity-80" : "cursor-pointer"
                       }`}
                     >
                       <div className="relative overflow-hidden rounded-t-[2rem]">

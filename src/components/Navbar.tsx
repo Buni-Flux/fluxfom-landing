@@ -34,25 +34,13 @@ const Navbar = () => {
         <div className="flex items-center gap-3">
           <button
             type="button"
-            aria-label="Language"
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-white/25 text-white/80 transition hover:border-flux-neon/50 hover:text-flux-neon"
-          >
-            <Globe size={16} strokeWidth={1.5} />
-          </button>
-          <button
-            type="button"
-            onClick={() => setOpen(!open)}
-            aria-label={open ? "Close menu" : "Open menu"}
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-white/25 text-white/80 transition hover:border-flux-neon/50 hover:text-flux-neon lg:hidden"
+            onClick={() => setOpen((prev) => !prev)}
+            aria-label={open ? "Close navigation menu" : "Open navigation menu"}
+            aria-expanded={open}
+            aria-controls="mobile-nav-menu"
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-white/25 text-white/80 transition hover:border-flux-neon/50 hover:text-flux-neon focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-flux-neon focus-visible:ring-offset-2 focus-visible:ring-offset-flux-void lg:hidden"
           >
             {open ? <X size={16} strokeWidth={1.5} /> : <Menu size={16} strokeWidth={1.5} />}
-          </button>
-          <button
-            type="button"
-            aria-label="Menu"
-            className="hidden h-10 w-10 items-center justify-center rounded-full border border-white/25 text-white/80 transition hover:border-flux-neon/50 hover:text-flux-neon lg:flex"
-          >
-            <Menu size={16} strokeWidth={1.5} />
           </button>
         </div>
       </div>
@@ -60,6 +48,7 @@ const Navbar = () => {
       <AnimatePresence>
         {open && (
           <motion.div
+            id="mobile-nav-menu"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
