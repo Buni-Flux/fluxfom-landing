@@ -15,6 +15,7 @@ const AdminPublicProfileEditor = lazy(() => import("@/pages/AdminPublicProfileEd
 const ProjectDraft = lazy(() => import("@/pages/landing/portfolio/projectDraft/ProjectDraft"));
 const About = lazy(() => import("@/pages/About"));
 const Terms = lazy(() => import("@/pages/Terms"));
+const Contact = lazy(() => import("@/pages/Contact"));
 const StartYourBrand = lazy(() => import("@/pages/StartYourBrand"));
 const ProfileStatus = lazy(() => import("@/pages/ProfileStatus"));
 const ResetPassword = lazy(() => import("@/pages/ResetPassword"));
@@ -49,6 +50,7 @@ const LandingApp = () => (
 
             <Route path="/about" element={<About />} />
             <Route path="/terms" element={<Terms />} />
+            <Route path="/contact" element={<Contact />} />
             <Route path="/start" element={<StartYourBrand />} />
             <Route path="/portfolio" element={<Navigate to="/projects" replace />} />
             <Route path="/work/:token" element={<Navigate to="/projects" replace />} />
