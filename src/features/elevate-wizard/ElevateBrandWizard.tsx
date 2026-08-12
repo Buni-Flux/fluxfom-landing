@@ -30,17 +30,17 @@ function Ambient() {
   return (
     <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
       <motion.div
-        className="absolute -left-1/4 top-0 h-[70vh] w-[70vw] rounded-full bg-flux-growth/10 blur-[120px]"
+        className="absolute -left-1/4 top-0 h-[70vh] w-[70vw] rounded-full bg-[#0B2B12]/10 blur-[120px]"
         animate={{ x: [0, 36, 0], opacity: [0.35, 0.55, 0.35] }}
         transition={{ duration: 20, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
       />
       <motion.div
-        className="absolute -right-1/4 bottom-0 h-[55vh] w-[55vw] rounded-full bg-flux-amber/14 blur-[100px]"
+        className="absolute -right-1/4 bottom-0 h-[55vh] w-[55vw] rounded-full bg-[#0B2B12]/8 blur-[100px]"
         animate={{ x: [0, -28, 0], opacity: [0.3, 0.45, 0.3] }}
         transition={{ duration: 24, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
       />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_85%_55%_at_50%_-15%,rgba(255,255,255,0.58),transparent_52%)]" />
-      <div className="flux-grain absolute inset-0 opacity-20 mix-blend-multiply" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_85%_55%_at_50%_-15%,rgba(255,255,255,0.52),transparent_52%)]" />
+      <div className="flux-grain absolute inset-0 opacity-10 mix-blend-multiply" />
     </div>
   );
 }
@@ -48,9 +48,9 @@ function Ambient() {
 function ProgressBar({ step, complete }: { step: number; complete: boolean }) {
   const pct = complete ? 100 : Math.min(100, (step / 7) * 100);
   return (
-    <div className="relative z-20 h-0.5 w-full bg-flux-sand">
+    <div className="relative z-20 h-0.5 w-full bg-[#0B2B12]/10">
       <motion.div
-        className="h-full bg-gradient-to-r from-flux-forest via-flux-green to-flux-growth"
+        className="h-full bg-gradient-to-r from-[#0B2B12] via-[#1c4a2c] to-[#9AE32D]"
         initial={false}
         animate={{ width: `${pct}%` }}
         transition={{ type: "spring", stiffness: 120, damping: 22 }}
@@ -77,17 +77,17 @@ function SelectTile({
       whileTap={{ scale: 0.99 }}
       onClick={onClick}
       className={cn(
-        "rounded-2xl border px-5 py-4 text-left text-sm font-semibold text-flux-editorial transition-colors duration-300",
-        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-flux-clay/35 focus-visible:ring-offset-2 focus-visible:ring-offset-flux-ivory",
+        "rounded-2xl border px-5 py-4 text-left text-sm font-semibold text-[#0B2B12] transition-colors duration-300",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0B2B12]/20 focus-visible:ring-offset-2 focus-visible:ring-offset-white",
         selected
-          ? "border-flux-green/50 bg-flux-sand/35 shadow-[0_0_0_1px_rgba(166,106,63,0.12)]"
-          : "border-flux-sand bg-white/62 hover:border-flux-green/45 hover:bg-white/90",
+          ? "border-[#0B2B12]/30 bg-[#C9FF6B]/40 shadow-[0_0_0_1px_rgba(11,43,18,0.08)]"
+          : "border-[#0B2B12]/10 bg-white/70 hover:border-[#0B2B12]/25 hover:bg-white",
         className,
       )}
     >
       <span className="flex items-center justify-between gap-3">
         <span>{children}</span>
-        {selected ? <Check className="h-4 w-4 shrink-0 text-flux-clay" strokeWidth={2.5} aria-hidden /> : null}
+        {selected ? <Check className="h-4 w-4 shrink-0 text-[#0B2B12]" strokeWidth={2.5} aria-hidden /> : null}
       </span>
     </motion.button>
   );
@@ -118,8 +118,8 @@ function RecentWorkVideoCard({ project }: { project: RecentVideoProject }) {
   const native = !iframeSrc && isLikelyDirectVideoUrl(raw);
 
   return (
-    <article className="flex flex-col overflow-hidden rounded-xl border border-flux-sand bg-white/70 text-left shadow-sm">
-      <div className="relative aspect-video w-full bg-flux-sand">
+    <article className="flex flex-col overflow-hidden rounded-xl border border-[#0B2B12]/10 bg-white/70 text-left shadow-sm">
+      <div className="relative aspect-video w-full bg-[#0B2B12]/5">
         {iframeSrc ? (
           <iframe
             title={`${project.title} — showreel`}
@@ -142,12 +142,12 @@ function RecentWorkVideoCard({ project }: { project: RecentVideoProject }) {
           </video>
         ) : (
           <div className="flex h-full flex-col items-center justify-center gap-3 px-4 text-center">
-            <p className="text-xs text-flux-cool-gray">Open this reel in a new tab.</p>
+            <p className="text-xs text-[#0B2B12]/70">Open this reel in a new tab.</p>
             <a
               href={raw}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[11px] font-semibold uppercase tracking-[0.2em] text-flux-clay transition hover:text-flux-editorial"
+              className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#0B2B12] transition hover:text-[#0B2B12]/70"
             >
               Watch video
             </a>
@@ -155,11 +155,11 @@ function RecentWorkVideoCard({ project }: { project: RecentVideoProject }) {
         )}
       </div>
       <div className="flex flex-1 flex-col p-4">
-        <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-flux-clay">{project.category}</p>
-        <h3 className="heading-editorial mt-1.5 text-lg font-semibold leading-snug text-flux-editorial">{project.title}</h3>
+        <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#0B2B12]/75">{project.category}</p>
+        <h3 className="heading-editorial mt-1.5 text-lg font-semibold leading-snug text-[#0B2B12]">{project.title}</h3>
         <Link
           to={`/projects/${project.id}`}
-          className="mt-4 inline-flex text-[10px] font-semibold uppercase tracking-[0.2em] text-flux-cool-gray transition hover:text-flux-editorial"
+          className="mt-4 inline-flex text-[10px] font-semibold uppercase tracking-[0.2em] text-[#0B2B12]/70 transition hover:text-[#0B2B12]"
         >
           Case study →
         </Link>
@@ -318,19 +318,19 @@ export function ElevateBrandWizard() {
   const opportunities = useMemo(() => opportunityAreas(answers), [answers]);
 
   return (
-    <div className="relative flex min-h-[calc(100dvh-5rem)] flex-col overflow-hidden bg-flux-ivory text-flux-editorial">
+    <div className="relative flex min-h-[calc(100dvh-5rem)] flex-col overflow-hidden bg-[#C9FF6B] text-[#0B2B12]">
       <Ambient />
       <ProgressBar step={step} complete={done} />
 
       <header className="relative z-20 flex items-center justify-between px-5 py-4 sm:px-8">
         <Link
           to="/"
-          className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-flux-cool-gray transition hover:text-flux-editorial"
+          className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-[#0B2B12]/75 transition hover:text-[#0B2B12]"
         >
           <ArrowLeft className="h-3.5 w-3.5" aria-hidden />
           Home
         </Link>
-        <span className="text-[10px] font-semibold uppercase tracking-[0.28em] text-flux-gold">Start Profile</span>
+        <span className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#0B2B12]">Start Profile</span>
         <span className="w-14" aria-hidden />
       </header>
 
@@ -352,43 +352,43 @@ export function ElevateBrandWizard() {
               className="w-full max-w-5xl text-center"
             >
               <div className="mx-auto max-w-md">
-                <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full border border-flux-green/35 bg-flux-sand/35 text-flux-clay">
+                <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full border border-[#0B2B12]/20 bg-white/60 text-[#0B2B12]">
                   <Sparkles className="h-7 w-7" aria-hidden />
                 </div>
-                <h2 className="heading-editorial mt-8 text-3xl font-semibold text-flux-editorial">Your Flux profile is started.</h2>
-                <p className="mt-4 text-sm leading-relaxed text-flux-cool-gray">
+                <h2 className="heading-editorial mt-8 text-3xl font-semibold text-[#0B2B12]">Your Flux profile is started.</h2>
+                <p className="mt-4 text-sm leading-relaxed text-[#0B2B12]/70">
                   We received your profile. A strategist will turn your answers into a marketing overview and follow up
                   with clear next steps.
                 </p>
                 <Link
                   to="/"
-                  className="mt-10 inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-flux-clay transition hover:text-flux-editorial"
+                  className="mt-10 inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-[#0B2B12]/75 transition hover:text-[#0B2B12]"
                 >
                   Back to FluxFom
                 </Link>
               </div>
 
-              <div className="mt-16 border-t border-flux-sand pt-14 text-left">
-                <p className="text-center text-[10px] font-semibold uppercase tracking-[0.28em] text-flux-clay">
+              <div className="mt-16 border-t border-[#0B2B12]/10 pt-14 text-left">
+                <p className="text-center text-[10px] font-semibold uppercase tracking-[0.28em] text-[#0B2B12]/75">
                   Recent work
                 </p>
-                <h3 className="heading-editorial mt-3 text-center text-2xl font-semibold text-flux-editorial sm:text-3xl">
+                <h3 className="heading-editorial mt-3 text-center text-2xl font-semibold text-[#0B2B12] sm:text-3xl">
                   Recent creative proof from the studio
                 </h3>
-                <p className="mx-auto mt-3 max-w-xl text-center text-sm text-flux-cool-gray">
+                <p className="mx-auto mt-3 max-w-xl text-center text-sm text-[#0B2B12]/70">
                   Watch how we translate strategy into campaign, motion, and brand surfaces.
                 </p>
 
                 {videosLoading ? (
                   <div className="mt-10 flex justify-center py-8">
                     <div
-                      className="h-8 w-8 animate-spin rounded-full border-2 border-flux-green/40 border-t-transparent"
+                      className="h-8 w-8 animate-spin rounded-full border-2 border-[#0B2B12]/30 border-t-transparent"
                       aria-label="Loading videos"
                     />
                   </div>
                 ) : recentVideos.length === 0 ? (
-                  <p className="mt-10 text-center text-sm text-flux-cool-gray">
-                    <Link to="/projects" className="text-flux-clay underline-offset-4 transition hover:text-flux-editorial hover:underline">
+                  <p className="mt-10 text-center text-sm text-[#0B2B12]/70">
+                    <Link to="/projects" className="text-[#0B2B12] underline-offset-4 transition hover:text-[#0B2B12]/70 hover:underline">
                       Browse all projects
                     </Link>{" "}
                     — new motion pieces will land here as we publish them.
@@ -405,7 +405,7 @@ export function ElevateBrandWizard() {
                   <div className="mt-10 flex justify-center">
                     <Link
                       to="/projects"
-                      className="rounded-full border border-flux-clay/30 bg-white/55 px-6 py-2.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-flux-editorial transition hover:border-flux-green/55"
+                      className="rounded-full border border-[#0B2B12]/20 bg-white/55 px-6 py-2.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-[#0B2B12] transition hover:border-[#0B2B12]/35"
                     >
                       View all work
                     </Link>
@@ -423,16 +423,16 @@ export function ElevateBrandWizard() {
               transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
               className="w-full max-w-lg"
             >
-              <div className="rounded-[1.65rem] border border-flux-sand bg-flux-ivory/88 p-8 shadow-[0_24px_80px_-55px_rgba(27,43,34,0.48)] backdrop-blur-sm sm:p-10">
+              <div className="rounded-[1.65rem] border border-[#0B2B12]/10 bg-white/70 p-8 shadow-[0_24px_80px_-55px_rgba(27,43,34,0.48)] backdrop-blur-sm sm:p-10">
                 {step === 0 ? (
                   <>
-                    <p className="text-center text-[10px] font-semibold uppercase tracking-[0.3em] text-flux-clay">
+                    <p className="text-center text-[10px] font-semibold uppercase tracking-[0.3em] text-[#0B2B12]/75">
                       Start profile
                     </p>
-                    <h1 className="heading-editorial mt-5 text-center text-3xl font-semibold leading-[1.12] text-flux-editorial sm:text-4xl">
+                    <h1 className="heading-editorial mt-5 text-center text-3xl font-semibold leading-[1.12] text-[#0B2B12] sm:text-4xl">
                       Let&apos;s map the brand system you need next.
                     </h1>
-                    <p className="mt-5 text-center text-sm leading-relaxed text-flux-cool-gray">
+                    <p className="mt-5 text-center text-sm leading-relaxed text-[#0B2B12]/70">
                       A few guided questions so FluxFom can understand your identity, audience, channels, campaign needs,
                       and growth goals before shaping your marketing overview.
                     </p>
@@ -441,13 +441,13 @@ export function ElevateBrandWizard() {
 
                 {step === 1 ? (
                   <>
-                    <p className="text-center text-[10px] font-semibold uppercase tracking-[0.28em] text-flux-clay">
+                    <p className="text-center text-[10px] font-semibold uppercase tracking-[0.28em] text-[#0B2B12]/75">
                       Step 1 of 7
                     </p>
-                    <h2 className="heading-editorial mt-4 text-center text-2xl font-semibold text-flux-editorial sm:text-3xl">
+                    <h2 className="heading-editorial mt-4 text-center text-2xl font-semibold text-[#0B2B12] sm:text-3xl">
                       What are you building?
                     </h2>
-                    <p className="mt-3 text-center text-xs font-medium text-flux-cool-gray">{reassurance}</p>
+                    <p className="mt-3 text-center text-xs font-medium text-[#0B2B12]/70">{reassurance}</p>
                     <div className="mt-8 grid gap-2.5 sm:grid-cols-2">
                       {BUSINESS_TYPES.map((t) => (
                         <SelectTile
@@ -465,13 +465,11 @@ export function ElevateBrandWizard() {
 
                 {step === 2 ? (
                   <>
-                    <p className="text-center text-[10px] font-semibold uppercase tracking-[0.28em] text-flux-clay">
-                      Step 2 of 7
-                    </p>
-                    <h2 className="heading-editorial mt-4 text-center text-2xl font-semibold text-flux-editorial sm:text-3xl">
+                    
+                    <h2 className="heading-editorial mt-4 text-center text-2xl font-semibold text-[#0B2B12] sm:text-3xl">
                       What&apos;s slowing your brand down?
                     </h2>
-                    <p className="mt-3 text-center text-xs font-medium text-flux-cool-gray">Select all that apply.</p>
+                    <p className="mt-3 text-center text-xs font-medium text-[#0B2B12]/70">Select all that apply.</p>
                     <div className="mt-8 grid max-h-[min(52vh,420px)] gap-2.5 overflow-y-auto pr-1 sm:max-h-none sm:grid-cols-2">
                       {CHALLENGES.map((c) => (
                         <SelectTile
@@ -488,13 +486,13 @@ export function ElevateBrandWizard() {
 
                 {step === 3 ? (
                   <>
-                    <p className="text-center text-[10px] font-semibold uppercase tracking-[0.28em] text-flux-clay">
+                    <p className="text-center text-[10px] font-semibold uppercase tracking-[0.28em] text-[#0B2B12]/75">
                       Step 3 of 7
                     </p>
-                    <h2 className="heading-editorial mt-4 text-center text-2xl font-semibold text-flux-editorial sm:text-3xl">
+                    <h2 className="heading-editorial mt-4 text-center text-2xl font-semibold text-[#0B2B12] sm:text-3xl">
                       How is your marketing managed today?
                     </h2>
-                    <p className="mt-3 text-center text-xs font-medium text-flux-cool-gray">{reassurance}</p>
+                    <p className="mt-3 text-center text-xs font-medium text-[#0B2B12]/70">{reassurance}</p>
                     <div className="mt-8 grid gap-2.5">
                       {TEAM_OPTIONS.map((t) => (
                         <SelectTile key={t} selected={answers.team === t} onClick={() => setSingle("team", t)}>
@@ -507,13 +505,13 @@ export function ElevateBrandWizard() {
 
                 {step === 4 ? (
                   <>
-                    <p className="text-center text-[10px] font-semibold uppercase tracking-[0.28em] text-flux-clay">
+                    <p className="text-center text-[10px] font-semibold uppercase tracking-[0.28em] text-[#0B2B12]/75">
                       Step 4 of 7
                     </p>
-                    <h2 className="heading-editorial mt-4 text-center text-2xl font-semibold text-flux-editorial sm:text-3xl">
+                    <h2 className="heading-editorial mt-4 text-center text-2xl font-semibold text-[#0B2B12] sm:text-3xl">
                       What matters most right now?
                     </h2>
-                    <p className="mt-3 text-center text-xs font-medium text-flux-cool-gray">Select all that apply.</p>
+                    <p className="mt-3 text-center text-xs font-medium text-[#0B2B12]/70">Select all that apply.</p>
                     <div className="mt-8 grid max-h-[min(52vh,420px)] gap-2.5 overflow-y-auto pr-1 sm:max-h-none sm:grid-cols-2">
                       {GOAL_OPTIONS.map((g) => (
                         <SelectTile
@@ -530,10 +528,10 @@ export function ElevateBrandWizard() {
 
                 {step === 5 ? (
                   <>
-                    <p className="text-center text-[10px] font-semibold uppercase tracking-[0.28em] text-flux-clay">
+                    <p className="text-center text-[10px] font-semibold uppercase tracking-[0.28em] text-[#0B2B12]/75">
                       Step 5 of 7
                     </p>
-                    <h2 className="heading-editorial mt-4 text-center text-2xl font-semibold text-flux-editorial sm:text-3xl">
+                    <h2 className="heading-editorial mt-4 text-center text-2xl font-semibold text-[#0B2B12] sm:text-3xl">
                       How established is your brand today?
                     </h2>
                     <div className="mt-8 grid gap-2.5">
@@ -548,10 +546,10 @@ export function ElevateBrandWizard() {
 
                 {step === 6 ? (
                   <>
-                    <p className="text-center text-[10px] font-semibold uppercase tracking-[0.28em] text-flux-clay">
+                    <p className="text-center text-[10px] font-semibold uppercase tracking-[0.28em] text-[#0B2B12]/75">
                       Step 6 of 7
                     </p>
-                    <h2 className="heading-editorial mt-4 text-center text-2xl font-semibold text-flux-editorial sm:text-3xl">
+                    <h2 className="heading-editorial mt-4 text-center text-2xl font-semibold text-[#0B2B12] sm:text-3xl">
                       What kind of brand are you becoming?
                     </h2>
                     <div className="mt-8 grid gap-3">
@@ -562,8 +560,8 @@ export function ElevateBrandWizard() {
                           onClick={() => setSingle("vision", v.label)}
                           className="py-5"
                         >
-                          <span className="block font-semibold text-flux-editorial">{v.label}</span>
-                          <span className="mt-1 block text-xs font-normal text-flux-cool-gray">{v.hint}</span>
+                          <span className="block font-semibold text-[#0B2B12]">{v.label}</span>
+                          <span className="mt-1 block text-xs font-normal text-[#0B2B12]/70">{v.hint}</span>
                         </SelectTile>
                       ))}
                     </div>
@@ -572,28 +570,28 @@ export function ElevateBrandWizard() {
 
                 {step === 7 ? (
                   <>
-                    <p className="text-center text-[10px] font-semibold uppercase tracking-[0.28em] text-flux-clay">
+                    <p className="text-center text-[10px] font-semibold uppercase tracking-[0.28em] text-[#0B2B12]/75">
                       Your snapshot
                     </p>
-                    <h2 className="heading-editorial mt-4 text-center text-2xl font-semibold text-flux-editorial sm:text-3xl">
+                    <h2 className="heading-editorial mt-4 text-center text-2xl font-semibold text-[#0B2B12] sm:text-3xl">
                       FluxFom can help you build a clearer, more scalable brand system.
                     </h2>
-                    <div className="mt-8 space-y-5 rounded-xl border border-flux-sand bg-white/62 p-5 text-left text-sm">
+                    <div className="mt-8 space-y-5 rounded-xl border border-[#0B2B12]/10 bg-white/62 p-5 text-left text-sm">
                       <div>
-                        <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-flux-clay">Goals</p>
-                        <p className="mt-1 text-flux-editorial">{answers.goals.join(" · ") || "—"}</p>
+                        <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#0B2B12]/75">Goals</p>
+                        <p className="mt-1 text-[#0B2B12]">{answers.goals.join(" · ") || "—"}</p>
                       </div>
                       <div>
-                        <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-flux-clay">
+                        <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#0B2B12]/75">
                           Opportunity areas
                         </p>
-                        <p className="mt-1 text-flux-editorial">{opportunities.join(" · ")}</p>
+                        <p className="mt-1 text-[#0B2B12]">{opportunities.join(" · ")}</p>
                       </div>
                       <div>
-                        <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-flux-clay">
+                        <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#0B2B12]/75">
                           Suggested modules
                         </p>
-                        <ul className="mt-2 list-inside list-disc text-flux-editorial/78">
+                        <ul className="mt-2 list-inside list-disc text-[#0B2B12]/75">
                           {modules.map((m) => (
                             <li key={m}>{m}</li>
                           ))}
@@ -602,7 +600,7 @@ export function ElevateBrandWizard() {
                     </div>
                     <div className="mt-8 space-y-4">
                       <div>
-                        <label htmlFor="elevate-brand" className="mb-2 block text-[10px] font-semibold uppercase tracking-[0.2em] text-flux-clay">
+                        <label htmlFor="elevate-brand" className="mb-2 block text-[10px] font-semibold uppercase tracking-[0.2em] text-[#0B2B12]/75">
                           Brand or company name
                         </label>
                         <input
@@ -612,11 +610,11 @@ export function ElevateBrandWizard() {
                           value={answers.companyName}
                           onChange={(e) => setSingle("companyName", e.target.value)}
                           placeholder="How we’ll address you"
-                          className="w-full rounded-xl border border-flux-sand/90 bg-white/70 px-4 py-3.5 text-sm text-flux-editorial placeholder:text-flux-cool-gray focus:border-flux-green/55 focus:outline-none focus:ring-1 focus:ring-flux-clay/20"
+                          className="w-full rounded-xl border border-[#0B2B12]/10 bg-white/70 px-4 py-3.5 text-sm text-[#0B2B12] placeholder:text-[#0B2B12]/45 focus:border-[#0B2B12]/25 focus:outline-none focus:ring-1 focus:ring-[#0B2B12]/10"
                         />
                       </div>
                       <div>
-                        <label htmlFor="elevate-email" className="mb-2 block text-[10px] font-semibold uppercase tracking-[0.2em] text-flux-clay">
+                        <label htmlFor="elevate-email" className="mb-2 block text-[10px] font-semibold uppercase tracking-[0.2em] text-[#0B2B12]/75">
                           Work email
                         </label>
                         <input
@@ -626,7 +624,7 @@ export function ElevateBrandWizard() {
                           value={answers.email}
                           onChange={(e) => setSingle("email", e.target.value)}
                           placeholder="you@company.com"
-                          className="w-full rounded-xl border border-flux-sand/90 bg-white/70 px-4 py-3.5 text-sm text-flux-editorial placeholder:text-flux-cool-gray focus:border-flux-green/55 focus:outline-none focus:ring-1 focus:ring-flux-clay/20"
+                          className="w-full rounded-xl border border-[#0B2B12]/10 bg-white/70 px-4 py-3.5 text-sm text-[#0B2B12] placeholder:text-[#0B2B12]/45 focus:border-[#0B2B12]/25 focus:outline-none focus:ring-1 focus:ring-[#0B2B12]/10"
                         />
                       </div>
                     </div>
@@ -639,7 +637,7 @@ export function ElevateBrandWizard() {
       </div>
 
       {!done ? (
-        <footer className="fixed bottom-0 left-0 right-0 z-30 border-t border-flux-sand bg-flux-ivory/92 px-5 py-4 backdrop-blur-md sm:px-8">
+        <footer className="fixed bottom-0 left-0 right-0 z-30 border-t border-[#0B2B12]/10 bg-white/80 px-5 py-4 backdrop-blur-md sm:px-8">
           <div className="mx-auto flex max-w-lg items-center justify-between gap-4">
             <button
               type="button"
@@ -647,7 +645,7 @@ export function ElevateBrandWizard() {
               disabled={step === 0}
               className={cn(
                 "min-w-[5rem] text-[11px] font-semibold uppercase tracking-[0.2em] transition",
-                step === 0 ? "pointer-events-none text-flux-cool-gray/50" : "text-flux-cool-gray hover:text-flux-editorial",
+                step === 0 ? "pointer-events-none text-[#0B2B12]/45" : "text-[#0B2B12]/75 hover:text-[#0B2B12]",
               )}
             >
               Back
@@ -657,7 +655,7 @@ export function ElevateBrandWizard() {
                 type="button"
                 onClick={next}
                 disabled={!canContinue()}
-                className="inline-flex min-w-[8.5rem] items-center justify-center gap-2 rounded-full bg-flux-green px-8 py-3.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-white shadow-[0_20px_50px_-30px_rgba(43,170,54,0.45)] transition hover:bg-[#24932E] disabled:cursor-not-allowed disabled:opacity-35"
+                className="inline-flex min-w-[8.5rem] items-center justify-center gap-2 rounded-full bg-[#0B2B12] px-8 py-3.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-white shadow-[0_20px_50px_-30px_rgba(11,43,18,0.45)] transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-35"
               >
                 {step === 0 ? "Start" : "Continue"}
                 {step > 0 ? <ArrowRight className="h-3.5 w-3.5" aria-hidden /> : null}
@@ -667,7 +665,7 @@ export function ElevateBrandWizard() {
                 type="button"
                 onClick={submit}
                 disabled={!canContinue() || submitting}
-                className="inline-flex min-w-[10rem] items-center justify-center gap-2 rounded-full bg-flux-green px-8 py-3.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-white shadow-[0_20px_50px_-30px_rgba(43,170,54,0.45)] transition hover:bg-[#24932E] disabled:cursor-not-allowed disabled:opacity-35"
+                className="inline-flex min-w-[10rem] items-center justify-center gap-2 rounded-full bg-[#0B2B12] px-8 py-3.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-white shadow-[0_20px_50px_-30px_rgba(11,43,18,0.45)] transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-35"
               >
                 {submitting ? "Sending..." : "Submit profile"}
               </button>

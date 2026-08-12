@@ -13,7 +13,7 @@ const StartYourBrand = () => {
   }, []);
 
   return (
-    <div className="bg-flux-void text-white">
+    <div className="bg-[#C9FF6B] text-[#0B2B12]">
       <ElevateBrandWizard />
     </div>
   );
