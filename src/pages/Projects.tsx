@@ -5,6 +5,7 @@ import { ArrowUpRight, Image as ImageIcon } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { ProjectGridPreview } from "@/components/ProjectGridPreview";
 import { clientCardSubtitle } from "@/lib/clientProfile";
+import { updateSeoMeta } from "@/lib/seo";
 import type { ClientWorkRow } from "@/types/clientProfile";
 
 const fallbackClients: ClientWorkRow[] = [
@@ -64,12 +65,12 @@ const Projects = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    document.title = "Work — FluxFom";
-    const meta = document.querySelector('meta[name="description"]');
-    meta?.setAttribute(
-      "content",
-      "Explore FluxFom client brand profiles — strategy, creative direction, identity systems, and launch templates.",
-    );
+    updateSeoMeta({
+      title: "Client Work | FluxFom",
+      description:
+        "Explore FluxFom client brand profiles, identity systems, launch assets, and growth work across strategy, creative direction, and campaign execution.",
+      pathname: "/projects",
+    });
 
     supabase
       .from("cms_projects")

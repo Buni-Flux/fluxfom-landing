@@ -4,19 +4,18 @@ import { HomeHero } from "../components/home/HomeHero";
 import { HomeMission } from "../components/home/HomeService";
 import { HomeProcess } from "../components/home/HomeProcess";
 import { HomeFinalCta } from "../components/home/HomeFinalCta";
+import { updateSeoMeta } from "@/lib/seo";
 
 const Home = () => {
   useGsapLandingSections();
 
   useEffect(() => {
-    document.title = "FluxFom — Discover your Brand Position to Win";
-    const meta = document.querySelector('meta[name="description"]');
-    if (meta) {
-      meta.setAttribute(
-        "content",
-        "FluxFom helps brands discover their position, define their journey, and deliver real marketing and conversion results.",
-      );
-    }
+    updateSeoMeta({
+      title: "FluxFom | Got an idea? Let's make it make sense.",
+      description:
+        "FluxFom helps brands turn ideas into clear positioning, memorable identity, and real growth momentum — got an idea? Let's make it make sense.",
+      pathname: "/",
+    });
   }, []);
 
   return (
