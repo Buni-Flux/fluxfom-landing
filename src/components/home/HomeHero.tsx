@@ -51,7 +51,7 @@ export function HomeHero() {
               <Link to="/start" className="btn-neon-solid px-9 py-4 text-base">
                 Start a project →
               </Link>
-              <Link to="/start" className="btn-neon-outline px-9 py-4 text-base">
+              <Link to="/contact" className="btn-neon-outline px-9 py-4 text-base">
                 Contact Sales
               </Link>
             </div>
