@@ -97,7 +97,7 @@ const Contact = () => {
           <div className="grid items-start gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-14">
             <div className="pt-6">
               <span className="text-sm font-bold uppercase tracking-[0.24em] text-flux-editorial/70">Contact us</span>
-              <h1 className="mt-5 max-w-xl font-monument text-[clamp(2.75rem,5vw,5.5rem)] leading-[0.9] tracking-tight text-[#0B2B12]">
+              <h1 className="mt-5 max-w-xl font-monument text-[clamp(1.75rem,2.5vw,2.5rem)] leading-[0.9] tracking-tight text-[#0B2B12]">
                 Let&apos;s build<br/>something<br/>that feels right.
               </h1>
 
