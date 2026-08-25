@@ -43,10 +43,10 @@ const Services = () => {
           <div className="space-y-8">
             <div className="max-w-3xl">
               <h1 className="text-[clamp(3rem,5vw,5.25rem)] font-monument font-black leading-[0.92] tracking-tight text-flux-void">
-                Services we offer.
+                Build your Fom.
               </h1>
               <p className="mt-6 max-w-xl text-base leading-relaxed text-flux-editorial/90 md:text-lg">
-                Search by capability, outcome, or market need to see the full service path from identity to launch, creative, and growth.
+                Pick what you need. We'll put the numbers together.
               </p>
             </div>
           </div>
@@ -54,7 +54,7 @@ const Services = () => {
           <div className="space-y-6">
             <p className="text-xs font-semibold uppercase tracking-[0.24em] text-flux-editorial/70">/Are you looking for something specific?/</p>
             <p className="mt-6 text-sm leading-relaxed text-flux-editorial/90">
-              Don't know where to specifically start? Let our AI assistanth help keep the full marketing journey connected so your next move is decisive and memorable.
+              Don't know where to specifically start? Let our AI assistant help.
             </p>
             <Link
               to="/start"
