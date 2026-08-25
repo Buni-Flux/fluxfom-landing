@@ -38,7 +38,7 @@ export function HomeHero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.2 }}
           >
-            <span className="text-sm font-bold w-full uppercase tracking-[0.24em] text-flux-editorial/70">Design | Video | Websites | Marketing</span>
+            <span className="text-sm font-bold w-full uppercase tracking-[0.24em] text-flux-editorial/70">Design | Brand Narratives | Websites | Marketing</span>
             <div className="mt-6 h-[1px] w-14 rounded-full bg-flux-editorial/20" />
             <motion.p
               variants={fadeInView}
@@ -49,10 +49,10 @@ export function HomeHero() {
 
             <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-end">
               <Link to="/start" className="btn-neon-solid px-9 py-4 text-base">
-                Start a project →
+                Try Fluxfom for 14 days
               </Link>
               <Link to="/contact" className="btn-neon-outline px-9 py-4 text-base">
-                Contact Sales
+                Talk to a Human →
               </Link>
             </div>
           </motion.div>
