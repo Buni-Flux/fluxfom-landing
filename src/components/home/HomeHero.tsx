@@ -28,7 +28,7 @@ export function HomeHero() {
               variants={fadeInView}
               className="text-[clamp(3rem,5vw,5.25rem)] font-monument font-black leading-[0.92] tracking-tight text-flux-void"
             >
-              <span className="block text-[#0B2B12]">Got an idea? <br/>Let's make it make sense.</span>
+              <span className="block text-[#0B2B12]">Make your business impossible <br/>to ignore.</span>
             </motion.h1>
           </motion.div>
 
@@ -38,7 +38,7 @@ export function HomeHero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.2 }}
           >
-            <span className="text-sm font-bold w-full uppercase tracking-[0.24em] text-flux-editorial/70">Design | Brand Narratives | Websites | Marketing</span>
+            <span className="text-sm font-bold w-full uppercase tracking-[0.24em] text-flux-editorial/70">| BRAND POSTIONING-LED DIGITAL MARKETING </span>
             <div className="mt-6 h-[1px] w-14 rounded-full bg-flux-editorial/20" />
             <motion.p
               variants={fadeInView}
