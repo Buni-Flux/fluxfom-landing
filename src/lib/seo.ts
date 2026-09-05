@@ -89,7 +89,7 @@ export const updateSeoMeta = ({
     contactPoint: {
       "@type": "ContactPoint",
       contactType: "sales",
-      email: "hello@fluxfom.io",
+      email: "sales@fluxfom.com",
     },
     potentialAction: {
       "@type": "SearchAction",

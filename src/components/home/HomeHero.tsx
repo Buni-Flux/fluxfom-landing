@@ -38,7 +38,7 @@ export function HomeHero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.2 }}
           >
-            <span className="text-sm font-bold w-full uppercase tracking-[0.24em] text-flux-editorial/70">| BRAND POSTIONING-LED DIGITAL MARKETING </span>
+            <span className="text-sm font-bold w-full uppercase tracking-[0.24em] text-flux-editorial/70">| Digital Marketing & Brand Positioning</span>
             <div className="mt-6 h-[1px] w-14 rounded-full bg-flux-editorial/20" />
             <motion.p
               variants={fadeInView}
