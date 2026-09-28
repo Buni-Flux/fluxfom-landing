@@ -1,24 +1,44 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Sparkles, Zap, Globe2, Layers, Package, Star } from "lucide-react";
+import { Palette, Telescope, ShieldCheck, FingerprintIcon, Facebook, Instagram, Twitter } from "lucide-react";
 import { fadeInView } from "./homeMotion";
 
-const COMPANY_LOGOS = [
-  { name: "Lumina", icon: Sparkles },
-  { name: "Vortex", icon: Zap },
-  { name: "Velocity", icon: Globe2 },
-  { name: "Synergy", icon: Layers },
-  { name: "Enigma", icon: Package },
-  { name: "Spectrum", icon: Star },
+const HERO_STATS = [
+  {
+    label: "For Creatives",
+    description: "Are you planning an Album Launch, Event, or a Tour? We help you plan and execute successful campaigns that engage your audience and drive results based on your current market position.",
+    icon: Palette,
+  },
+  {
+    label: "For Individuals",
+    description: "Are you an individual looking to build your personal brand or promote your services? We help you create a strong online presence and connect with your target audience effectively.",
+    icon: Telescope,
+  },
+  {
+    label: "For Businesses",
+    description: "Websites and your social media presence are both crucial towards meeting your goals. Build your product, we'll think about your brand long term",
+    icon: ShieldCheck,
+  },
 ];
 
 export function HomeHero() {
   return (
-    <section id="hero" data-gsap-section aria-labelledby="home-hero-heading" className="bg-[#C9FF6B] text-flux-void">
+    <section
+      id="hero"
+      data-gsap-section
+      aria-labelledby="home-hero-heading"
+      className="relative overflow-hidden text-flux-void"
+      style={{
+        backgroundImage:
+          "linear-gradient(180deg, rgba(3, 18, 30, 0.55) 0%, rgba(3, 18, 30, 0.55) 25%, rgba(3, 18, 30, 0.55) 30%), url('/assets/images/hero-bg.jpg')",
+        backgroundPosition: "center",
+        backgroundSize: "cover",
+      }}
+    >
       <div className="gsap-section-inner mx-auto max-w-[1400px] px-5 py-16 sm:px-8 lg:px-12 lg:py-24">
-        <div className="grid gap-10 items-top lg:grid-cols-[minmax(0,0.6fr)_minmax(0,0.4fr)]">
+        <div className="flex flex-col gap-10 items-center text-center">
           <motion.div
-            className="lg:pr-8"
+            className="flex flex-col gap-6 items-center"
             initial="hidden"
             animate="visible"
             variants={{ visible: { transition: { staggerChildren: 0.12 } } }}
@@ -26,9 +46,9 @@ export function HomeHero() {
             <motion.h1
               id="home-hero-heading"
               variants={fadeInView}
-              className="text-[clamp(3rem,5vw,5.25rem)] font-monument font-black leading-[0.92] tracking-tight text-flux-void"
+              className="text-[clamp(3rem,5vw,5.25rem)] font-monument font-black leading-[0.92] tracking-tight md:mt-32 text-flux-void"
             >
-              <span className="block text-[#0B2B12]">Make your business impossible <br/>to ignore.</span>
+              <span className="block text-white">Make your business impossible to ignore.</span>
             </motion.h1>
           </motion.div>
 
@@ -38,16 +58,14 @@ export function HomeHero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.2 }}
           >
-            <span className="text-sm font-bold w-full uppercase tracking-[0.24em] text-flux-editorial/70">| BRAND POSTIONING-LED DIGITAL MARKETING </span>
-            <div className="mt-6 h-[1px] w-14 rounded-full bg-flux-editorial/20" />
             <motion.p
               variants={fadeInView}
-              className="max-w-xl text-base leading-relaxed text-flux-editorial/90 md:text-lg"
+              className="max-w-xl text-base leading-relaxed text-white/90 md:text-lg"
             >
               Every brand needs a growth partner, that's why we help turn ideas into something people can see, feel and remember long after their purchase.
             </motion.p>
 
-            <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-end">
+            <div className="mt-16 self-center flex flex-col gap-4 md:flex-row items-center justify-center">
               <Link to="/start" className="btn-neon-solid px-9 py-4 text-base">
                 Try Fluxfom for 14 days
               </Link>
@@ -59,52 +77,31 @@ export function HomeHero() {
         </div>
 
         <div className="mt-14">
-          <div className="relative border-t border-flux-sand/50 overflow-hidden rounded-[2rem] border border-flux-sand bg-flux-sand/10 shadow-[0_40px_120px_-55px_rgba(5,16,5,0.18)]">
-            <img
-              src="/assets/images/hero-bg.png"
-              alt="fluxfom-hero-bg"
-              fetchPriority="high"
-              decoding="async"
-              className="h-[420px] w-full object-fit sm:h-[520px]"
-            />
-            <img
-              src="/assets/images/hero-bg-face.png"
-              alt="fluxfom-hero-face"
-              fetchPriority="high"
-              decoding="async"
-              className="pointer-events-none absolute left-1/2 top-1/2 h-[420px] w-auto max-w-none -translate-x-1/2 -translate-y-1/2 object-contain sm:h-[520px]"
-            />
-          </div>
-
-          {/* <div className="my-4 space-y-4 border-t border-b border-flux-sand/50 py-4 text-sm text-flux-editorial/70">
-            <div className="flex flex-col gap-3 mb-6 items-start justify-between">
-              <p className="font-semibold uppercase tracking-[0.24em] text-flux-editorial/85">
-                Companies we've worked with
-              </p>
-              <p className="max-w-xl text-xs uppercase text-flux-editorial/60 sm:text-right">
-                Trusted partnerships with brand-led teams and fast-moving startups.
-              </p>
-            </div>
-
-            <div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-6">
-              {COMPANY_LOGOS.map((company) => {
-                const Icon = company.icon;
+          <div className="mx-auto flex max-w-[1100px] flex-col items-center justify-between gap-6 rounded-[1.5rem] text-white sm:px-8 lg:flex-row">
+            <div className="grid w-full gap-5 px-6 py-4 bg-white/10 border border-white/20 rounded-xl shadow-xl backdrop-blur-md sm:grid-cols-3 lg:flex-1">
+              {HERO_STATS.map((stat) => {
+                const Icon = stat.icon;
                 return (
-                  <div
-                    key={company.name}
-                    className="flex items-center gap-3 text-sm"
-                  >
-                    <div className="flex h-11 w-11 items-center justify-center text-flux-editorial/80">
-                      <Icon className="h-5 w-5" aria-hidden />
-                    </div>
+                  <div key={stat.label} className="flex items-start gap-3">
+                    <Icon className="mt-1 h-6 w-6 shrink-0 text-[#C9FF6B]" aria-hidden />
                     <div>
-                      <p className="font-semibold uppercase tracking-[0.18em] text-flux-editorial/90">{company.name}</p>
+                      <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-white">
+                        {stat.label}
+                      </p>
+                      <p className="mt-1 text-[11px] leading-relaxed text-white/80">
+                        {stat.description}
+                      </p>
                     </div>
                   </div>
                 );
               })}
             </div>
-          </div> */}
+            <div className="flex shrink-0 items-center gap-2 border-t border-white/20 pt-4 lg:border-l lg:border-t-0 lg:pl-6 lg:pt-0" aria-label="Social links">
+              <a href="#facebook" aria-label="Facebook" className="rounded-full border border-white/20 bg-white/10 p-2 transition hover:bg-white/20"><Facebook className="h-3.5 w-3.5" aria-hidden /></a>
+              <a href="#instagram" aria-label="Instagram" className="rounded-full border border-white/20 bg-white/10 p-2 transition hover:bg-white/20"><Instagram className="h-3.5 w-3.5" aria-hidden /></a>
+              <a href="#twitter" aria-label="Twitter" className="rounded-full border border-white/20 bg-white/10 p-2 transition hover:bg-white/20"><Twitter className="h-3.5 w-3.5" aria-hidden /></a>
+            </div>
+          </div>
         </div>
       </div>
     </section>

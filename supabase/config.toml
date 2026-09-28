@@ -20,5 +20,8 @@ verify_jwt = false
 [functions.flux-ai-run-automations]
 verify_jwt = false
 
+[functions.public-ask-assistant]
+verify_jwt = false
+
 [functions.flux-ai-score-clients]
 verify_jwt = false

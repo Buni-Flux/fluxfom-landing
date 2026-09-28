@@ -11,18 +11,21 @@ export const LandingNotFound = () => {
   return (
     <div className="flex min-h-[calc(100dvh-5rem)] flex-col items-center justify-center bg-flux-void px-6">
       <div className="max-w-md rounded-[1.5rem] border border-white/10 bg-white/[0.04] p-8 text-center shadow-[0_24px_90px_-48px_rgba(0,0,0,0.8)] backdrop-blur-xl">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-flux-neon">PAGE NOT FOUND</p>
+        <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-flux-neon">COMING SOON</p>
         <h1 className="heading-editorial mt-4 text-3xl font-semibold text-white sm:text-4xl">
-          404
+          Something new is taking shape.
         </h1>
         <p className="mt-4 text-sm leading-relaxed text-white/70">
-          It is possible that the URL may have changed, or the link may be incomplete. please confirm that you have entered it correctly or reload the page.
+          This FluxFom experience is not available yet. We are preparing the next part of the journey.
+        </p>
+        <p className="mt-4 truncate text-xs text-white/40" title={location.pathname}>
+          {location.pathname}
         </p>
         <Link
           to="/"
           className="mt-10 inline-flex items-center justify-center rounded-full bg-flux-neon px-8 py-3.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-flux-void transition hover:bg-[#b8ff33]"
         >
-          Back to home
+          Explore FluxFom
         </Link>
       </div>
     </div>
