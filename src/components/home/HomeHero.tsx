@@ -1,22 +1,25 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Palette, Telescope, ShieldCheck, FingerprintIcon, Facebook, Instagram, Twitter } from "lucide-react";
+import { Palette, ShieldCheck, FingerprintIcon, Facebook, Instagram, Twitter } from "lucide-react";
 import { fadeInView } from "./homeMotion";
 
 const HERO_STATS = [
   {
+    label: "For Personal Brands",
+    description: "Build your personal brand or promote your services with a strong online presence that connects you to the right audience.",
+    to: "/personal",
+    icon: FingerprintIcon,
+  },
+  {
     label: "For Creatives",
     description: "Are you planning an Album Launch, Event, or a Tour? We help you plan and execute successful campaigns that engage your audience and drive results based on your current market position.",
+    to: "/creatives",
     icon: Palette,
   },
   {
-    label: "For Individuals",
-    description: "Are you an individual looking to build your personal brand or promote your services? We help you create a strong online presence and connect with your target audience effectively.",
-    icon: Telescope,
-  },
-  {
     label: "For Businesses",
-    description: "Websites and your social media presence are both crucial towards meeting your goals. Build your product, we'll think about your brand long term",
+    description: "Websites and Digital presence are both crucial towards meeting your goals. Build your product, we'll think about your brand long term",
+    to: "/corporate",
     icon: ShieldCheck,
   },
 ];
@@ -82,17 +85,20 @@ export function HomeHero() {
               {HERO_STATS.map((stat) => {
                 const Icon = stat.icon;
                 return (
+                  <a key={stat.label} href={stat.to}>
+
                   <div key={stat.label} className="flex items-start gap-3">
                     <Icon className="mt-1 h-6 w-6 shrink-0 text-[#C9FF6B]" aria-hidden />
                     <div>
                       <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-white">
                         {stat.label}
                       </p>
-                      <p className="mt-1 text-[11px] leading-relaxed text-white/80">
+                      <p className="mt-1 line-clamp-3 text-[11px] leading-relaxed text-white/80">
                         {stat.description}
                       </p>
                     </div>
                   </div>
+              </a>
                 );
               })}
             </div>
