@@ -65,7 +65,7 @@ const Navbar = () => {
 
   return (
     <nav className="fixed left-4 right-4 top-3 z-[1100] md:left-14 md:right-14">
-      <div className="mx-auto flex h-12 max-w-[1400px] items-center justify-between rounded-full border border-white/[0.13] bg-transparent px-3 shadow-[0_8px_30px_rgba(0,0,0,0.18)] backdrop-blur-xl sm:px-5 lg:px-6">
+      <div className="mx-auto flex h-12 max-w-[1400px] items-center justify-between rounded-full border border-white/20 bg-transparent px-3 backdrop-blur-xl sm:px-5 lg:px-6">
         <FluxLogo size="sm" />
 
         <div className="hidden flex-1 items-center justify-center gap-7 lg:flex">
@@ -110,7 +110,7 @@ const Navbar = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="mx-2 mt-2 overflow-hidden rounded-2xl border border-white/[0.13] bg-[#071321]/95 shadow-xl backdrop-blur-xl lg:hidden"
+            className="mx-2 mt-2 overflow-hidden rounded-2xl border border-white/20 bg-transparent backdrop-blur-xl lg:hidden"
           >
             <div className="flex flex-col gap-1 px-5 py-4 sm:px-8">
               {navLinks.map((link) => (
