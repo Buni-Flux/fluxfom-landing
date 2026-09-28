@@ -5,6 +5,7 @@ import { LandingLayout } from "./LandingLayout";
 import { LandingNotFound } from "./LandingNotFound";
 
 const Home = lazy(() => import("@/pages/Home"));
+const AudiencePage = lazy(() => import("@/pages/AudiencePage"));
 const Services = lazy(() => import("@/pages/Services"));
 const HowItWorks = lazy(() => import("@/pages/HowItWorks"));
 const Projects = lazy(() => import("@/pages/Projects"));
@@ -36,6 +37,10 @@ const LandingApp = () => (
         <Suspense fallback={<LoadingFallback />}>
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/creatives" element={<AudiencePage audience="creatives" />} />
+            <Route path="/corporate" element={<AudiencePage audience="corporate" />} />
+            <Route path="/personal" element={<AudiencePage audience="personal" />} />
+            <Route path="/individuals" element={<Navigate to="/personal" replace />} />
             <Route path="/services" element={<Services />} />
             <Route path="/how-it-works" element={<HowItWorks />} />
             <Route path="/projects" element={<Projects />} />
