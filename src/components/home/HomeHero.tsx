@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Palette, ShieldCheck, FingerprintIcon, Facebook, Instagram, Twitter } from "lucide-react";
+import { Palette, ShieldCheck, FingerprintIcon, Facebook, Instagram, Twitter, Linkedin } from "lucide-react";
 import { fadeInView } from "./homeMotion";
 
 const HERO_STATS = [
@@ -79,21 +79,25 @@ export function HomeHero() {
           </motion.div>
         </div>
 
-        <div className="mt-14">
-          <div className="mx-auto flex max-w-[1100px] flex-col items-center justify-between gap-6 rounded-[1.5rem] text-white sm:px-8 lg:flex-row">
-            <div className="grid w-full gap-5 px-6 py-4 bg-white/10 border border-white/20 rounded-xl shadow-xl backdrop-blur-md sm:grid-cols-3 lg:flex-1">
+        <div className="mt-14 w-full">
+          <div className="mx-auto flex flex-col items-center justify-between gap-6 rounded-[1.5rem] text-white sm:px-8 lg:ml-0 lg:mr-auto lg:flex-row">
+            <div className="grid w-full gap-2 sm:grid-cols-3 lg:w-auto lg:grid-cols-3">
               {HERO_STATS.map((stat) => {
                 const Icon = stat.icon;
                 return (
-                  <a key={stat.label} href={stat.to}>
-
-                  <div key={stat.label} className="flex items-start gap-3">
+                  <a
+                    key={stat.label}
+                    href={stat.to} 
+                    title={stat.description}
+                    className="group relative rounded-lg p-2 -m-2 focus-visible:outline-none lg:h-[72px] lg:w-[176px]"
+                  >
+                  <div className="flex h-full items-start gap-3 rounded-xl border border-white/20 bg-white/10 px-4 py-2 shadow-xl backdrop-blur-md">
                     <Icon className="mt-1 h-6 w-6 shrink-0 text-[#C9FF6B]" aria-hidden />
                     <div>
                       <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-white">
                         {stat.label}
                       </p>
-                      <p className="mt-1 line-clamp-3 text-[11px] leading-relaxed text-white/80">
+                      <p className="pointer-events-none absolute left-2 top-full z-20 mt-2 w-64 rounded-md border border-white/20 bg-[#15232b] px-3 py-2 text-left text-[11px] leading-relaxed text-white/90 opacity-0 shadow-xl transition-opacity duration-200 group-focus-visible:opacity-100 group-hover:opacity-100">
                         {stat.description}
                       </p>
                     </div>
@@ -103,9 +107,9 @@ export function HomeHero() {
               })}
             </div>
             <div className="flex shrink-0 items-center gap-2 border-t border-white/20 pt-4 lg:border-l lg:border-t-0 lg:pl-6 lg:pt-0" aria-label="Social links">
-              <a href="#facebook" aria-label="Facebook" className="rounded-full border border-white/20 bg-white/10 p-2 transition hover:bg-white/20"><Facebook className="h-3.5 w-3.5" aria-hidden /></a>
-              <a href="#instagram" aria-label="Instagram" className="rounded-full border border-white/20 bg-white/10 p-2 transition hover:bg-white/20"><Instagram className="h-3.5 w-3.5" aria-hidden /></a>
-              <a href="#twitter" aria-label="Twitter" className="rounded-full border border-white/20 bg-white/10 p-2 transition hover:bg-white/20"><Twitter className="h-3.5 w-3.5" aria-hidden /></a>
+              <a href="https://instagram.com/fluxfom" aria-label="Instagram" className="rounded-full border border-white/20 bg-white/10 p-2 transition hover:bg-white/20"><Instagram className="h-3.5 w-3.5" aria-hidden /></a>
+              <a href="https://twitter.com/fluxfom" aria-label="Twitter" className="rounded-full border border-white/20 bg-white/10 p-2 transition hover:bg-white/20"><Twitter className="h-3.5 w-3.5" aria-hidden /></a>
+              <a href="https://linkedin.com/company/fluxfom" aria-label="LinkedIn" className="rounded-full border border-white/20 bg-white/10 p-2 transition hover:bg-white/20"><Linkedin className="h-3.5 w-3.5" aria-hidden /></a>
             </div>
           </div>
         </div>
