@@ -15,9 +15,58 @@ const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [isBrightBackground, setIsBrightBackground] = useState(false);
   const location = useLocation();
+  const navRef = useRef<HTMLElement | null>(null);
   const animationFrameRef = useRef<number | null>(null);
   const completionTimeoutRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    let frameId: number | null = null;
+
+    const detectBackground = () => {
+      frameId = null;
+      const nav = navRef.current;
+      if (!nav) return;
+
+      const previousVisibility = nav.style.visibility;
+      nav.style.visibility = "hidden";
+      let element = document.elementFromPoint(window.innerWidth / 2, 36);
+      nav.style.visibility = previousVisibility;
+
+      let bright = false;
+      if (!element?.closest("#hero")) {
+        while (element) {
+          const color = window.getComputedStyle(element).backgroundColor;
+          const channels = color.match(/[\d.]+/g)?.map(Number);
+
+          if (channels && channels.length >= 3 && (channels[3] ?? 1) > 0.85) {
+            const luminance = (0.2126 * channels[0] + 0.7152 * channels[1] + 0.0722 * channels[2]) / 255;
+            bright = luminance > 0.62;
+            break;
+          }
+
+          element = element.parentElement;
+        }
+      }
+
+      setIsBrightBackground(bright);
+    };
+
+    const scheduleDetection = () => {
+      if (frameId === null) frameId = requestAnimationFrame(detectBackground);
+    };
+
+    scheduleDetection();
+    window.addEventListener("scroll", scheduleDetection, { passive: true });
+    window.addEventListener("resize", scheduleDetection);
+
+    return () => {
+      window.removeEventListener("scroll", scheduleDetection);
+      window.removeEventListener("resize", scheduleDetection);
+      if (frameId !== null) cancelAnimationFrame(frameId);
+    };
+  }, []);
 
   useEffect(() => {
     setIsLoading(true);
@@ -64,7 +113,7 @@ const Navbar = () => {
   }, [location.pathname]);
 
   return (
-    <nav className="fixed left-4 right-4 top-3 z-[1100] md:left-14 md:right-14">
+    <nav ref={navRef} className="fixed left-4 right-4 top-3 z-[1100] md:left-14 md:right-14">
       <div className="mx-auto flex h-12 max-w-[1400px] items-center justify-between rounded-full border border-white/20 bg-transparent px-3 backdrop-blur-xl sm:px-5 lg:px-6">
         <FluxLogo size="sm" />
 
@@ -73,7 +122,7 @@ const Navbar = () => {
             <Link
               key={link.label}
               to={link.to}
-              className="text-[11px] font-medium tracking-[0.04em] text-white/75 transition-colors hover:text-white"
+              className={`text-[11px] font-medium tracking-[0.04em] transition-colors ${isBrightBackground ? "text-[#051005] hover:text-black" : "text-white/75 hover:text-white"}`}
             >
               {link.label}
             </Link>
@@ -96,7 +145,7 @@ const Navbar = () => {
             aria-label={open ? "Close navigation menu" : "Open navigation menu"}
             aria-expanded={open}
             aria-controls="mobile-nav-menu"
-            className="flex h-9 w-9 items-center justify-center rounded-full border border-white/20 text-white/80 transition hover:border-flux-neon/50 hover:text-flux-neon focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-flux-neon focus-visible:ring-offset-2 focus-visible:ring-offset-flux-void lg:hidden"
+            className={`flex h-9 w-9 items-center justify-center rounded-full border transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-flux-neon focus-visible:ring-offset-2 focus-visible:ring-offset-flux-void lg:hidden ${isBrightBackground ? "border-[#051005]/20 text-[#051005] hover:border-[#051005]/50 hover:text-black" : "border-white/20 text-white/80 hover:border-flux-neon/50 hover:text-flux-neon"}`}
           >
             {open ? <X size={16} strokeWidth={1.5} /> : <Menu size={16} strokeWidth={1.5} />}
           </button>
@@ -118,7 +167,7 @@ const Navbar = () => {
                   key={link.label}
                   to={link.to}
                   onClick={() => setOpen(false)}
-                  className="px-2 py-3 text-sm font-medium text-white/80 transition hover:text-flux-neon"
+                  className={`px-2 py-3 text-sm font-medium transition ${isBrightBackground ? "text-[#051005]/80 hover:text-black" : "text-white/80 hover:text-flux-neon"}`}
                 >
                   {link.label}
                 </Link>

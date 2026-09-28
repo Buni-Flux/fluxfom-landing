@@ -30,7 +30,7 @@ export function HomeHero() {
       className="relative overflow-hidden text-flux-void"
       style={{
         backgroundImage:
-          "linear-gradient(180deg, rgba(3, 18, 30, 0.55) 0%, rgba(3, 18, 30, 0.55) 25%, rgba(3, 18, 30, 0.35) 30%), url('/assets/images/hero-bg.jpg')",
+          "linear-gradient(180deg, rgba(3, 18, 30, 0.55) 0%, rgba(3, 18, 30, 0.55) 25%, rgba(3, 18, 30, 0.55) 30%), url('/assets/images/hero-bg.jpg')",
         backgroundPosition: "center",
         backgroundSize: "cover",
       }}
@@ -46,7 +46,7 @@ export function HomeHero() {
             <motion.h1
               id="home-hero-heading"
               variants={fadeInView}
-              className="text-[clamp(3rem,5vw,5.25rem)] font-monument font-black leading-[0.92] tracking-tight md:mt-16 text-flux-void"
+              className="text-[clamp(3rem,5vw,5.25rem)] font-monument font-black leading-[0.92] tracking-tight md:mt-32 text-flux-void"
             >
               <span className="block text-white">Make your business impossible to ignore.</span>
             </motion.h1>
@@ -78,7 +78,7 @@ export function HomeHero() {
 
         <div className="mt-14">
           <div className="mx-auto flex max-w-[1100px] flex-col items-center justify-between gap-6 rounded-[1.5rem] text-white sm:px-8 lg:flex-row">
-            <div className="grid w-full gap-5 px-6 py-4 bg-white/10 border border-white/20 shadow-xl backdrop-blur-md sm:grid-cols-3 lg:flex-1">
+            <div className="grid w-full gap-5 px-6 py-4 bg-white/10 border border-white/20 rounded-xl shadow-xl backdrop-blur-md sm:grid-cols-3 lg:flex-1">
               {HERO_STATS.map((stat) => {
                 const Icon = stat.icon;
                 return (
