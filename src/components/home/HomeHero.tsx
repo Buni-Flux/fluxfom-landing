@@ -108,7 +108,7 @@ export function HomeHero() {
             </div>
             <div className="flex shrink-0 items-center gap-2 border-t border-white/20 pt-4 lg:border-l lg:border-t-0 lg:pl-6 lg:pt-0" aria-label="Social links">
               <a href="https://instagram.com/fluxfom" aria-label="Instagram" className="rounded-full border border-white/20 bg-white/10 p-2 transition hover:bg-white/20"><Instagram className="h-3.5 w-3.5" aria-hidden /></a>
-              <a href="https://twitter.com/fluxfom" aria-label="Twitter" className="rounded-full border border-white/20 bg-white/10 p-2 transition hover:bg-white/20"><Twitter className="h-3.5 w-3.5" aria-hidden /></a>
+              <a href="https://x.com/fluxfomke" aria-label="Twitter" className="rounded-full border border-white/20 bg-white/10 p-2 transition hover:bg-white/20"><Twitter className="h-3.5 w-3.5" aria-hidden /></a>
               <a href="https://linkedin.com/company/fluxfom" aria-label="LinkedIn" className="rounded-full border border-white/20 bg-white/10 p-2 transition hover:bg-white/20"><Linkedin className="h-3.5 w-3.5" aria-hidden /></a>
             </div>
           </div>
