@@ -1,11 +1,11 @@
 ﻿import { Suspense, lazy } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { AppProviders } from "@/apps/shared/AppProviders";
+import AudiencePage from "@/pages/AudiencePage";
 import { LandingLayout } from "./LandingLayout";
 import { LandingNotFound } from "./LandingNotFound";
 
 const Home = lazy(() => import("@/pages/Home"));
-const AudiencePage = lazy(() => import("@/pages/AudiencePage"));
 const Services = lazy(() => import("@/pages/Services"));
 const HowItWorks = lazy(() => import("@/pages/HowItWorks"));
 const Projects = lazy(() => import("@/pages/Projects"));
