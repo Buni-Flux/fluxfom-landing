@@ -19,7 +19,7 @@ const Home = () => {
   }, []);
 
   return (
-    <main className="bg-[#C9FF6B]">
+    <main className="bg-white">
       <HomeHero />
       <HomeMission />
       <HomeProcess />

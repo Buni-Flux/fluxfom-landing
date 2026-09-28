@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Palette, ShieldCheck, FingerprintIcon, Facebook, Instagram, Twitter, Linkedin } from "lucide-react";
+import { Palette, ShieldCheck, FingerprintIcon, Facebook, Instagram, Twitter, Linkedin, ArrowUpRight } from "lucide-react";
 import { fadeInView } from "./homeMotion";
 
 const HERO_STATS = [
@@ -49,9 +49,9 @@ export function HomeHero() {
             <motion.h1
               id="home-hero-heading"
               variants={fadeInView}
-              className="text-[clamp(3rem,5vw,5.25rem)] font-monument font-black leading-[0.92] tracking-tight md:mt-32 text-flux-void"
+              className="text-[clamp(3rem,5vw,5.25rem)] font-monument font-black leading-[0.92] tracking-tight md:mt-32 text-[#AAED36]"
             >
-              <span className="block text-white">Make your business impossible to ignore.</span>
+              <span className="block text-white">Make your Brand</span>impossible to ignore.
             </motion.h1>
           </motion.div>
 
@@ -69,11 +69,17 @@ export function HomeHero() {
             </motion.p>
 
             <div className="mt-16 self-center flex flex-col gap-4 md:flex-row items-center justify-center">
-              <Link to="/start" className="btn-neon-solid px-9 py-4 text-base">
-                Try Fluxfom for 14 days
+              <Link
+                to="/start"
+                className="flex flex-row items-center justify-between rounded-full bg-flux-neon py-2 pl-4 pr-2 text-sm font-semibold text-[#10170a] transition-colors hover:bg-[#d5ff35]"
+              >
+                START HERE
+                <span className="ml-2 flex h-7 w-7 items-center justify-center rounded-full bg-[#10170a] text-white">
+                  <ArrowUpRight size={15} strokeWidth={2.5} />
+                </span>
               </Link>
               <Link to="/contact" className="btn-neon-outline px-9 py-4 text-base">
-                Talk to a Human →
+                Talk to a Human
               </Link>
             </div>
           </motion.div>

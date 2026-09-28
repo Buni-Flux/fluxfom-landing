@@ -40,6 +40,16 @@ const AUDIENCES = {
 
 type AudienceKey = keyof typeof AUDIENCES;
 
+function getAudienceHeroBackground(audience: AudienceKey) {
+  const imageByAudience: Record<AudienceKey, string> = {
+    creatives: "/assets/images/creative-hero-bg.png",
+    corporate: "/assets/images/corporate-hero-bg.png",
+    personal: "/assets/images/personal-hero-bg.jpg",
+  };
+
+  return `linear-gradient(180deg, rgba(3, 18, 30, 0.62) 0%, rgba(3, 18, 30, 0.56) 48%, rgba(3, 18, 30, 0.82) 100%), url('${imageByAudience[audience]}')`;
+}
+
 export default function AudiencePage({ audience }: { audience: AudienceKey }) {
   const { pathname } = useLocation();
   const content = AUDIENCES[audience];
@@ -60,8 +70,7 @@ export default function AudiencePage({ audience }: { audience: AudienceKey }) {
         aria-labelledby="audience-hero-heading"
         className="relative overflow-hidden text-flux-void"
         style={{
-          backgroundImage:
-            "linear-gradient(180deg, rgba(3, 18, 30, 0.62) 0%, rgba(3, 18, 30, 0.56) 48%, rgba(3, 18, 30, 0.82) 100%), url('/assets/images/hero-bg.jpg')",
+          backgroundImage: getAudienceHeroBackground(audience),
           backgroundPosition: "center",
           backgroundSize: "cover",
         }}
