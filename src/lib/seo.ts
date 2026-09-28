@@ -6,6 +6,8 @@ const GOOGLE_SITE_VERIFICATION =
 
 const DEFAULT_KEYWORDS = [
   "FluxFom",
+  "FluxFomKE",
+  "FluxFom Kenya",
   "brand positioning",
   "growth studio",
   "Nairobi marketing agency",
@@ -82,11 +84,16 @@ export const updateSeoMeta = ({
     "@context": "https://schema.org",
     "@type": ["Organization", "WebSite"],
     name: "FluxFom",
+    alternateName: ["FluxFomKE", "FluxFom Kenya"],
     url: SITE_URL,
     logo: SITE_ICON,
     description,
     areaServed: "Nairobi, Kenya",
-    sameAs: ["https://www.linkedin.com", "https://www.instagram.com"],
+    sameAs: [
+      "https://www.instagram.com/fluxfom",
+      "https://x.com/fluxfomke",
+      "https://linkedin.com/company/fluxfom",
+    ],
     contactPoint: {
       "@type": "ContactPoint",
       contactType: "sales",

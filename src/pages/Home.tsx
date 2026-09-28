@@ -11,9 +11,9 @@ const Home = () => {
 
   useEffect(() => {
     updateSeoMeta({
-      title: "FluxFom | Got an idea? Let's make it make sense.",
+      title: "FluxFom (FluxFomKE) | Got an idea? Let's make it make sense.",
       description:
-        "FluxFom helps brands turn ideas into clear positioning, memorable identity, and real growth momentum — got an idea? Let's make it make sense.",
+        "FluxFom, also known as FluxFomKE, is a Nairobi brand strategy and growth studio helping brands build clear positioning, memorable identity, and real momentum.",
       pathname: "/",
     });
   }, []);
