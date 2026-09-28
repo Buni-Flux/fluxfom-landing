@@ -2,7 +2,7 @@ import { Link, useLocation } from "react-router-dom";
 import { ArrowUpRight, Menu, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FluxLogo } from "@/components/marketing/FluxLogo";
+import { FluxLogoOnDark, FluxLogoOnLight } from "@/components/marketing/FluxLogoVariants";
 
 const navLinks = [
   { label: "SERVICES", to: "/services", hash: "#service-offerings" },
@@ -115,7 +115,7 @@ const Navbar = () => {
   return (
     <nav ref={navRef} className="fixed left-4 right-4 top-3 z-[1100] md:left-14 md:right-14">
       <div className="mx-auto flex h-12 max-w-[1400px] items-center justify-between rounded-full border border-white/20 bg-transparent px-3 backdrop-blur-xl sm:px-5 lg:px-6">
-        <FluxLogo size="sm" />
+        {isBrightBackground ? <FluxLogoOnLight /> : <FluxLogoOnDark />}
 
         <div className="hidden flex-1 items-center justify-center gap-7 lg:flex">
           {navLinks.map((link) => (
