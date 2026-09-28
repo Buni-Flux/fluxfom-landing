@@ -6,7 +6,7 @@ import PublicAskAssistant from "@/components/PublicAskAssistant";
 
 export const LandingLayout = ({ children }: { children: ReactNode }) => {
   const { pathname } = useLocation();
-  const isPublicPage = !/^\/(admin|reset-password|verify-email|profile-status|portfolio\/projectDraft|fom-core|flux-core)(\/|$)/.test(pathname);
+  const isPublicPage = !/^\/(admin|start|reset-password|verify-email|profile-status|portfolio\/projectDraft|fom-core|flux-core)(\/|$)/.test(pathname);
 
   return (
     <div className="flux-landing-world flex min-h-screen flex-col">
