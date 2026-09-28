@@ -1,22 +1,22 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Clock3, CarFront, ShieldCheck, Facebook, Instagram, Twitter } from "lucide-react";
+import { Palette, Telescope, ShieldCheck, FingerprintIcon, Facebook, Instagram, Twitter } from "lucide-react";
 import { fadeInView } from "./homeMotion";
 
 const HERO_STATS = [
   {
-    label: "Two decades",
-    description: "Family-run since 2004, with the same service team behind every sale.",
-    icon: Clock3,
+    label: "For Creatives",
+    description: "Are you planning an Album Launch, Event, or a Tour? We help you plan and execute successful campaigns that engage your audience and drive results based on your current market position.",
+    icon: Palette,
   },
   {
-    label: "15,000 vehicles",
-    description: "Sold and serviced — first cars through to full fleet replacement.",
-    icon: CarFront,
+    label: "For Individuals",
+    description: "Are you an individual looking to build your personal brand or promote your services? We help you create a strong online presence and connect with your target audience effectively.",
+    icon: Telescope,
   },
   {
-    label: "172-point check",
-    description: "Every certified vehicle inspected before it reaches the floor.",
+    label: "For Businesses",
+    description: "Websites and your social media presence are both crucial towards meeting your goals. Build your product, we'll think about your brand long term",
     icon: ShieldCheck,
   },
 ];
@@ -83,7 +83,7 @@ export function HomeHero() {
                 const Icon = stat.icon;
                 return (
                   <div key={stat.label} className="flex items-start gap-3">
-                    <Icon className="mt-1 h-4 w-4 shrink-0 text-[#C9FF6B]" aria-hidden />
+                    <Icon className="mt-1 h-6 w-6 shrink-0 text-[#C9FF6B]" aria-hidden />
                     <div>
                       <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-white">
                         {stat.label}
