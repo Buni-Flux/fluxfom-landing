@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
 import { fadeInView } from "./homeMotion";
 import { SectionDivider } from "@/components/marketing/SectionDivider";
+import FEATURED_VIDEO_URL from "@/assets/flux-abstract.mp4";
 
 export function HomeFinalCta() {
   return (
@@ -19,10 +19,8 @@ export function HomeFinalCta() {
               variants={fadeInView}
               className="text-[clamp(2rem,4.5vw,3.25rem)] leading-[1.08] text-white"
             >
-              <span className="heading-accent">Focus </span>
-              <span className="heading-monument normal-case">on the Business, look & </span>
-              <span className="heading-accent">Sound </span>
-              <span className="heading-monument normal-case">right doing it</span>
+              <span className="heading-accent">Focus on the Business, <br/> look right doing it</span>
+              <span className="heading-monument normal-case"> </span>
             </motion.h2>
 
             <motion.div variants={fadeInView}>
@@ -51,28 +49,18 @@ export function HomeFinalCta() {
             className="mx-auto w-full max-w-md lg:max-w-none"
           >
             <div className="relative overflow-hidden rounded-2xl border-[5px] border-flux-neon neon-glow-strong">
-              <div className="liquid-green aspect-[3/4] w-full" aria-hidden />
-              <div className="flux-grain absolute inset-0 opacity-30 mix-blend-overlay" aria-hidden />
-
-              <div className="absolute inset-0 flex flex-col items-center justify-center gap-6 p-8">
-                <div className="rounded-lg bg-black/60 px-8 py-4 backdrop-blur-sm">
-                  <span className="heading-monument text-lg tracking-widest text-white md:text-xl">[PLACEHOLDER]</span>
-                </div>
-
-                <div className="relative w-full max-w-[260px]">
-                  <div className="absolute inset-0 -z-10 overflow-hidden rounded-xl">
-                    <img
-                      src="/assets/images/hero-bg-face.png"
-                      alt=""
-                      className="h-full w-full object-cover"
-                    />
-                    <div className="absolute inset-0 bg-black/40" aria-hidden />
-                  </div>
-
-                  <Link to="/start" className="relative z-10 btn-neon-solid px-10 py-3.5 text-base w-full text-center">
-                    Get Started
-                  </Link>
-                </div>
+              <div className="group relative">
+                <video
+                  src={FEATURED_VIDEO_URL}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="auto"
+                  className="h-full min-h-[320px] w-full object-cover md:min-h-[420px] [&::-webkit-media-controls-panel]:opacity-0 [&::-webkit-media-controls]:opacity-0 [&::-webkit-media-controls-play-button]:opacity-0 [&::-webkit-media-controls-current-time-display]:opacity-0 [&::-webkit-media-controls-time-remaining-display]:opacity-0 [&::-webkit-media-controls-timeline]:opacity-0 [&::-webkit-media-controls-volume-slider]:opacity-0 [&::-webkit-media-controls-mute-button]:opacity-0 [&::-webkit-media-controls-fullscreen-button]:opacity-0 group-hover:[&::-webkit-media-controls-panel]:opacity-100 group-hover:[&::-webkit-media-controls]:opacity-100 group-hover:[&::-webkit-media-controls-play-button]:opacity-100 group-hover:[&::-webkit-media-controls-current-time-display]:opacity-100 group-hover:[&::-webkit-media-controls-time-remaining-display]:opacity-100 group-hover:[&::-webkit-media-controls-timeline]:opacity-100 group-hover:[&::-webkit-media-controls-volume-slider]:opacity-100 group-hover:[&::-webkit-media-controls-mute-button]:opacity-100 group-hover:[&::-webkit-media-controls-fullscreen-button]:opacity-100"
+                >
+                  <source src={FEATURED_VIDEO_URL} type="video/mp4" />
+                </video>
               </div>
             </div>
           </motion.div>

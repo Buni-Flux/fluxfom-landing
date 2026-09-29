@@ -74,7 +74,7 @@ export function HomeHero() {
                 className="flex flex-row items-center justify-between rounded-full bg-flux-neon py-2 pl-4 pr-2 text-sm font-semibold text-[#10170a] transition-colors hover:bg-[#d5ff35]"
               >
                 START HERE
-                <span className="ml-2 flex h-7 w-7 items-center justify-center rounded-full bg-[#10170a] text-white">
+                <span className="ml-4 flex h-7 w-7 items-center justify-center rounded-full bg-[#10170a] text-white">
                   <ArrowUpRight size={15} strokeWidth={2.5} />
                 </span>
               </Link>

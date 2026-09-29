@@ -121,10 +121,6 @@ const Contact = () => {
               <div className="absolute inset-x-8 top-0 h-16 rounded-b-full bg-[#0B2B12]/5 blur-2xl" aria-hidden />
 
               <div className="relative">
-                <div className="mb-5 flex items-center gap-2 text-[#0B2B12]">
-                  <MessageSquareText size={18} />
-                  <span className="text-[10px] font-bold uppercase tracking-[0.28em]">we will get back to you as soon as possible</span>
-                </div>
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div className="grid gap-4 sm:grid-cols-2">
                     <label className="block">

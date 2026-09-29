@@ -34,10 +34,7 @@ export function HomeProcess() {
             id="process-heading"
             className="max-w-4xl text-[clamp(1.75rem,4vw,3rem)] leading-[1.1] text-flux-void"
           >
-            <span className="heading-accent text-flux-void">from </span>
-            <span className="heading-monument normal-case">living brand profiles </span>
-            <span className="heading-monument normal-case">to sales-driven </span>
-            <span className="heading-accent text-flux-void">marketing results</span>
+            <span className="heading-monument normal-case">From living brand profiles to sales-driven marketing results</span>
           </h2>
 
           <p className="mt-6 max-w-2xl text-sm font-medium leading-relaxed text-flux-void/75 md:text-base">
