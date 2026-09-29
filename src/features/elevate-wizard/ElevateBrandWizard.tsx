@@ -1,5 +1,5 @@
 ﻿import { useCallback, useEffect, useMemo, useState, type FormEvent } from "react";
-import { ArrowLeft, ArrowRight, Loader2, Send, Search, Plus } from "lucide-react";
+import { ArrowLeft, ArrowRight, Loader2, Send, Plus } from "lucide-react";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { EMAIL_EVENTS } from "@/services/email/email.events";
@@ -49,8 +49,8 @@ type WizardStep =
 const WIZARD_STEPS: readonly WizardStep[] = [
   {
     kind: "start",
-    title: "A guided conversation for your brand.",
-    description: "Answer one question at a time so FluxFom can build a sharper profile." ,
+    title: "A guided profile for your brand.",
+    description: "Share a few details so FluxFom can build a sharper profile.",
   },
   {
     kind: "single",
@@ -107,27 +107,6 @@ function optionLabel(option: Option) {
 
 function optionHint(option: Option) {
   return typeof option === "string" ? undefined : option.hint;
-}
-
-function assistantBubble({ title, description }: { title: string; description: string }) {
-  return (
-    <div className="relative max-w-[90%] rounded-[2.25rem] border border-[#0B2B12]/10 bg-white px-6 py-6 shadow-[0_24px_80px_-48px_rgba(11,43,18,0.16)]">
-      <div className="mb-4 inline-flex rounded-full bg-[#F4F7F1] px-3 py-1 text-[10px] uppercase tracking-[0.3em] text-[#0B2B12]/70">
-        Flux
-      </div>
-      <h3 className="text-xl font-semibold leading-tight tracking-tight text-[#0B2B12] sm:text-2xl">{title}</h3>
-      <p className="mt-4 text-sm leading-7 text-[#0B2B12]/75">{description}</p>
-    </div>
-  );
-}
-
-function userBubble({ text }: { text: string }) {
-  return (
-    <div className="relative ml-auto max-w-[80%] rounded-[2.25rem] bg-[#0B2B12] px-6 py-5 text-sm text-white shadow-[0_24px_60px_-30px_rgba(11,43,18,0.5)] ring-1 ring-white/10">
-      <p className="whitespace-pre-wrap leading-6">{text}</p>
-      <span className="absolute -right-4 bottom-2 h-4 w-4 rounded-tl-[1.5rem] bg-[#0B2B12]" />
-    </div>
-  );
 }
 
 function OptionButton({
@@ -325,8 +304,8 @@ export function ElevateBrandWizard() {
               Home
             </Link>
             <div className="text-center">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-white/55">Flux Chat</p>
-              <h1 className="text-lg font-semibold tracking-tight text-white sm:text-xl">Conversation complete</h1>
+              <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-white/55">Brand profile</p>
+              <h1 className="text-lg font-semibold tracking-tight text-white sm:text-xl">Profile started</h1>
             </div>
             <div className="w-16" aria-hidden />
           </div>
@@ -361,7 +340,7 @@ export function ElevateBrandWizard() {
         <div className="mx-auto flex max-w-[1400px] items-center justify-between gap-4">
           <div className="inline-flex items-center gap-3 rounded-full border border-white/10 bg-white/10 px-4 py-2 text-sm text-white/90 shadow-sm">
             <Search className="h-4 w-4" />
-            <span className="font-semibold uppercase tracking-[0.24em]">New Chat</span>
+            <span className="font-semibold uppercase tracking-[0.24em]">Your brand profile</span>
           </div>
           <div className="hidden sm:flex items-center gap-3">
             <button className="inline-flex h-10 items-center justify-center rounded-full border border-white/15 bg-white/10 px-4 text-sm text-white/90 transition hover:bg-white/20">
@@ -383,7 +362,7 @@ export function ElevateBrandWizard() {
                   <Plus className="h-6 w-6" />
                 </div>
                 <h1 className="mt-6 text-4xl font-semibold tracking-tight text-[#0B2B12]">Hello there!</h1>
-                <p className="mt-3 text-sm leading-6 text-[#0B2B12]/70">I'm Fom AI, <br/>I basically help you get started marketing your brand. What can we do to market your brand today?</p>
+                <p className="mt-3 text-sm leading-6 text-[#0B2B12]/70">Answer a few questions about your brand and goals to help us shape the right next steps.</p>
               </div>
 
               <div className="mt-12 grid gap-4 sm:grid-cols-3">
@@ -425,18 +404,6 @@ export function ElevateBrandWizard() {
               </div>
             </div>
 
-            <div className="mx-auto w-full max-w-3xl">
-              <div className="flex items-center gap-4 rounded-full border border-white/70 bg-white px-4 py-4 shadow-[0_25px_80px_-45px_rgba(5,16,5,0.18)]">
-                <button className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-[#0B2B12] text-white shadow-sm">
-                  <Plus className="h-5 w-5" />
-                </button>
-                <div className="flex-1 text-sm text-[#0B2B12]/70">Write a message here...</div>
-                <button className="inline-flex items-center gap-2 rounded-full bg-[#0B2B12] px-5 py-3 text-sm font-semibold text-white transition hover:brightness-110">
-                  Send
-                  <ArrowRight className="h-4 w-4" />
-                </button>
-              </div>
-            </div>
           </div>
         </main>
       ) : (
@@ -528,18 +495,6 @@ export function ElevateBrandWizard() {
               </div>
             ) : null}
 
-            <div className="mx-auto w-full max-w-3xl">
-              <div className="flex items-center gap-4 rounded-full border border-white/80 bg-white px-4 py-4 shadow-[0_25px_80px_-45px_rgba(5,16,5,0.18)]">
-                <button className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-[#0B2B12] text-white shadow-sm">
-                  <Plus className="h-5 w-5" />
-                </button>
-                <div className="flex-1 text-sm text-[#0B2B12]/70">Write a message here...</div>
-                <button className="inline-flex items-center gap-2 rounded-full bg-[#0B2B12] px-5 py-3 text-sm font-semibold text-white transition hover:brightness-110">
-                  Send
-                  <ArrowRight className="h-4 w-4" />
-                </button>
-              </div>
-            </div>
           </div>
         </main>
       )}
