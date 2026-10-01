@@ -232,7 +232,7 @@ export function ThreeDLayeredServiceCard({
             transition={{ type: "spring", stiffness: isMobile ? 300 : 400, damping: isMobile ? 30 : 25, mass: 0.8 }}
           >
             <motion.div
-              className="grid h-full w-full place-items-center text-white drop-shadow-lg"
+              className={`grid h-full w-full place-items-center drop-shadow-lg transition-colors duration-300 ${shouldBeExpanded ? "text-white" : "text-flux-neon"}`}
               style={{ x: shouldBeExpanded ? logoMoveX : 0, y: shouldBeExpanded ? logoMoveY : 0 }}
             >
               <LogoIcon size={logoSize} strokeWidth={1.7} aria-hidden />
