@@ -1,33 +1,76 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { ChevronRight } from "lucide-react";
-import { fadeInView, fadeItem, staggerContainer } from "./homeMotion";
+import { BarChart3, Clapperboard, Film, Globe2, Megaphone, Monitor, Palette, Rocket, Search, Sparkles, TrendingUp } from "lucide-react";
+import { ThreeDLayeredServiceCard } from "./ThreeDLayeredServiceCard";
+import { fadeInView } from "./homeMotion";
 
 const SERVICE_CARDS = [
   {
     id: 1,
     label: "(01)",
     title: "Social & \nContent Strategy.",
-    bg: "bg-[#ffe8d2]",
+    category: "CONTENT & STRATEGY",
+    description: "Build a voice people remember.",
+    icon: Megaphone,
+    visualIcon: Palette,
+    glow: "rgba(255, 153, 40, 0.5)",
+    glowGradient: "#ffd164",
   },
   {
     id: 2,
     label: "(02)",
     title: "Web & Digital",
-    bg: "bg-[#e9dbff]",
+    category: "WEB & DIGITAL",
+    description: "Turn digital experiences into momentum.",
+    icon: Globe2,
+    visualIcon: Monitor,
+    glow: "rgba(68, 148, 247, 0.48)",
+    glowGradient: "#9ad4ff",
   },
   {
     id: 3,
     label: "(03)",
     title: "Video, Animation\n& Motion Design.",
-    bg: "bg-[#fbffcd]",
+    category: "VIDEO & MOTION",
+    description: "Make the story impossible to scroll past.",
+    icon: Clapperboard,
+    visualIcon: Film,
+    glow: "rgba(245, 69, 106, 0.48)",
+    glowGradient: "#ff9ba8",
   },
   {
     id: 4,
     label: "(04)",
     title: "Brand Marketing\n& Growth.",
-    bg: "bg-[#d9efff]",
-  }
+    category: "BRAND & GROWTH",
+    description: "Build a brand that keeps moving forward.",
+    icon: BarChart3,
+    visualIcon: TrendingUp,
+    glow: "rgba(53, 189, 223, 0.48)",
+    glowGradient: "#93edff",
+  },
+  {
+    id: 5,
+    label: "(05)",
+    title: "Market Research\n& Intelligence.",
+    category: "RESEARCH & INTELLIGENCE",
+    description: "Find the signal in a crowded market.",
+    icon: Search,
+    visualIcon: Sparkles,
+    glow: "rgba(60, 204, 119, 0.46)",
+    glowGradient: "#9df5bb",
+  },
+  {
+    id: 6,
+    label: "(06)",
+    title: "Launches &\nCustom Projects.",
+    category: "LAUNCHES & SPECIAL PROJECTS",
+    description: "Make the next big move with confidence.",
+    icon: Rocket,
+    visualIcon: Sparkles,
+    glow: "rgba(140, 174, 205, 0.45)",
+    glowGradient: "#c4e2ff",
+  },
 ];
 
 export function HomeMission() {
@@ -72,28 +115,8 @@ export function HomeMission() {
           </div>
 
           <motion.div variants={fadeInView} className="mt-14">
-            <div className="service-carousel mt-6 rounded-[2rem] bg-white/0">
-              <div className="service-carousel-track flex gap-6 py-6 px-4">
-                {[...SERVICE_CARDS, ...SERVICE_CARDS].map((card, idx) => (
-                  <motion.div
-                    key={`${card.id}-${idx}`}
-                    variants={fadeItem}
-                    className={`${card.bg} cursor-crosshair group relative flex flex-col justify-between overflow-hidden rounded-[2rem] p-8 shadow-[0_20px_50px_-30px_rgba(15,24,29,0.20)] min-w-[280px] sm:min-w-[320px] lg:min-w-[340px] min-h-[360px]`}
-                  >
-                    <span className="text-xs font-semibold uppercase tracking-[0.28em] text-flux-editorial/60">
-                      {card.label}
-                    </span>
-                    <div className="flex flex-row items-center justify-between">
-                      <h3 className="mt-8 whitespace-pre-line text-xl font-semibold leading-tight text-flux-void w-11/12">
-                        {card.title}
-                      </h3>
-                      <div className="flex h-12 w-12 items-center justify-center rounded-full bg-flux-void text-white transition group-hover:scale-105">
-                        <ChevronRight size={18} strokeWidth={3} aria-hidden />
-                      </div>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
+            <div className="grid justify-items-stretch gap-[2px] px-1 py-4 sm:grid-cols-2 md:grid-cols-3">
+              {SERVICE_CARDS.map((card) => <ThreeDLayeredServiceCard key={card.id} service={card} />)}
             </div>
           </motion.div>
         </motion.div>
