@@ -1,17 +1,79 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import { Search, ChevronRight } from "lucide-react";
+import {
+  BarChart3,
+  Clapperboard,
+  Film,
+  Fingerprint,
+  Globe2,
+  Megaphone,
+  Monitor,
+  Palette,
+  Rocket,
+  Search,
+  Sparkles,
+  TrendingUp,
+} from "lucide-react";
 import { SERVICES } from "@/lib/services";
 import { updateSeoMeta } from "@/lib/seo";
+import {
+  ThreeDLayeredServiceCard,
+  type ServiceCardData,
+} from "@/components/home/ThreeDLayeredServiceCard";
 
-const serviceBackgrounds = [
-  "bg-[#ffe8d2]",
-  "bg-[#e9dbff]",
-  "bg-[#fbffcd]",
-  "bg-[#d9efff]",
-  "bg-[#ffd7ff]",
-  "bg-[#d3f9d8]",
-  "bg-[#f6f4ff]",
+const serviceArtwork: Pick<
+  ServiceCardData,
+  "category" | "icon" | "visualIcon" | "glow" | "glowGradient"
+>[] = [
+  {
+    category: "CREATE",
+    icon: Palette,
+    visualIcon: Sparkles,
+    glow: "rgba(162, 255, 0, 0.34)",
+    glowGradient: "#a2ff00",
+  },
+  {
+    category: "PRODUCE",
+    icon: Clapperboard,
+    visualIcon: Film,
+    glow: "rgba(162, 255, 0, 0.34)",
+    glowGradient: "#a2ff00",
+  },
+  {
+    category: "GO DIGITAL",
+    icon: Globe2,
+    visualIcon: Monitor,
+    glow: "rgba(162, 255, 0, 0.34)",
+    glowGradient: "#a2ff00",
+  },
+  {
+    category: "BUILD A BRAND",
+    icon: Fingerprint,
+    visualIcon: Sparkles,
+    glow: "rgba(162, 255, 0, 0.34)",
+    glowGradient: "#a2ff00",
+  },
+  {
+    category: "GET NOTICED",
+    icon: Megaphone,
+    visualIcon: TrendingUp,
+    glow: "rgba(162, 255, 0, 0.34)",
+    glowGradient: "#a2ff00",
+  },
+  {
+    category: "RESEARCH & INTELLIGENCE",
+    icon: Search,
+    visualIcon: BarChart3,
+    glow: "rgba(162, 255, 0, 0.34)",
+    glowGradient: "#a2ff00",
+  },
+  {
+    category: "SPECIAL PROJECTS",
+    icon: Rocket,
+    visualIcon: Sparkles,
+    glow: "rgba(162, 255, 0, 0.34)",
+    glowGradient: "#a2ff00",
+  },
 ];
 
 const filterServices = (query: string) => {
@@ -82,26 +144,18 @@ const Services = () => {
           </div>
         </div>
 
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 md:grid-cols-4">
-          {filteredServices.map((service, index) => (
-            <article
-              key={service.title}
-              className={`${serviceBackgrounds[index % serviceBackgrounds.length]} cursor-crosshair group relative flex flex-col justify-between overflow-hidden rounded-[2rem] p-8 shadow-[0_25px_65px_-35px_rgba(15,23,16,0.25)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_35px_95px_-45px_rgba(15,23,16,0.28)]`}
-            >
-              <div className="text-sm uppercase tracking-[0.28em] text-flux-editorial/60">(0{index + 1})</div>
-              <div>
-                <h2 className="mt-8 text-2xl font-semibold leading-tight text-flux-void">
-                  {service.title}
-                </h2>
-                <p className="mt-5 text-sm leading-relaxed text-flux-editorial/85">
-                  {service.description}
-                </p>
-              </div>
-              <div className="mt-8 inline-flex h-12 w-12 items-center justify-center rounded-full bg-flux-void text-white transition group-hover:scale-105">
-                <ChevronRight size={18} strokeWidth={3} aria-hidden="true" />
-              </div>
-            </article>
-          ))}
+        <div className="mt-12 grid justify-items-stretch gap-[2px] sm:grid-cols-2 md:grid-cols-3">
+          {filteredServices.map((service) => {
+            const serviceIndex = SERVICES.findIndex((item) => item.title === service.title);
+            const card: ServiceCardData = {
+              ...service,
+              id: serviceIndex + 1,
+              label: `(0${serviceIndex + 1})`,
+              ...serviceArtwork[serviceIndex],
+            };
+
+            return <ThreeDLayeredServiceCard key={service.title} service={card} />;
+          })}
         </div>
 
         {filteredServices.length === 0 && (
