@@ -306,14 +306,15 @@ export function ThreeDLayeredServiceCard({
               width: `${imageSize}px`,
               height: `${imageSize}px`,
               zIndex: 20,
-              color: "white",
             }}
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: shouldBeExpanded ? 1 : 0, scale: shouldBeExpanded ? 1 : 0.8 }}
             transition={{ type: "spring", stiffness: 500, damping: 30, mass: 0.6 }}
           >
             <div className="grid h-full w-full place-items-center drop-shadow-xl">
-              <VisualIcon size={112} strokeWidth={1.35} aria-hidden />
+              <div className="grid h-28 w-28 place-items-center rounded-full bg-flux-neon text-flux-void shadow-[0_0_36px_rgba(162,255,0,0.55)]">
+                <VisualIcon size={72} strokeWidth={1.6} aria-hidden />
+              </div>
             </div>
             <div
               aria-hidden="true"
