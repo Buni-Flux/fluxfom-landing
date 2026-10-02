@@ -7,6 +7,7 @@ import { LandingNotFound } from "./LandingNotFound";
 
 const Home = lazy(() => import("@/pages/Home"));
 const Blog = lazy(() => import("@/pages/Blog"));
+const BlogArticle = lazy(() => import("@/pages/BlogArticle"));
 const Services = lazy(() => import("@/pages/Services"));
 const HowItWorks = lazy(() => import("@/pages/HowItWorks"));
 const Projects = lazy(() => import("@/pages/Projects"));
@@ -39,6 +40,7 @@ const LandingApp = () => (
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/blog" element={<Blog />} />
+            <Route path="/blog/:slug" element={<BlogArticle />} />
             <Route path="/creatives" element={<AudiencePage audience="creatives" />} />
             <Route path="/corporate" element={<AudiencePage audience="corporate" />} />
             <Route path="/personal" element={<AudiencePage audience="personal" />} />
