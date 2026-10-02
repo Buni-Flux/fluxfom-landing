@@ -9,6 +9,7 @@ const navLinks = [
   // { label: "About Us", to: "/about", hash: "#what-to-expect" },
   { label: "PORTFOLIO", to: "/projects", hash: "#clients-index" },
   { label: "TALK TO US", to: "/contact", hash: "#contact" },
+  { label: "BLOG", to: "/blog", hash: "#blog" },
 ];
 
 const Navbar = () => {
