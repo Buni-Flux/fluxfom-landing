@@ -1,5 +1,5 @@
 ﻿import { useCallback, useEffect, useMemo, useState, type FormEvent } from "react";
-import { ArrowLeft, ArrowRight, Loader2, Send, Plus } from "lucide-react";
+import { ArrowLeft, ArrowRight, Loader2, Send, Plus, Search } from "lucide-react";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { EMAIL_EVENTS } from "@/services/email/email.events";
