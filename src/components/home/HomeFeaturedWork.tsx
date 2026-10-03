@@ -70,7 +70,7 @@ export function HomeFeaturedWork({ projects }: Props) {
               return (
                 <motion.article key={project.id} variants={fadeItem} className={`group relative ${span}`}>
                   <Link
-                    to={`/projects/${project.id}`}
+                    to={`/clients/${project.id}`}
                     className="block h-full overflow-hidden rounded-[1.6rem] border border-flux-sand bg-white/55 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-flux-green/35 hover:bg-white/85 hover:shadow-[0_24px_70px_-45px_rgba(27,43,34,0.42)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-flux-green/40"
                   >
                     <div className="relative overflow-hidden">

@@ -1,503 +1,662 @@
-﻿import { useCallback, useEffect, useMemo, useState, type FormEvent } from "react";
-import { ArrowLeft, ArrowRight, Loader2, Send, Plus, Search } from "lucide-react";
-import { Link } from "react-router-dom";
+﻿import { useEffect, useLayoutEffect, useMemo, useRef, useState, type FormEvent } from "react";
+import { ArrowRight, ArrowLeft, Loader2, Mic, Search, CheckCircle2, Building2, UserRound, type LucideIcon } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
-import { EMAIL_EVENTS } from "@/services/email/email.events";
-import { sendEmail } from "@/services/email/sendEmail";
-import { cn } from "@/lib/utils";
-import { buildVerificationUrl } from "./verification";
-import {
-  BUSINESS_TYPES,
-  CHALLENGES,
-  GOAL_OPTIONS,
-  MATURITY_OPTIONS,
-  REASSURANCE,
-  TEAM_OPTIONS,
-  VISION_OPTIONS,
-} from "./constants";
-import { buildWizardSummary, opportunityAreas, suggestServices } from "./summary";
-import { emptyAnswers, type ElevateWizardAnswers } from "./types";
+import { useAuth } from "@/hooks/useAuth";
+import { buildProjectDeliverables, buildProjectMilestones, buildProjectPayload, type CustomerType, type ProjectFormValues } from "./onboarding";
 
-type Option = string | { id: string; label: string; hint: string };
+const serviceOptions: Record<CustomerType, string[]> = {
+  creative: [
+    "Brand positioning",
+    "Digital presence",
+    "Social media content",
+    "Brand identity",
+    "Campaign strategy",
+    "Portfolio refresh",
+  ],
+  personal: [
+    "Personal brand positioning",
+    "Website or portfolio",
+    "Social media strategy",
+    "Launch support",
+    "Brand refresh",
+    "Content planning",
+  ],
+  business: [
+    "Brand positioning",
+    "Website & digital presence",
+    "Marketing strategy",
+    "Content systems",
+    "Campaign planning",
+    "Launch support",
+  ],
+};
 
-type WizardStep =
-  | {
-      kind: "start";
-      title: string;
-      description: string;
-    }
-  | {
-      kind: "single";
-      field: keyof ElevateWizardAnswers;
-      title: string;
-      description: string;
-      options: readonly Option[];
-    }
-  | {
-      kind: "multi";
-      field: "challenges" | "goals";
-      title: string;
-      description: string;
-      options: readonly string[];
-    }
-  | {
-      kind: "final";
-      title: string;
-      description: string;
-    };
+const defaultValues: ProjectFormValues = {
+  customerType: "",
+  name: "",
+  companyName: "",
+  email: "",
+  phone: "",
+  preferredContactMethod: "",
+  profession: "",
+  profileUrl: "",
+  primaryGoal: "",
+  services: [],
+  projectDescription: "",
+  desiredOutcome: "",
+  timeline: "",
+  source: "start_page",
+};
 
-const WIZARD_STEPS: readonly WizardStep[] = [
-  {
-    kind: "start",
-    title: "A guided profile for your brand.",
-    description: "Share a few details so FluxFom can build a sharper profile.",
-  },
-  {
-    kind: "single",
-    field: "businessType",
-    title: "What are you building?",
-    description: "Choose the category that best describes your business.",
-    options: BUSINESS_TYPES,
-  },
-  {
-    kind: "multi",
-    field: "challenges",
-    title: "What’s slowing your brand down?",
-    description: "Select the challenges that matter most right now.",
-    options: CHALLENGES,
-  },
-  {
-    kind: "single",
-    field: "team",
-    title: "How is your marketing managed today?",
-    description: "Tell us who is running your marketing.",
-    options: TEAM_OPTIONS,
-  },
-  {
-    kind: "multi",
-    field: "goals",
-    title: "What matters most right now?",
-    description: "Select the outcomes you want FluxFom to prioritize.",
-    options: GOAL_OPTIONS,
-  },
-  {
-    kind: "single",
-    field: "maturity",
-    title: "How established is your brand today?",
-    description: "Choose the statement that best fits your current stage.",
-    options: MATURITY_OPTIONS,
-  },
-  {
-    kind: "single",
-    field: "vision",
-    title: "What kind of brand are you becoming?",
-    description: "Pick the direction that feels most aligned with your next phase.",
-    options: VISION_OPTIONS,
-  },
-  {
-    kind: "final",
-    title: "Finish with your brand name and email.",
-    description: "We’ll use this to send your profile and next steps.",
-  },
-] as const;
-
-function optionLabel(option: Option) {
-  return typeof option === "string" ? option : option.label;
-}
-
-function optionHint(option: Option) {
-  return typeof option === "string" ? undefined : option.hint;
-}
-
-function OptionButton({
-  selected,
-  onClick,
-  label,
-  hint,
-}: {
-  selected: boolean;
-  onClick: () => void;
-  label: string;
-  hint?: string;
-}) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      className={cn(
-        "w-full rounded-2xl border px-5 py-4 text-left text-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0B2B12]/20 focus-visible:ring-offset-2 focus-visible:ring-offset-white",
-        selected
-          ? "border-[#0B2B12] bg-[#0B2B12] text-white shadow-[0_8px_30px_-10px_rgba(11,43,18,0.22)]"
-          : "border-[#0B2B12]/10 bg-white text-[#0B2B12] hover:border-[#0B2B12]/30 hover:bg-[#F4F7F1]",
-      )}
-    >
-      <div className="flex items-center justify-between gap-3">
-        <div>
-          <span className="block font-semibold">{label}</span>
-          {hint ? <span className="mt-2 block text-[11px] text-[#0B2B12]/60">{hint}</span> : null}
-        </div>
-        {selected ? <span className="text-sm font-semibold">✓</span> : null}
-      </div>
-    </button>
-  );
-}
+const customerTypeMeta: Record<CustomerType, { label: string; summary: string; icon: LucideIcon }> = {
+  creative: { label: "I’m a Creative", summary: "Artist, creator, photographer, filmmaker, or independent professional.", icon: Mic },
+  personal: { label: "I’m here for myself", summary: "Personal brand, portfolio, identity, event or next professional chapter.", icon: UserRound },
+  business: { label: "I’m representing a business", summary: "Startup, SME, team, or organization with a clear growth need.", icon: Building2 },
+};
 
 export function ElevateBrandWizard() {
-  const [step, setStep] = useState(0);
-  const [answers, setAnswers] = useState<ElevateWizardAnswers>(() => emptyAnswers());
+  const navigate = useNavigate();
+  const { user } = useAuth();
+  const [form, setForm] = useState<ProjectFormValues>(defaultValues);
+  const [currentStep, setCurrentStep] = useState(0);
+  const [typedQuestion, setTypedQuestion] = useState("");
+  const [showDescription, setShowDescription] = useState(false);
+  const [showAnswers, setShowAnswers] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(false);
   const [submitting, setSubmitting] = useState(false);
-  const [done, setDone] = useState(false);
-  const [micro, setMicro] = useState(() => REASSURANCE[Math.floor(Math.random() * REASSURANCE.length)]);
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
+  const transitionTimeout = useRef<number | null>(null);
 
   useEffect(() => {
-    document.title = "Start Profile — FluxFom";
+    document.title = "Start a project — FluxFom";
   }, []);
 
-  const currentStep = WIZARD_STEPS[step];
-
-  const setSingle = useCallback(<K extends keyof ElevateWizardAnswers>(key: K, value: ElevateWizardAnswers[K]) => {
-    setAnswers((prev) => ({ ...prev, [key]: value }));
+  useEffect(() => () => {
+    if (transitionTimeout.current !== null) window.clearTimeout(transitionTimeout.current);
   }, []);
 
-  const toggleMulti = useCallback((key: "challenges" | "goals", value: string) => {
-    setAnswers((prev) => {
-      const current = prev[key];
-      return {
-        ...prev,
-        [key]: current.includes(value) ? current.filter((entry) => entry !== value) : [...current, value],
-      };
-    });
-  }, []);
+  const customerType = form.customerType as CustomerType | "";
 
-  const canContinue = useCallback(() => {
-    switch (currentStep.kind) {
-      case "start":
-        return true;
-      case "single":
-        return Boolean(answers[currentStep.field]);
-      case "multi":
-        return answers[currentStep.field].length > 0;
-      case "final":
-        return answers.companyName.trim().length > 1 && answers.email.trim().length > 3 && answers.email.includes("@");
+  const totalSteps = 6;
+  const questionsLeft = Math.max(totalSteps - currentStep - 1, 0);
+  const progressPercent = ((currentStep + 1) / totalSteps) * 100;
+
+  const stepIsValid = () => {
+    switch (currentStep) {
+      case 0:
+        return Boolean(customerType);
+      case 1:
+        return Boolean(form.name.trim() || form.companyName.trim());
+      case 2:
+        return Boolean(form.email.trim() || form.phone.trim());
+      case 3:
+        return Boolean(form.primaryGoal.trim());
+      case 4:
+        return form.services.length > 0;
+      case 5:
+        return Boolean(form.projectDescription.trim() || form.desiredOutcome.trim() || form.timeline.trim());
       default:
-        return false;
+        return true;
     }
-  }, [answers, currentStep]);
+  };
 
-  const next = useCallback(() => {
-    if (!canContinue() || step >= WIZARD_STEPS.length - 1) return;
-    setMicro(REASSURANCE[(step + 1) % REASSURANCE.length]);
-    setStep((current) => current + 1);
-  }, [canContinue, step]);
+  const transitionToStep = (nextStep: number, beforeStepChange?: () => void) => {
+    if (transitionTimeout.current !== null) return;
 
-  const back = useCallback(() => {
-    if (step > 0) setStep((current) => current - 1);
-  }, [step]);
+    setIsTransitioning(true);
+    const reducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+    transitionTimeout.current = window.setTimeout(() => {
+      beforeStepChange?.();
+      setCurrentStep(nextStep);
+      setIsTransitioning(false);
+      transitionTimeout.current = null;
+    }, reducedMotion ? 0 : 500);
+  };
 
-  const submit = useCallback(async () => {
-    if (!canContinue()) return;
-    setSubmitting(true);
+  const advanceStep = () => {
+    if (!stepIsValid()) return;
+    transitionToStep(Math.min(currentStep + 1, totalSteps - 1));
+  };
+
+  const goBack = () => {
+    transitionToStep(Math.max(currentStep - 1, 0));
+  };
+
+  const currentQuestion = (() => {
+    const isBusiness = customerType === "business";
+    switch (currentStep) {
+      case 0:
+        return {
+          title: "What best describes you?",
+          helper: "Start with the option that fits best.",
+        };
+      case 1:
+        return {
+          title: isBusiness ? "Who should we contact?" : "What’s your name?",
+          helper: isBusiness ? "Tell us the main contact and their business." : "We’ll use this to personalize your project brief.",
+        };
+      case 2:
+        return {
+          title: "How can we reach you?",
+          helper: "Leave whichever contact details are easiest for us to use.",
+        };
+      case 3:
+        return {
+          title: "What are you hoping to achieve?",
+          helper: "Keep it simple and specific.",
+        };
+      case 4:
+        return {
+          title: "Which services fit your goal?",
+          helper: "Pick the areas you want us to help with.",
+        };
+      case 5:
+        return {
+          title: "Tell us a little more about the project.",
+          helper: "Add the context that will help us shape the right approach.",
+        };
+      default:
+        return { title: "Complete your project brief", helper: "Almost there." };
+    }
+  })();
+
+  useLayoutEffect(() => {
+    const question = currentQuestion.title;
+    setTypedQuestion("");
+    setShowDescription(false);
+    setShowAnswers(false);
+
+    if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) {
+      setTypedQuestion(question);
+      setShowDescription(true);
+      setShowAnswers(true);
+      return;
+    }
+
+    let characterIndex = 0;
+    let holdTimeout: number | null = null;
+    let answerTimeout: number | null = null;
+
+    const typingInterval = window.setInterval(() => {
+      characterIndex += 1;
+      setTypedQuestion(question.slice(0, characterIndex));
+
+      if (characterIndex >= question.length) {
+        window.clearInterval(typingInterval);
+        holdTimeout = window.setTimeout(() => {
+          setShowDescription(true);
+          answerTimeout = window.setTimeout(() => setShowAnswers(true), 350);
+        }, 1300);
+      }
+    }, 36);
+
+    return () => {
+      window.clearInterval(typingInterval);
+      if (holdTimeout !== null) window.clearTimeout(holdTimeout);
+      if (answerTimeout !== null) window.clearTimeout(answerTimeout);
+    };
+  }, [currentQuestion.title]);
+
+  const questionHeader = (
+    <div className="max-w-2xl">
+      <h1
+        aria-label={currentQuestion.title}
+        className="text-4xl font-semibold tracking-tight text-[#0B2B12] sm:text-5xl"
+      >
+        {typedQuestion}
+      </h1>
+      <p
+        aria-hidden={!showDescription}
+        className={`mt-3 text-base text-[#0B2B12]/70 transition-all duration-500 ease-out motion-reduce:transition-none ${showDescription ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"}`}
+      >
+        {currentQuestion.helper}
+      </p>
+    </div>
+  );
+
+  const renderStepInput = () => {
+    if (currentStep === 0) {
+      return (
+        <div className="grid gap-3 md:grid-cols-3">
+          {(Object.keys(customerTypeMeta) as CustomerType[]).map((type) => {
+            const meta = customerTypeMeta[type];
+            const Icon = meta.icon;
+
+            return (
+              <button
+                type="button"
+                key={type}
+                onClick={() => transitionToStep(1, () => setForm((prev) => ({ ...prev, customerType: type })))}
+                className={`border p-4 text-left transition ${form.customerType === type ? "border-[#0B2B12] bg-[#0B2B12] text-white shadow-[0_20px_50px_-28px_rgba(11,43,18,0.75)]" : "border-[#0B2B12]/10 bg-flux-neon text-[#0B2B12] hover:border-[#0B2B12]/30 hover:bg-transparent"}`}
+              >
+                <div className={`inline-flex h-11 w-11 items-center justify-center rounded-2xl ${form.customerType === type ? "bg-white text-[#0B2B12]" : "bg-[#0B2B12] text-white"}`}>
+                  <Icon className="h-5 w-5" />
+                </div>
+                <h2 className="mt-4 text-lg font-semibold">{meta.label}</h2>
+                <p className={`mt-2 text-sm leading-6 ${form.customerType === type ? "text-white/75" : "text-[#0B2B12]/70"}`}>{meta.summary}</p>
+              </button>
+            );
+          })}
+        </div>
+      );
+    }
+
+    if (currentStep === 1) {
+      return (
+        <div className="space-y-4">
+          <label className="block space-y-2">
+            <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#0B2B12]/60">{customerType === "business" ? "Contact person" : "Your name"}</span>
+            <input
+              value={form.name}
+              onChange={(event) => updateField("name", event.target.value)}
+              placeholder={customerType === "business" ? "Jane Doe" : "Your name"}
+              className="w-full border-b border-flux-void/10 bg-transparent px-4 py-3.5 text-base text-[#0B2B12] outline-none transition focus:border-[#0B2B12]/30 focus:ring-2 focus:ring-[#0B2B12]/10"
+            />
+          </label>
+
+          {customerType === "business" ? (
+            <label className="block space-y-2">
+              <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#0B2B12]/60">Business name</span>
+              <input
+                value={form.companyName}
+                onChange={(event) => updateField("companyName", event.target.value)}
+                placeholder="Northline Studio"
+                className="w-full border-b border-flux-void/10 bg-transparent px-4 py-3.5 text-base text-[#0B2B12] outline-none transition focus:border-[#0B2B12]/30 focus:ring-2 focus:ring-[#0B2B12]/10"
+              />
+            </label>
+          ) : (
+            <label className="block space-y-2">
+              <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#0B2B12]/60">Profession / discipline</span>
+              <input
+                value={form.profession}
+                onChange={(event) => updateField("profession", event.target.value)}
+                placeholder="Photographer, founder, strategist..."
+                className="w-full border-b border-flux-void/10 bg-transparent px-4 py-3.5 text-base text-[#0B2B12] outline-none transition focus:border-[#0B2B12]/30 focus:ring-2 focus:ring-[#0B2B12]/10"
+              />
+            </label>
+          )}
+        </div>
+      );
+    }
+
+    if (currentStep === 2) {
+      return (
+        <div className="space-y-4">
+          <label className="block space-y-2">
+            <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#0B2B12]/60">Email</span>
+            <input
+              type="email"
+              value={form.email}
+              onChange={(event) => updateField("email", event.target.value)}
+              placeholder="hello@example.com"
+              className="w-full border-b border-flux-void/10 bg-transparent px-4 py-3.5 text-base text-[#0B2B12] outline-none transition focus:border-[#0B2B12]/30 focus:ring-2 focus:ring-[#0B2B12]/10"
+            />
+          </label>
+
+          <label className="block space-y-2">
+            <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#0B2B12]/60">Phone</span>
+            <input
+              type="tel"
+              value={form.phone}
+              onChange={(event) => updateField("phone", event.target.value)}
+              placeholder="+254 712 345 678"
+              className="w-full border-b border-flux-void/10 bg-transparent px-4 py-3.5 text-base text-[#0B2B12] outline-none transition focus:border-[#0B2B12]/30 focus:ring-2 focus:ring-[#0B2B12]/10"
+            />
+          </label>
+
+          <div className="space-y-3 pt-1">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#0B2B12]/60">Preferred contact method</p>
+            <div className="grid gap-2 sm:grid-cols-3">
+              {(["email", "phone", "whatsapp"] as const).map((method) => (
+                <button
+                  key={method}
+                  type="button"
+                  onClick={() => updateField("preferredContactMethod", method)}
+                  className={`rounded-2xl border px-3 py-3 text-sm font-medium capitalize transition ${form.preferredContactMethod === method ? "border-[#0B2B12] bg-[#0B2B12] text-white" : "border-[#0B2B12]/10 bg-white text-[#0B2B12]"}`}
+                >
+                  {method}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    if (currentStep === 3) {
+      return (
+        <div className="space-y-4">
+          <textarea
+            value={form.primaryGoal}
+            onChange={(event) => updateField("primaryGoal", event.target.value)}
+            rows={4}
+            placeholder="We want a clearer brand story and more consistent demand generation."
+            className="w-full rounded-[1.75rem] border border-[#0B2B12]/10 bg-white px-4 py-3.5 text-base text-[#0B2B12] outline-none transition focus:border-[#0B2B12]/30 focus:ring-2 focus:ring-[#0B2B12]/10"
+          />
+        </div>
+      );
+    }
+
+    if (currentStep === 4) {
+      return (
+        <div className="grid gap-3 sm:grid-cols-2">
+          {serviceOptions[customerType].map((service) => (
+            <button
+              key={service}
+              type="button"
+              onClick={() => toggleService(service)}
+              className={`flex items-center justify-between rounded-2xl border p-3 text-left text-sm transition ${form.services.includes(service) ? "border-[#0B2B12] bg-[#0B2B12] text-white" : "border-[#0B2B12]/10 bg-white text-[#0B2B12]"}`}
+            >
+              <span>{service}</span>
+              {form.services.includes(service) ? <CheckCircle2 className="h-4 w-4" /> : null}
+            </button>
+          ))}
+        </div>
+      );
+    }
+
+    return (
+      <div className="space-y-4">
+        <textarea
+          value={form.projectDescription}
+          onChange={(event) => updateField("projectDescription", event.target.value)}
+          rows={5}
+          placeholder="Tell us a bit more about your current situation, what’s already in motion, and what success should look like."
+          className="w-full rounded-[1.75rem] border border-[#0B2B12]/10 bg-white px-4 py-3.5 text-base text-[#0B2B12] outline-none transition focus:border-[#0B2B12]/30 focus:ring-2 focus:ring-[#0B2B12]/10"
+        />
+
+        <div className="grid gap-4 sm:grid-cols-2">
+          <label className="block space-y-2">
+            <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#0B2B12]/60">Desired outcome</span>
+            <input
+              value={form.desiredOutcome}
+              onChange={(event) => updateField("desiredOutcome", event.target.value)}
+              placeholder="A clearer offer and stronger positioning"
+              className="w-full border-b border-flux-void/10 bg-transparent px-4 py-3.5 text-base text-[#0B2B12] outline-none transition focus:border-[#0B2B12]/30 focus:ring-2 focus:ring-[#0B2B12]/10"
+            />
+          </label>
+
+          <label className="block space-y-2">
+            <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#0B2B12]/60">Approximate timeline</span>
+            <input
+              value={form.timeline}
+              onChange={(event) => updateField("timeline", event.target.value)}
+              placeholder="Within the next 4–6 weeks"
+              className="w-full border-b border-flux-void/10 bg-transparent px-4 py-3.5 text-base text-[#0B2B12] outline-none transition focus:border-[#0B2B12]/30 focus:ring-2 focus:ring-[#0B2B12]/10"
+            />
+          </label>
+        </div>
+      </div>
+    );
+  };
+
+  const updateField = (field: keyof ProjectFormValues, value: string | string[]) => {
+    setForm((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const toggleService = (service: string) => {
+    setForm((prev) => {
+      const services = prev.services.includes(service)
+        ? prev.services.filter((item) => item !== service)
+        : [...prev.services, service];
+      return { ...prev, services };
+    });
+  };
+
+  const formReady = useMemo(() => {
+    if (!customerType) return false;
+    if (!form.name.trim() && !form.companyName.trim()) return false;
+    if (!form.email.trim() && !form.phone.trim()) return false;
+    if (!form.primaryGoal.trim() && !form.projectDescription.trim()) return false;
+    return true;
+  }, [customerType, form.companyName, form.email, form.name, form.phone, form.primaryGoal, form.projectDescription]);
+
+  const submitProject = async (event: FormEvent) => {
+    event.preventDefault();
+    setError(null);
 
     try {
-      const email = answers.email.trim();
-      const summary = buildWizardSummary(answers);
+      const payload = buildProjectPayload(form);
+      setSubmitting(true);
 
-      const { error } = await supabase.from("cms_submissions").insert({
-        company_name: answers.companyName.trim(),
-        industry: answers.businessType,
-        email,
-        website: null,
-        brand_status: [answers.maturity, answers.vision, answers.team].filter(Boolean).join(" · ") || null,
-        existing_assets: answers.challenges.join("; ") || null,
-        business_goals: summary,
-        tone_preferences: answers.goals.join("; ") || null,
-        target_audience: opportunityAreas(answers).join("; "),
-        competitors: suggestServices(answers).join("; "),
-      });
+      let userId = user?.id ?? null;
+      if (!userId) {
+        if (payload.email) {
+          const temporaryPassword = `fluxfom-${crypto.randomUUID().replace(/-/g, "").slice(0, 12)}`;
+          const { data, error: signUpError } = await supabase.auth.signUp({
+            email: payload.email,
+            password: temporaryPassword,
+          });
 
-      if (error) throw error;
+          if (signUpError && !/already|registered|exists/i.test(signUpError.message)) {
+            throw signUpError;
+          }
 
-      const baseUrl = import.meta.env.VITE_PUBLIC_SITE_URL || "https://fluxfom.com";
-      const verificationUrl = buildVerificationUrl(baseUrl, email);
-      const temporaryPassword = `fluxfom-${crypto.randomUUID().replace(/-/g, "").slice(0, 16)}`;
+          userId = data.user?.id ?? null;
+        }
 
-      const { error: authError } = await supabase.auth.signUp({
-        email,
-        password: temporaryPassword,
-        options: { emailRedirectTo: verificationUrl },
-      });
-
-      if (authError && !/already|registered|exists/i.test(authError.message)) {
-        console.warn("Supabase account creation was skipped", authError.message);
+        if (!userId) {
+          const { data, error: anonymousError } = await supabase.auth.signInAnonymously();
+          if (anonymousError) throw anonymousError;
+          userId = data.user?.id ?? null;
+        }
       }
 
-      await sendEmail({
-        to: email,
-        event: EMAIL_EVENTS.VERIFY_EMAIL,
-        props: {
-          clientName: answers.companyName.trim() || "there",
-          verificationUrl,
-        },
-        preview: !import.meta.env.VITE_RESEND_API_KEY,
-      });
+      if (!userId) {
+        throw new Error("We could not create your secure project record. Please try again.");
+      }
 
-      setDone(true);
-    } catch (error) {
-      console.error("Failed to submit start profile", error);
-      setDone(true);
+      const projectInsert = {
+        user_id: userId,
+        customer_type: payload.customerType,
+        display_name: payload.name,
+        company_name: payload.companyName || null,
+        email: payload.email || null,
+        phone: payload.phone || null,
+        preferred_contact_method: payload.preferredContactMethod,
+        profession: payload.profession || null,
+        profile_url: payload.profileUrl || null,
+        primary_goal: payload.primaryGoal || null,
+        services: payload.services,
+        project_description: payload.projectDescription || null,
+        desired_outcome: payload.desiredOutcome || null,
+        timeline: payload.timeline || null,
+        source: form.source || "start_page",
+        status: "request_received",
+        title: payload.title,
+        access_token: crypto.randomUUID(),
+        metadata: {
+          customer_type: payload.customerType,
+          preferred_contact_method: payload.preferredContactMethod,
+          source: form.source || "start_page",
+        },
+      };
+
+      const { data: project, error: projectError } = await supabase
+        .from("project_requests")
+        .insert(projectInsert)
+        .select("id, access_token")
+        .single();
+
+      if (projectError) throw projectError;
+
+      const milestones = buildProjectMilestones(project.id).map((milestone) => ({
+        ...milestone,
+        status: milestone.status,
+      }));
+
+      const deliverables = buildProjectDeliverables(project.id, payload.services).map((deliverable) => ({
+        ...deliverable,
+      }));
+
+      const [milestonesResult, deliverablesResult] = await Promise.all([
+        supabase.from("project_milestones").insert(milestones),
+        supabase.from("project_deliverables").insert(deliverables),
+      ]);
+
+      if (milestonesResult.error) throw milestonesResult.error;
+      if (deliverablesResult.error) throw deliverablesResult.error;
+
+      const projectToken = project.access_token;
+      if (projectToken) {
+        localStorage.setItem(`fluxfom-project-token:${project.id}`, projectToken);
+      }
+
+      if (payload.email) {
+        const safeName = payload.name || "there";
+        try {
+          await supabase.from("cms_submissions").insert({
+            company_name: payload.companyName || safeName,
+            industry: payload.customerType,
+            email: payload.email,
+            website: payload.profileUrl || null,
+            brand_status: payload.primaryGoal || null,
+            existing_assets: payload.services.join("; ") || null,
+            business_goals: payload.summary,
+            tone_preferences: payload.desiredOutcome || null,
+            target_audience: payload.profession || null,
+            competitors: payload.projectDescription || null,
+            status: "new",
+          });
+        } catch (submissionError) {
+          console.warn("Project intake was created without a matching cms_submission record.", submissionError);
+        }
+      }
+
+      setSuccess(true);
+      navigate(`/projects/${project.id}?token=${encodeURIComponent(projectToken)}`);
+    } catch (submitError) {
+      console.error("Failed to create project request", submitError);
+      setError(
+        submitError instanceof Error
+          ? submitError.message
+          : "Something went wrong while creating your project. Your information has not been lost. Please try again.",
+      );
     } finally {
       setSubmitting(false);
     }
-  }, [answers, canContinue]);
+  };
 
-  const clearAnswer = useCallback(
-    (stepIndex: number) => {
-      const stepItem = WIZARD_STEPS[stepIndex];
-      if (stepItem.kind === "single") {
-        setSingle(stepItem.field, null);
-      }
-
-      if (stepItem.kind === "multi") {
-        setSingle(stepItem.field, []);
-      }
-
-      if (stepItem.kind === "final") {
-        setSingle("companyName", "");
-        setSingle("email", "");
-      }
-
-      if (step > stepIndex) {
-        setStep(stepIndex);
-      }
-    },
-    [setSingle, step],
-  );
-
-  const history = useMemo(() => {
-    return WIZARD_STEPS.slice(1, step).map((stepItem, index) => {
-      const answer =
-        stepItem.kind === "multi"
-          ? answers[stepItem.field].join(" · ")
-          : stepItem.kind === "single"
-          ? `${answers[stepItem.field] ?? ""}`
-          : "";
-
-      return {
-        id: `${index + 1}-${stepItem.kind}`,
-        stepIndex: index + 1,
-        question: stepItem.title,
-        answer: answer || "Not answered yet",
-      };
-    });
-  }, [answers, step]);
-
-  if (done) {
+  if (success) {
     return (
-      <div className="min-h-screen bg-[#0B2B12] text-[#0B2B12]">
-        <div className="fixed inset-x-0 top-0 z-20 border-b border-white/10 bg-[#0B2B12]/95 px-4 py-3 backdrop-blur-lg sm:px-6">
-          <div className="mx-auto flex max-w-[1400px] items-center justify-between gap-4">
-            <Link
-              to="/"
-              className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.24em] text-white transition hover:bg-white/10"
-            >
-              <ArrowLeft className="h-3.5 w-3.5" aria-hidden />
-              Home
-            </Link>
-            <div className="text-center">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-white/55">Brand profile</p>
-              <h1 className="text-lg font-semibold tracking-tight text-white sm:text-xl">Profile started</h1>
-            </div>
-            <div className="w-16" aria-hidden />
-          </div>
+      <div className="min-h-screen bg-[#C9FF6B] px-4 py-10 text-[#0B2B12]">
+        <div className="mx-auto max-w-xl rounded-[2rem] border border-[#0B2B12]/10 bg-white/95 p-8 text-center shadow-[0_30px_80px_-40px_rgba(15,23,16,0.25)]">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-[#0B2B12]/60">Project started</p>
+          <h2 className="mt-4 text-3xl font-semibold">Your project is in motion.</h2>
+          <p className="mt-3 text-sm leading-6 text-[#0B2B12]/70">We’ve received your request and are setting up your workspace.</p>
+          <Link to="/" className="mt-8 inline-flex items-center justify-center rounded-full bg-[#0B2B12] px-6 py-3 text-sm font-semibold text-white">
+            Return home
+          </Link>
         </div>
-
-        <main className="relative mx-auto min-h-screen max-w-[1400px] px-4 pt-24 pb-6 sm:px-6 lg:px-8">
-          <div className="mx-auto w-full max-w-3xl rounded-[2rem] border border-white/10 bg-white/95 px-8 py-14 shadow-[0_40px_120px_-45px_rgba(5,16,5,0.28)] backdrop-blur-lg">
-            <div className="text-center">
-              <p className="text-sm uppercase tracking-[0.28em] text-[#0B2B12]/70">All set</p>
-              <h2 className="mt-4 text-3xl font-semibold text-[#0B2B12]">Your Flux profile is started.</h2>
-              <p className="mt-4 text-sm leading-6 text-[#0B2B12]/70">
-                We received your answers. A strategist will turn them into a marketing overview and the next aligned steps.
-              </p>
-              <div className="mt-8 flex justify-center">
-                <Link
-                  to="/"
-                  className="inline-flex items-center justify-center rounded-full bg-[#0B2B12] px-8 py-3.5 text-sm font-semibold text-white transition hover:brightness-110"
-                >
-                  Return to FluxFom
-                </Link>
-              </div>
-            </div>
-          </div>
-        </main>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#C9FF6B]">
-      <div className="fixed inset-x-0 top-0 z-20 border-b border-white/10 bg-[#C9FF6B] px-4 py-3 backdrop-blur-lg sm:px-6">
-        <div className="mx-auto flex max-w-[1400px] items-center justify-between gap-4">
-          <div className="inline-flex items-center gap-3 rounded-full border border-white/10 bg-white/10 px-4 py-2 text-sm text-white/90 shadow-sm">
-            <Search className="h-4 w-4" />
-            <span className="font-semibold uppercase tracking-[0.24em]">Your brand profile</span>
+    <div className="min-h-screen bg-[#C9FF6B] text-[#0B2B12]">
+      <div className="fixed inset-x-0 top-0 z-20 border-b border-[#0B2B12]/10 bg-[#C9FF6B]/95 px-4 py-3 backdrop-blur-lg sm:px-6">
+        <div className="mx-auto flex max-w-[1400px] items-center justify-between gap-3">
+          <div className="inline-flex items-center gap-2 rounded-full border border-[#0B2B12]/10 bg-white/20 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.26em] text-[#0B2B12]">
+            <Search className="h-3.5 w-3.5" />
+            Start a project
           </div>
-          <div className="hidden sm:flex items-center gap-3">
-            <button className="inline-flex h-10 items-center justify-center rounded-full border border-white/15 bg-white/10 px-4 text-sm text-white/90 transition hover:bg-white/20">
-              Share
-            </button>
-            <button className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-white/10 text-white/90 transition hover:bg-white/20">
-              <Plus className="h-4 w-4" />
-            </button>
-          </div>
+          <Link to="/" className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#0B2B12]/70">
+            FluxFom
+          </Link>
         </div>
       </div>
 
-      {currentStep.kind === "start" ? (
-        <main className="relative mx-auto min-h-screen max-w-[1400px] px-4 pt-24 pb-12 sm:px-6 lg:px-8">
-          <div className="mx-auto flex min-h-[calc(80vh-5rem)] max-w-5xl flex-col justify-between gap-5">
-            <div className="rounded-[2rem] px-10 py-12 backdrop-blur-lg">
-              <div className="text-center">
-                <div className="mx-auto inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-[#0B2B12] text-white shadow-sm">
-                  <Plus className="h-6 w-6" />
-                </div>
-                <h1 className="mt-6 text-4xl font-semibold tracking-tight text-[#0B2B12]">Hello there!</h1>
-                <p className="mt-3 text-sm leading-6 text-[#0B2B12]/70">Answer a few questions about your brand and goals to help us shape the right next steps.</p>
-              </div>
-
-              <div className="mt-12 grid gap-4 sm:grid-cols-3">
-                <div className="rounded-[1.75rem] border border-[#0B2B12]/10 p-6 shadow-sm">
-                  <h2 className="mt-6 text-base font-semibold text-[#0B2B12]">Get noticed</h2>
-                  <p className="mt-3 text-sm leading-6 text-[#0B2B12]/70">Increase your visibility and attract more attention to your brand.</p>
-                  <button
-                    type="button"
-                    onClick={next}
-                    className="mt-6 w-fit inline-flex w-full items-center justify-center rounded-full bg-transparent px-4 py-3 text-sm font-semibold border border-[#0B2B12] text-[#0B2B12] transition hover:brightness-110"
-                  >
-                    {/* View Report */}
-                  </button>
-                </div>
-
-                <div className="rounded-[1.75rem] border border-[#0B2B12]/10 p-6 shadow-sm">
-                  <h2 className="mt-6 text-base font-semibold text-[#0B2B12]">Go digital</h2>
-                  <p className="mt-3 text-sm leading-6 text-[#0B2B12]/70">Engage with your audience more effectively with digital marketing.</p>
-                  <button
-                    type="button"
-                    onClick={next}
-                    className="mt-6 w-fit inline-flex w-full items-center justify-center rounded-full bg-transparent px-4 py-3 text-sm font-semibold border border-[#0B2B12] text-[#0B2B12] transition hover:brightness-110"
-                  >
-                    {/* Analyze Budget */}
-                  </button>
-                </div>
-
-                <div className="rounded-[1.75rem] border border-[#0B2B12]/10 p-6 shadow-sm">
-                  <h2 className="mt-6 text-base font-semibold text-[#0B2B12]">Build a Brand</h2>
-                  <p className="mt-3 text-sm leading-6 text-[#0B2B12]/70">Create a strong, recognizable brand for your target audience.</p>
-                  <button
-                    type="button"
-                    onClick={next}
-                    className="mt-6 w-fit inline-flex w-full items-center justify-center rounded-full bg-transparent px-4 py-3 text-sm font-semibold border border-[#0B2B12] text-[#0B2B12] transition hover:brightness-110"
-                  >
-                    
-                  </button>
-                </div>
+      <main className="mx-auto max-w-5xl px-4 pb-12 pt-12 sm:px-6 lg:px-8">
+        <div
+          aria-hidden={isTransitioning}
+          className={`border-none bg-transparent transition-all duration-500 ease-in-out motion-reduce:transition-none sm:p-8 lg:p-10 ${isTransitioning ? "pointer-events-none translate-y-2 opacity-0" : "translate-y-0 opacity-100"}`}
+        >
+          <div className="mb-8 space-y-4">
+            <div className="flex items-center justify-between gap-3">
+              {/* <div className="text-[10px] font-semibold uppercase tracking-[0.24em] text-[#0B2B12]/60">
+                {currentStep === 0 ? "Question 1 of 6" : `Question ${Math.min(currentStep + 1, totalSteps)} of ${totalSteps}`}
+              </div> */}
+              <div className="text-[10px] font-semibold uppercase tracking-[0.24em] text-[#0B2B12]/60">
+                Just {questionsLeft} {questionsLeft === 1 ? "step" : "steps"} left
               </div>
             </div>
 
+            <div className="h-2 overflow-hidden rounded-full bg-[#0B2B12]/5">
+              <div className="h-full rounded-full bg-[#0B2B12] transition-all duration-300" style={{ width: `${Math.min(progressPercent, 100)}%` }} />
+            </div>
           </div>
-        </main>
-      ) : (
-        <main className="relative mx-auto min-h-screen max-w-[1400px] px-4 pt-24 pb-12 sm:px-6 lg:px-8">
-          <div className="mx-auto flex min-h-[calc(80vh-5rem)] max-w-3xl flex-col justify-between gap-6">
-            <div className="mx-auto w-full rounded-[2rem] border border-white/20 bg-[#C9FF6B]/90 px-8 py-10 backdrop-blur-lg">
-              <h2 className="text-2xl font-semibold text-[#0B2B12]">{currentStep.title}</h2>
-              <p className="mt-3 text-sm leading-6 text-[#0B2B12]/75">{currentStep.description}</p>
 
-              {currentStep.kind === "final" ? (
-                <form onSubmit={(event) => { event.preventDefault(); submit(); }} className="mt-8 space-y-4">
-                  <div className="grid gap-4 sm:grid-cols-2">
-                    <label className="space-y-2">
-                      <span className="text-[10px] uppercase tracking-[0.24em] text-[#0B2B12]/60">Brand or company name</span>
-                      <input
-                        value={answers.companyName}
-                        onChange={(event) => setSingle("companyName", event.target.value)}
-                        placeholder="Your brand or business name"
-                        className="w-full rounded-2xl border border-[#0B2B12]/10 bg-white px-4 py-3 text-sm text-[#0B2B12] outline-none focus:border-[#0B2B12]/30 focus:ring-2 focus:ring-[#0B2B12]/10"
-                      />
-                    </label>
-                    <label className="space-y-2">
-                      <span className="text-[10px] uppercase tracking-[0.24em] text-[#0B2B12]/60">Work email</span>
-                      <input
-                        type="email"
-                        value={answers.email}
-                        onChange={(event) => setSingle("email", event.target.value)}
-                        placeholder="you@company.com"
-                        className="w-full rounded-2xl border border-[#0B2B12]/10 bg-white px-4 py-3 text-sm text-[#0B2B12] outline-none focus:border-[#0B2B12]/30 focus:ring-2 focus:ring-[#0B2B12]/10"
-                      />
-                    </label>
-                  </div>
-                  <div className="flex flex-col gap-3 sm:flex-row sm:justify-between sm:items-center">
-                    <button
-                      type="button"
-                      onClick={back}
-                      className="inline-flex items-center justify-center rounded-full border border-[#0B2B12]/10 bg-white px-6 py-3.5 text-sm font-semibold text-[#0B2B12] transition hover:border-[#0B2B12]/30"
-                    >
-                      Back
-                    </button>
-                    <button
-                      type="submit"
-                      disabled={!canContinue() || submitting}
-                      className="inline-flex items-center justify-center gap-2 rounded-full bg-[#0B2B12] px-6 py-3.5 text-sm font-semibold text-white transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50"
-                    >
-                      {submitting ? <Loader2 className="h-4 w-4 animate-spin" aria-hidden /> : "Submit profile"}
-                      <Send className="h-4 w-4" aria-hidden />
-                    </button>
-                  </div>
-                </form>
-              ) : (
-                <div className="mt-8 grid gap-3 sm:grid-cols-3">
-                  {currentStep.options.map((option) => (
-                    <OptionButton
-                      key={optionLabel(option)}
-                      selected={currentStep.kind === "single" ? answers[currentStep.field] === optionLabel(option) : answers[currentStep.field].includes(option)}
-                      onClick={() =>
-                        currentStep.kind === "single"
-                          ? setSingle(currentStep.field, optionLabel(option))
-                          : toggleMulti(currentStep.field, option)
-                      }
-                      label={optionLabel(option)}
-                      hint={currentStep.kind === "single" ? optionHint(option) : undefined}
-                    />
-                  ))}
-                </div>
-              )}
+          {!customerType && currentStep === 0 ? (
+            <div className="space-y-6">
+              {questionHeader}
 
-              {currentStep.kind !== "final" ? (
-                <div className="mt-8 flex justify-end">
-                  <button
-                    type="button"
-                    onClick={next}
-                    disabled={!canContinue()}
-                    className="inline-flex items-center justify-center gap-2 rounded-full bg-[#0B2B12] px-6 py-3.5 text-sm font-semibold text-white transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50"
-                  >
-                    Continue
-                    <ArrowRight className="h-4 w-4" aria-hidden />
-                  </button>
+              {showAnswers ? (
+                <div className="animate-in fade-in slide-in-from-bottom-2 duration-500 motion-reduce:animate-none">
+                  {renderStepInput()}
                 </div>
               ) : null}
             </div>
+          ) : (
+            <form onSubmit={submitProject} className="space-y-8">
+              <div className="space-y-6">
+                {questionHeader}
 
-            {history.length > 0 ? (
-              <div className="mx-auto w-full max-w-2xl">
-                <div className="rounded-[1.75rem] bg-[#0B2B12] px-6 py-4 text-white shadow-[0_25px_80px_-45px_rgba(5,16,5,0.3)]">
-                  <p className="text-sm font-semibold">{history[history.length - 1].answer}</p>
-                </div>
+                {showAnswers ? (
+                  <div className="animate-in fade-in slide-in-from-bottom-2 duration-500 motion-reduce:animate-none">
+                    {renderStepInput()}
+                  </div>
+                ) : null}
               </div>
-            ) : null}
 
-          </div>
-        </main>
-      )}
+              {showAnswers ? (
+                <>
+                  {error ? (
+                    <div className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">{error}</div>
+                  ) : null}
+
+                  <div className="animate-in fade-in slide-in-from-bottom-2 flex flex-col gap-3 duration-500 motion-reduce:animate-none sm:flex-row sm:justify-between">
+                    {currentStep > 0 ? (
+                      <button
+                        type="button"
+                        onClick={goBack}
+                        className="inline-flex items-center justify-center gap-2 rounded-full border border-[#0B2B12]/10 bg-white px-5 py-3 text-sm font-semibold text-[#0B2B12]"
+                      >
+                        <ArrowLeft className="h-4 w-4" />
+                        Back
+                      </button>
+                    ) : (
+                      <div />
+                    )}
+
+                    {currentStep < totalSteps - 1 ? (
+                      <button
+                        type="button"
+                        onClick={advanceStep}
+                        disabled={!stepIsValid()}
+                        className="inline-flex items-center justify-center gap-2 rounded-full bg-[#0B2B12] px-6 py-3.5 text-sm font-semibold text-white transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50"
+                      >
+                        Continue
+                        <ArrowRight className="h-4 w-4" />
+                      </button>
+                    ) : (
+                      <button
+                        type="submit"
+                        disabled={!formReady || submitting}
+                        className="inline-flex items-center justify-center gap-2 rounded-full bg-[#0B2B12] px-6 py-3.5 text-sm font-semibold text-white transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50"
+                      >
+                        {submitting ? <Loader2 className="h-4 w-4 animate-spin" /> : "Start my project"}
+                        <ArrowRight className="h-4 w-4" />
+                      </button>
+                    )}
+                  </div>
+                </>
+              ) : null}
+            </form>
+          )}
+        </div>
+      </main>
     </div>
   );
 }

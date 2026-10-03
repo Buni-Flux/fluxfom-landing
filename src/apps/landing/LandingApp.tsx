@@ -6,18 +6,21 @@ import { LandingLayout } from "./LandingLayout";
 import { LandingNotFound } from "./LandingNotFound";
 
 const Home = lazy(() => import("@/pages/Home"));
+const BrandPositioning = lazy(() => import("@/pages/BrandPositioning"));
 const Blog = lazy(() => import("@/pages/Blog"));
 const BlogArticle = lazy(() => import("@/pages/BlogArticle"));
 const Services = lazy(() => import("@/pages/Services"));
 const HowItWorks = lazy(() => import("@/pages/HowItWorks"));
 const Projects = lazy(() => import("@/pages/Projects"));
 const ClientProfile = lazy(() => import("@/pages/ClientProfile"));
+const ProjectWorkspace = lazy(() => import("@/pages/ProjectWorkspace"));
 const AdminPublicProfiles = lazy(() => import("@/pages/AdminPublicProfiles"));
 const AdminPublicProfileUpload = lazy(() => import("@/pages/AdminPublicProfileUpload2"));
 const AdminPublicProfileEditor = lazy(() => import("@/pages/AdminPublicProfileEditor"));
 const ProjectDraft = lazy(() => import("@/pages/landing/portfolio/projectDraft/ProjectDraft"));
 const About = lazy(() => import("@/pages/About"));
 const Terms = lazy(() => import("@/pages/Terms"));
+const PrivacyPolicy = lazy(() => import("@/pages/PrivacyPolicy"));
 const Contact = lazy(() => import("@/pages/Contact"));
 const StartYourBrand = lazy(() => import("@/pages/StartYourBrand"));
 const ProfileStatus = lazy(() => import("@/pages/ProfileStatus"));
@@ -39,6 +42,7 @@ const LandingApp = () => (
         <Suspense fallback={<LoadingFallback />}>
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/brand-positioning" element={<BrandPositioning />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:slug" element={<BlogArticle />} />
             <Route path="/creatives" element={<AudiencePage audience="creatives" />} />
@@ -48,7 +52,8 @@ const LandingApp = () => (
             <Route path="/services" element={<Services />} />
             <Route path="/how-it-works" element={<HowItWorks />} />
             <Route path="/projects" element={<Projects />} />
-            <Route path="/projects/:id" element={<ClientProfile />} />
+            <Route path="/projects/:projectId" element={<ProjectWorkspace />} />
+            <Route path="/clients/:id" element={<ClientProfile />} />
 
             <Route path="/admin" element={<Navigate to="/admin/public-profiles" replace />} />
             <Route path="/admin/public-profiles" element={<AdminPublicProfiles />} />
@@ -59,6 +64,8 @@ const LandingApp = () => (
 
             <Route path="/about" element={<About />} />
             <Route path="/terms" element={<Terms />} />
+            <Route path="/privacy" element={<PrivacyPolicy />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/start" element={<StartYourBrand />} />
             <Route path="/portfolio" element={<Navigate to="/projects" replace />} />

@@ -5,11 +5,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import { FluxLogoOnDark, FluxLogoOnLight } from "@/components/marketing/FluxLogoVariants";
 
 const navLinks = [
+  { label: "BRAND POSITIONING", to: "/brand-positioning" },
   { label: "SERVICES", to: "/services", hash: "#service-offerings" },
-  // { label: "About Us", to: "/about", hash: "#what-to-expect" },
   { label: "PORTFOLIO", to: "/projects", hash: "#clients-index" },
+  { label: "BLOG", to: "/blog" },
   { label: "TALK TO US", to: "/contact", hash: "#contact" },
-  { label: "BLOG", to: "/blog", hash: "#blog" },
 ];
 
 const Navbar = () => {
@@ -119,15 +119,27 @@ const Navbar = () => {
         {isBrightBackground ? <FluxLogoOnLight /> : <FluxLogoOnDark />}
 
         <div className="hidden flex-1 items-center justify-center gap-7 lg:flex">
-          {navLinks.map((link) => (
-            <Link
-              key={link.label}
-              to={link.to}
-              className={`text-[11px] font-medium tracking-[0.04em] transition-colors ${isBrightBackground ? "text-[#051005] hover:text-black" : "text-white/75 hover:text-white"}`}
-            >
-              {link.label}
-            </Link>
-          ))}
+          {navLinks.map((link) => {
+            const isActive = location.pathname === link.to || location.pathname.startsWith(`${link.to}/`);
+
+            return (
+              <Link
+                key={link.label}
+                to={link.to}
+                aria-current={isActive ? "page" : undefined}
+                className={`relative flex h-12 items-center text-[11px] font-medium tracking-[0.04em] transition-colors ${isBrightBackground ? "text-[#051005] hover:text-black" : "text-white/75 hover:text-white"}`}
+              >
+                {link.label}
+                {isActive && (
+                  <motion.span
+                    layoutId="active-nav-dot"
+                    className={`absolute bottom-1 left-1/2 h-1.5 w-1.5 -translate-x-1/2 rounded-full ${isBrightBackground ? "bg-[#219C2B]" : "bg-flux-neon"}`}
+                    transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                  />
+                )}
+              </Link>
+            );
+          })}
         </div>
 
         <div className="flex items-center gap-3">
@@ -163,16 +175,27 @@ const Navbar = () => {
             className="mx-2 mt-2 overflow-hidden rounded-2xl border border-white/20 bg-transparent backdrop-blur-xl lg:hidden"
           >
             <div className="flex flex-col gap-1 px-5 py-4 sm:px-8">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.label}
-                  to={link.to}
-                  onClick={() => setOpen(false)}
-                  className={`px-2 py-3 text-sm font-medium transition ${isBrightBackground ? "text-[#051005]/80 hover:text-black" : "text-white/80 hover:text-flux-neon"}`}
-                >
-                  {link.label}
-                </Link>
-              ))}
+              {navLinks.map((link) => {
+                const isActive = location.pathname === link.to || location.pathname.startsWith(`${link.to}/`);
+
+                return (
+                  <Link
+                    key={link.label}
+                    to={link.to}
+                    onClick={() => setOpen(false)}
+                    aria-current={isActive ? "page" : undefined}
+                    className={`flex items-center gap-2 px-2 py-3 text-sm font-medium transition ${isBrightBackground ? "text-[#051005]/80 hover:text-black" : "text-white/80 hover:text-flux-neon"}`}
+                  >
+                    {link.label}
+                    {isActive && (
+                      <motion.span
+                        layoutId="active-mobile-nav-dot"
+                        className={`h-1.5 w-1.5 rounded-full ${isBrightBackground ? "bg-[#219C2B]" : "bg-flux-neon"}`}
+                      />
+                    )}
+                  </Link>
+                );
+              })}
               <Link
                 to="/start"
                 onClick={() => setOpen(false)}

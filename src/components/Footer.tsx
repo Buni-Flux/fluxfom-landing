@@ -3,9 +3,9 @@ import { Facebook, Linkedin, Music2 } from "lucide-react";
 import { FluxLogo } from "@/components/marketing/FluxLogo";
 
 const footerLinks = [
-  { label: "Terms", to: "/terms" },
-  { label: "Privacy", to: "/terms" },
-  { label: "Cookies", to: "/terms" },
+  { label: "Terms", to: "/privacy#our-role-under-data-protection-law" },
+  { label: "Privacy", to: "/privacy#overview" },
+  { label: "Cookies", to: "/privacy#cookies-and-tracking" },
 ];
 
 const socialLinks = [

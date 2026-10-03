@@ -150,13 +150,13 @@ const Projects = () => {
                       exit={{ opacity: 0, scale: 0.98 }}
                       transition={{ duration: 0.28 }}
                       onClick={() => {
-                        if (!isDemo) navigate(`/projects/${client.id}`);
+                        if (!isDemo) navigate(`/clients/${client.id}`);
                       }}
                       onKeyDown={(e) => {
                         if (isDemo) return;
                         if (e.key === "Enter" || e.key === " ") {
                           e.preventDefault();
-                          navigate(`/projects/${client.id}`);
+                          navigate(`/clients/${client.id}`);
                         }
                       }}
                       role={isDemo ? undefined : "link"}
