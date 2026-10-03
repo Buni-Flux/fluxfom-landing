@@ -1,4 +1,4 @@
-﻿import { useEffect, useMemo, useState, type FormEvent } from "react";
+﻿import { useEffect, useLayoutEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import { ArrowRight, ArrowLeft, Loader2, Mic, Search, CheckCircle2, Building2, UserRound, type LucideIcon } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
@@ -60,12 +60,21 @@ export function ElevateBrandWizard() {
   const { user } = useAuth();
   const [form, setForm] = useState<ProjectFormValues>(defaultValues);
   const [currentStep, setCurrentStep] = useState(0);
+  const [typedQuestion, setTypedQuestion] = useState("");
+  const [showDescription, setShowDescription] = useState(false);
+  const [showAnswers, setShowAnswers] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
+  const transitionTimeout = useRef<number | null>(null);
 
   useEffect(() => {
     document.title = "Start a project — FluxFom";
+  }, []);
+
+  useEffect(() => () => {
+    if (transitionTimeout.current !== null) window.clearTimeout(transitionTimeout.current);
   }, []);
 
   const customerType = form.customerType as CustomerType | "";
@@ -93,13 +102,26 @@ export function ElevateBrandWizard() {
     }
   };
 
+  const transitionToStep = (nextStep: number, beforeStepChange?: () => void) => {
+    if (transitionTimeout.current !== null) return;
+
+    setIsTransitioning(true);
+    const reducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+    transitionTimeout.current = window.setTimeout(() => {
+      beforeStepChange?.();
+      setCurrentStep(nextStep);
+      setIsTransitioning(false);
+      transitionTimeout.current = null;
+    }, reducedMotion ? 0 : 500);
+  };
+
   const advanceStep = () => {
     if (!stepIsValid()) return;
-    setCurrentStep((prev) => Math.min(prev + 1, totalSteps - 1));
+    transitionToStep(Math.min(currentStep + 1, totalSteps - 1));
   };
 
   const goBack = () => {
-    setCurrentStep((prev) => Math.max(prev - 1, 0));
+    transitionToStep(Math.max(currentStep - 1, 0));
   };
 
   const currentQuestion = (() => {
@@ -140,6 +162,60 @@ export function ElevateBrandWizard() {
     }
   })();
 
+  useLayoutEffect(() => {
+    const question = currentQuestion.title;
+    setTypedQuestion("");
+    setShowDescription(false);
+    setShowAnswers(false);
+
+    if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) {
+      setTypedQuestion(question);
+      setShowDescription(true);
+      setShowAnswers(true);
+      return;
+    }
+
+    let characterIndex = 0;
+    let holdTimeout: number | null = null;
+    let answerTimeout: number | null = null;
+
+    const typingInterval = window.setInterval(() => {
+      characterIndex += 1;
+      setTypedQuestion(question.slice(0, characterIndex));
+
+      if (characterIndex >= question.length) {
+        window.clearInterval(typingInterval);
+        holdTimeout = window.setTimeout(() => {
+          setShowDescription(true);
+          answerTimeout = window.setTimeout(() => setShowAnswers(true), 350);
+        }, 1300);
+      }
+    }, 36);
+
+    return () => {
+      window.clearInterval(typingInterval);
+      if (holdTimeout !== null) window.clearTimeout(holdTimeout);
+      if (answerTimeout !== null) window.clearTimeout(answerTimeout);
+    };
+  }, [currentQuestion.title]);
+
+  const questionHeader = (
+    <div className="max-w-2xl">
+      <h1
+        aria-label={currentQuestion.title}
+        className="text-4xl font-semibold tracking-tight text-[#0B2B12] sm:text-5xl"
+      >
+        {typedQuestion}
+      </h1>
+      <p
+        aria-hidden={!showDescription}
+        className={`mt-3 text-base text-[#0B2B12]/70 transition-all duration-500 ease-out motion-reduce:transition-none ${showDescription ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"}`}
+      >
+        {currentQuestion.helper}
+      </p>
+    </div>
+  );
+
   const renderStepInput = () => {
     if (currentStep === 0) {
       return (
@@ -152,11 +228,8 @@ export function ElevateBrandWizard() {
               <button
                 type="button"
                 key={type}
-                onClick={() => {
-                  updateField("customerType", type);
-                  setCurrentStep(1);
-                }}
-                className={`rounded-[1.75rem] border p-4 text-left transition ${form.customerType === type ? "border-[#0B2B12] bg-[#0B2B12] text-white shadow-[0_20px_50px_-28px_rgba(11,43,18,0.75)]" : "border-[#0B2B12]/10 bg-[#F7F8F2] text-[#0B2B12] hover:border-[#0B2B12]/30 hover:bg-white"}`}
+                onClick={() => transitionToStep(1, () => setForm((prev) => ({ ...prev, customerType: type })))}
+                className={`border p-4 text-left transition ${form.customerType === type ? "border-[#0B2B12] bg-[#0B2B12] text-white shadow-[0_20px_50px_-28px_rgba(11,43,18,0.75)]" : "border-[#0B2B12]/10 bg-flux-neon text-[#0B2B12] hover:border-[#0B2B12]/30 hover:bg-transparent"}`}
               >
                 <div className={`inline-flex h-11 w-11 items-center justify-center rounded-2xl ${form.customerType === type ? "bg-white text-[#0B2B12]" : "bg-[#0B2B12] text-white"}`}>
                   <Icon className="h-5 w-5" />
@@ -179,7 +252,7 @@ export function ElevateBrandWizard() {
               value={form.name}
               onChange={(event) => updateField("name", event.target.value)}
               placeholder={customerType === "business" ? "Jane Doe" : "Your name"}
-              className="w-full rounded-2xl border border-[#0B2B12]/10 bg-white px-4 py-3.5 text-base text-[#0B2B12] outline-none transition focus:border-[#0B2B12]/30 focus:ring-2 focus:ring-[#0B2B12]/10"
+              className="w-full border-b border-flux-void/10 bg-transparent px-4 py-3.5 text-base text-[#0B2B12] outline-none transition focus:border-[#0B2B12]/30 focus:ring-2 focus:ring-[#0B2B12]/10"
             />
           </label>
 
@@ -190,7 +263,7 @@ export function ElevateBrandWizard() {
                 value={form.companyName}
                 onChange={(event) => updateField("companyName", event.target.value)}
                 placeholder="Northline Studio"
-                className="w-full rounded-2xl border border-[#0B2B12]/10 bg-white px-4 py-3.5 text-base text-[#0B2B12] outline-none transition focus:border-[#0B2B12]/30 focus:ring-2 focus:ring-[#0B2B12]/10"
+                className="w-full border-b border-flux-void/10 bg-transparent px-4 py-3.5 text-base text-[#0B2B12] outline-none transition focus:border-[#0B2B12]/30 focus:ring-2 focus:ring-[#0B2B12]/10"
               />
             </label>
           ) : (
@@ -200,7 +273,7 @@ export function ElevateBrandWizard() {
                 value={form.profession}
                 onChange={(event) => updateField("profession", event.target.value)}
                 placeholder="Photographer, founder, strategist..."
-                className="w-full rounded-2xl border border-[#0B2B12]/10 bg-white px-4 py-3.5 text-base text-[#0B2B12] outline-none transition focus:border-[#0B2B12]/30 focus:ring-2 focus:ring-[#0B2B12]/10"
+                className="w-full border-b border-flux-void/10 bg-transparent px-4 py-3.5 text-base text-[#0B2B12] outline-none transition focus:border-[#0B2B12]/30 focus:ring-2 focus:ring-[#0B2B12]/10"
               />
             </label>
           )}
@@ -218,7 +291,7 @@ export function ElevateBrandWizard() {
               value={form.email}
               onChange={(event) => updateField("email", event.target.value)}
               placeholder="hello@example.com"
-              className="w-full rounded-2xl border border-[#0B2B12]/10 bg-white px-4 py-3.5 text-base text-[#0B2B12] outline-none transition focus:border-[#0B2B12]/30 focus:ring-2 focus:ring-[#0B2B12]/10"
+              className="w-full border-b border-flux-void/10 bg-transparent px-4 py-3.5 text-base text-[#0B2B12] outline-none transition focus:border-[#0B2B12]/30 focus:ring-2 focus:ring-[#0B2B12]/10"
             />
           </label>
 
@@ -229,7 +302,7 @@ export function ElevateBrandWizard() {
               value={form.phone}
               onChange={(event) => updateField("phone", event.target.value)}
               placeholder="+254 712 345 678"
-              className="w-full rounded-2xl border border-[#0B2B12]/10 bg-white px-4 py-3.5 text-base text-[#0B2B12] outline-none transition focus:border-[#0B2B12]/30 focus:ring-2 focus:ring-[#0B2B12]/10"
+              className="w-full border-b border-flux-void/10 bg-transparent px-4 py-3.5 text-base text-[#0B2B12] outline-none transition focus:border-[#0B2B12]/30 focus:ring-2 focus:ring-[#0B2B12]/10"
             />
           </label>
 
@@ -301,7 +374,7 @@ export function ElevateBrandWizard() {
               value={form.desiredOutcome}
               onChange={(event) => updateField("desiredOutcome", event.target.value)}
               placeholder="A clearer offer and stronger positioning"
-              className="w-full rounded-2xl border border-[#0B2B12]/10 bg-white px-4 py-3 text-base text-[#0B2B12] outline-none transition focus:border-[#0B2B12]/30 focus:ring-2 focus:ring-[#0B2B12]/10"
+              className="w-full border-b border-flux-void/10 bg-transparent px-4 py-3.5 text-base text-[#0B2B12] outline-none transition focus:border-[#0B2B12]/30 focus:ring-2 focus:ring-[#0B2B12]/10"
             />
           </label>
 
@@ -311,7 +384,7 @@ export function ElevateBrandWizard() {
               value={form.timeline}
               onChange={(event) => updateField("timeline", event.target.value)}
               placeholder="Within the next 4–6 weeks"
-              className="w-full rounded-2xl border border-[#0B2B12]/10 bg-white px-4 py-3 text-base text-[#0B2B12] outline-none transition focus:border-[#0B2B12]/30 focus:ring-2 focus:ring-[#0B2B12]/10"
+              className="w-full border-b border-flux-void/10 bg-transparent px-4 py-3.5 text-base text-[#0B2B12] outline-none transition focus:border-[#0B2B12]/30 focus:ring-2 focus:ring-[#0B2B12]/10"
             />
           </label>
         </div>
@@ -496,7 +569,10 @@ export function ElevateBrandWizard() {
       </div>
 
       <main className="mx-auto max-w-5xl px-4 pb-12 pt-12 sm:px-6 lg:px-8">
-        <div className="border-none bg-transparent sm:p-8 lg:p-10">
+        <div
+          aria-hidden={isTransitioning}
+          className={`border-none bg-transparent transition-all duration-500 ease-in-out motion-reduce:transition-none sm:p-8 lg:p-10 ${isTransitioning ? "pointer-events-none translate-y-2 opacity-0" : "translate-y-0 opacity-100"}`}
+        >
           <div className="mb-8 space-y-4">
             <div className="flex items-center justify-between gap-3">
               {/* <div className="text-[10px] font-semibold uppercase tracking-[0.24em] text-[#0B2B12]/60">
@@ -514,81 +590,69 @@ export function ElevateBrandWizard() {
 
           {!customerType && currentStep === 0 ? (
             <div className="space-y-6">
-              <div className="max-w-2xl">
-                <h1 className="text-4xl font-semibold tracking-tight text-[#0B2B12] sm:text-5xl">{currentQuestion.title}</h1>
-                <p className="mt-3 text-base text-[#0B2B12]/70">{currentQuestion.helper}</p>
-              </div>
+              {questionHeader}
 
-              {renderStepInput()}
+              {showAnswers ? (
+                <div className="animate-in fade-in slide-in-from-bottom-2 duration-500 motion-reduce:animate-none">
+                  {renderStepInput()}
+                </div>
+              ) : null}
             </div>
           ) : (
             <form onSubmit={submitProject} className="space-y-8">
-              {/* <div className="border-b border-[#0B2B12]/30 bg-transaparent p-4 sm:p-5">
-                <div className="flex items-center justify-between gap-3">
-                  <div>
-                    <h2 className="mt-2 text-xl font-semibold">{customerTypeMeta[customerType].label}</h2>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      updateField("customerType", "");
-                      setCurrentStep(0);
-                    }}
-                    className="rounded-full border border-[#0B2B12]/10 bg-white px-3 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-[#0B2B12]"
-                  >
-                    Change
-                  </button>
-                </div>
-              </div> */}
-
               <div className="space-y-6">
-                <div className="max-w-2xl">
-                  <h1 className="text-4xl font-semibold tracking-tight text-[#0B2B12] sm:text-5xl">{currentQuestion.title}</h1>
-                  <p className="mt-3 text-base text-[#0B2B12]/70">{currentQuestion.helper}</p>
-                </div>
+                {questionHeader}
 
-                {renderStepInput()}
+                {showAnswers ? (
+                  <div className="animate-in fade-in slide-in-from-bottom-2 duration-500 motion-reduce:animate-none">
+                    {renderStepInput()}
+                  </div>
+                ) : null}
               </div>
 
-              {error ? (
-                <div className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">{error}</div>
+              {showAnswers ? (
+                <>
+                  {error ? (
+                    <div className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">{error}</div>
+                  ) : null}
+
+                  <div className="animate-in fade-in slide-in-from-bottom-2 flex flex-col gap-3 duration-500 motion-reduce:animate-none sm:flex-row sm:justify-between">
+                    {currentStep > 0 ? (
+                      <button
+                        type="button"
+                        onClick={goBack}
+                        className="inline-flex items-center justify-center gap-2 rounded-full border border-[#0B2B12]/10 bg-white px-5 py-3 text-sm font-semibold text-[#0B2B12]"
+                      >
+                        <ArrowLeft className="h-4 w-4" />
+                        Back
+                      </button>
+                    ) : (
+                      <div />
+                    )}
+
+                    {currentStep < totalSteps - 1 ? (
+                      <button
+                        type="button"
+                        onClick={advanceStep}
+                        disabled={!stepIsValid()}
+                        className="inline-flex items-center justify-center gap-2 rounded-full bg-[#0B2B12] px-6 py-3.5 text-sm font-semibold text-white transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50"
+                      >
+                        Continue
+                        <ArrowRight className="h-4 w-4" />
+                      </button>
+                    ) : (
+                      <button
+                        type="submit"
+                        disabled={!formReady || submitting}
+                        className="inline-flex items-center justify-center gap-2 rounded-full bg-[#0B2B12] px-6 py-3.5 text-sm font-semibold text-white transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50"
+                      >
+                        {submitting ? <Loader2 className="h-4 w-4 animate-spin" /> : "Start my project"}
+                        <ArrowRight className="h-4 w-4" />
+                      </button>
+                    )}
+                  </div>
+                </>
               ) : null}
-
-              <div className="flex flex-col gap-3 sm:flex-row sm:justify-between">
-                {currentStep > 0 ? (
-                  <button
-                    type="button"
-                    onClick={goBack}
-                    className="inline-flex items-center justify-center gap-2 rounded-full border border-[#0B2B12]/10 bg-white px-5 py-3 text-sm font-semibold text-[#0B2B12]"
-                  >
-                    <ArrowLeft className="h-4 w-4" />
-                    Back
-                  </button>
-                ) : (
-                  <div />
-                )}
-
-                {currentStep < totalSteps - 1 ? (
-                  <button
-                    type="button"
-                    onClick={advanceStep}
-                    disabled={!stepIsValid()}
-                    className="inline-flex items-center justify-center gap-2 rounded-full bg-[#0B2B12] px-6 py-3.5 text-sm font-semibold text-white transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50"
-                  >
-                    Continue
-                    <ArrowRight className="h-4 w-4" />
-                  </button>
-                ) : (
-                  <button
-                    type="submit"
-                    disabled={!formReady || submitting}
-                    className="inline-flex items-center justify-center gap-2 rounded-full bg-[#0B2B12] px-6 py-3.5 text-sm font-semibold text-white transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50"
-                  >
-                    {submitting ? <Loader2 className="h-4 w-4 animate-spin" /> : "Start my project"}
-                    <ArrowRight className="h-4 w-4" />
-                  </button>
-                )}
-              </div>
             </form>
           )}
         </div>

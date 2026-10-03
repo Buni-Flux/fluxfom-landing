@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 
-import { cleanup, fireEvent, render, screen } from "@testing-library/react";
+import { act, cleanup, fireEvent, render, screen } from "@testing-library/react";
 import React from "react";
 import { MemoryRouter } from "react-router-dom";
 import { afterEach, describe, expect, it, vi } from "vitest";
@@ -9,6 +9,7 @@ import { buildProjectPayload, projectProgressStages } from "./onboarding";
 
 afterEach(() => {
   cleanup();
+  vi.useRealTimers();
 });
 
 vi.mock("@/hooks/useAuth", () => ({
@@ -67,19 +68,45 @@ describe("projectProgressStages", () => {
 });
 
 describe("ElevateBrandWizard", () => {
-  it("shows a single-question conversational progress indicator", () => {
+  it("reveals the question, description, and answers in sequence", () => {
+    vi.useFakeTimers();
     render(React.createElement(MemoryRouter, null, React.createElement(ElevateBrandWizard)));
 
-    expect(screen.getByText(/questions left/i)).toBeTruthy();
-    expect(screen.getByText(/what best describes you\?/i)).toBeTruthy();
+    const title = "What best describes you?";
+    const heading = screen.getByRole("heading", { name: title });
+    const description = screen.getByText("Start with the option that fits best.");
+
+    expect(screen.getByText(/steps left/i)).toBeTruthy();
+    expect(heading.textContent).toBe("");
+    expect(description.getAttribute("aria-hidden")).toBe("true");
+    expect(screen.queryByRole("button", { name: /i’m here for myself/i })).toBeNull();
+
+    act(() => vi.advanceTimersByTime(title.length * 36));
+    expect(heading.textContent).toBe(title);
+    expect(description.getAttribute("aria-hidden")).toBe("true");
+
+    act(() => vi.advanceTimersByTime(1300));
+    expect(description.getAttribute("aria-hidden")).toBe("false");
+    expect(screen.queryByRole("button", { name: /i’m here for myself/i })).toBeNull();
+
+    act(() => vi.advanceTimersByTime(350));
+    expect(screen.getByRole("button", { name: /i’m here for myself/i })).toBeTruthy();
   });
 
   it("reveals the next prompt after choosing the customer type", () => {
+    vi.useFakeTimers();
     render(React.createElement(MemoryRouter, null, React.createElement(ElevateBrandWizard)));
 
-    fireEvent.click(screen.getAllByRole("button", { name: /i’m here for myself/i })[0]);
+    const currentTitle = "What best describes you?";
+    act(() => vi.advanceTimersByTime(currentTitle.length * 36 + 1650));
+    fireEvent.click(screen.getByRole("button", { name: /i’m here for myself/i }));
 
-    expect(screen.getByText(/what.*name\?/i)).toBeTruthy();
-    expect(screen.getByText(/questions left/i)).toBeTruthy();
+    expect(document.querySelector("h1")?.getAttribute("aria-label")).toBe(currentTitle);
+    act(() => vi.advanceTimersByTime(499));
+    expect(document.querySelector("h1")?.getAttribute("aria-label")).toBe(currentTitle);
+
+    act(() => vi.advanceTimersByTime(1));
+    expect(screen.getByRole("heading", { name: /what.*name\?/i })).toBeTruthy();
+    expect(screen.getByText(/steps left/i)).toBeTruthy();
   });
 });
