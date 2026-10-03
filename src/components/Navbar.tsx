@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { FluxLogoOnDark, FluxLogoOnLight } from "@/components/marketing/FluxLogoVariants";
 
 const navLinks = [
+  { label: "BRAND POSITIONING", to: "/brand-positioning", hash: "#why-positioning" },
   { label: "SERVICES", to: "/services", hash: "#service-offerings" },
   // { label: "About Us", to: "/about", hash: "#what-to-expect" },
   { label: "PORTFOLIO", to: "/projects", hash: "#clients-index" },
