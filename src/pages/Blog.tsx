@@ -20,22 +20,6 @@ const Blog = () => {
   return (
     <section className="bg-[#efefed] text-flux-void">
       <div className="mx-auto max-w-[1380px] px-5 pb-20 pt-8 sm:px-6 lg:px-8 lg:pt-10">
-        <div className="mb-8 flex items-center justify-between gap-4">
-          <div className="flex items-center gap-3 text-flux-editorial/80">
-            <div className="flex h-7 w-7 items-center justify-center rounded-full border border-[#1a1a1a]/10 bg-white text-[10px] font-bold uppercase tracking-[0.2em] text-flux-editorial">
-              F
-            </div>
-            <span className="text-[11px] font-medium uppercase tracking-[0.2em]">FluxFom Journal</span>
-          </div>
-
-          <Link
-            to="/start"
-            className="rounded-full bg-[#161a18] px-5 py-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-white transition hover:bg-black"
-          >
-            Start for free
-          </Link>
-        </div>
-
         <div className="grid gap-7 xl:grid-cols-[minmax(0,1.7fr)_minmax(0,0.9fr)]">
           <Link to={`/blog/${featuredPost.slug}`} className="group block overflow-hidden rounded-[2rem] border border-[#e8e1dc] bg-white shadow-[0_16px_40px_-30px_rgba(10,12,12,0.7)] transition hover:-translate-y-0.5">
             <div className="overflow-hidden">
@@ -70,8 +54,8 @@ const Blog = () => {
           </Link>
 
           <aside className="space-y-4">
-            <div className="rounded-[1.8rem] bg-[#2f2440] p-5 text-white shadow-[0_18px_45px_-35px_rgba(25,15,30,0.9)] sm:p-6">
-              <p className="text-[11px] font-medium uppercase tracking-[0.24em] text-white/65">Trending</p>
+            <div className="rounded-[1.8rem] bg-flux-void p-5 text-white shadow-[0_18px_45px_-35px_rgba(25,15,30,0.9)] sm:p-6">
+              <p className="text-[11px] font-medium uppercase tracking-[0.24em] text-white/65">MOST READ</p>
               <h2 className="mt-3 text-4xl font-semibold leading-[0.95] tracking-[-0.05em] text-white">
                 Trending<br />on FluxFom
               </h2>
