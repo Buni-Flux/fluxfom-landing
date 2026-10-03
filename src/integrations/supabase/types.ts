@@ -1588,6 +1588,169 @@ export type Database = {
         }
         Relationships: []
       }
+      project_requests: {
+        Row: {
+          access_token: string | null
+          company_name: string | null
+          created_at: string
+          customer_type: string
+          deliverables: Json | null
+          desired_outcome: string | null
+          display_name: string
+          email: string | null
+          id: string
+          metadata: Json
+          phone: string | null
+          preferred_contact_method: string | null
+          primary_goal: string | null
+          profession: string | null
+          profile_url: string | null
+          project_description: string | null
+          services: string[]
+          source: string
+          status: string
+          timeline: string | null
+          title: string
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          access_token?: string | null
+          company_name?: string | null
+          created_at?: string
+          customer_type: string
+          deliverables?: Json | null
+          desired_outcome?: string | null
+          display_name: string
+          email?: string | null
+          id?: string
+          metadata?: Json
+          phone?: string | null
+          preferred_contact_method?: string | null
+          primary_goal?: string | null
+          profession?: string | null
+          profile_url?: string | null
+          project_description?: string | null
+          services?: string[]
+          source?: string
+          status?: string
+          timeline?: string | null
+          title: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          access_token?: string | null
+          company_name?: string | null
+          created_at?: string
+          customer_type?: string
+          deliverables?: Json | null
+          desired_outcome?: string | null
+          display_name?: string
+          email?: string | null
+          id?: string
+          metadata?: Json
+          phone?: string | null
+          preferred_contact_method?: string | null
+          primary_goal?: string | null
+          profession?: string | null
+          profile_url?: string | null
+          project_description?: string | null
+          services?: string[]
+          source?: string
+          status?: string
+          timeline?: string | null
+          title?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      project_milestones: {
+        Row: {
+          created_at: string
+          description: string | null
+          display_order: number
+          id: string
+          key: string
+          project_id: string
+          status: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          display_order?: number
+          id?: string
+          key: string
+          project_id: string
+          status?: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          display_order?: number
+          id?: string
+          key?: string
+          project_id?: string
+          status?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "project_milestones_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "project_requests"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      project_deliverables: {
+        Row: {
+          created_at: string
+          description: string | null
+          display_order: number
+          id: string
+          project_id: string
+          status: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          display_order?: number
+          id?: string
+          project_id: string
+          status?: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          display_order?: number
+          id?: string
+          project_id?: string
+          status?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "project_deliverables_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "project_requests"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       scheduled_social_posts: {
         Row: {
           caption: string

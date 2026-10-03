@@ -13,6 +13,7 @@ const Services = lazy(() => import("@/pages/Services"));
 const HowItWorks = lazy(() => import("@/pages/HowItWorks"));
 const Projects = lazy(() => import("@/pages/Projects"));
 const ClientProfile = lazy(() => import("@/pages/ClientProfile"));
+const ProjectWorkspace = lazy(() => import("@/pages/ProjectWorkspace"));
 const AdminPublicProfiles = lazy(() => import("@/pages/AdminPublicProfiles"));
 const AdminPublicProfileUpload = lazy(() => import("@/pages/AdminPublicProfileUpload2"));
 const AdminPublicProfileEditor = lazy(() => import("@/pages/AdminPublicProfileEditor"));
@@ -51,7 +52,8 @@ const LandingApp = () => (
             <Route path="/services" element={<Services />} />
             <Route path="/how-it-works" element={<HowItWorks />} />
             <Route path="/projects" element={<Projects />} />
-            <Route path="/projects/:id" element={<ClientProfile />} />
+            <Route path="/projects/:projectId" element={<ProjectWorkspace />} />
+            <Route path="/clients/:id" element={<ClientProfile />} />
 
             <Route path="/admin" element={<Navigate to="/admin/public-profiles" replace />} />
             <Route path="/admin/public-profiles" element={<AdminPublicProfiles />} />
