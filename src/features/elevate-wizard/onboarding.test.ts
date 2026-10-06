@@ -5,7 +5,7 @@ import React from "react";
 import { MemoryRouter } from "react-router-dom";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { ElevateBrandWizard } from "./ElevateBrandWizard";
-import { buildProjectPayload, projectProgressStages } from "./onboarding";
+import { buildProjectPayload, getProjectOwner, projectProgressStages } from "./onboarding";
 
 afterEach(() => {
   cleanup();
@@ -64,6 +64,43 @@ describe("projectProgressStages", () => {
   it("supports the lightweight project lifecycle used by the client portal", () => {
     expect(projectProgressStages[0].key).toBe("request_received");
     expect(projectProgressStages.map((stage) => stage.key)).toContain("reviewing");
+  });
+});
+
+describe("getProjectOwner", () => {
+  it("reuses an existing authenticated session", async () => {
+    const signInAnonymously = vi.fn();
+    const owner = await getProjectOwner({
+      getSession: async () => ({ data: { session: { access_token: "existing-jwt", user: { id: "existing-user" } } }, error: null }),
+      signInAnonymously,
+    });
+
+    expect(owner).toEqual({ userId: "existing-user", accessToken: "existing-jwt" });
+    expect(signInAnonymously).not.toHaveBeenCalled();
+  });
+
+  it("creates an authenticated anonymous session for a guest", async () => {
+    const owner = await getProjectOwner({
+      getSession: async () => ({ data: { session: null }, error: null }),
+      signInAnonymously: async () => ({
+        data: { user: { id: "guest-user" }, session: { access_token: "guest-jwt" } },
+        error: null,
+      }),
+    });
+
+    expect(owner).toEqual({ userId: "guest-user", accessToken: "guest-jwt" });
+  });
+
+  it("rejects an anonymous user result without an authenticated session", async () => {
+    await expect(
+      getProjectOwner({
+        getSession: async () => ({ data: { session: null }, error: null }),
+        signInAnonymously: async () => ({
+          data: { user: { id: "guest-user" }, session: null },
+          error: null,
+        }),
+      }),
+    ).rejects.toThrow(/secure project session/i);
   });
 });
 
