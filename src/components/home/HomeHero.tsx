@@ -49,7 +49,7 @@ export function HomeHero() {
             <motion.h1
               id="home-hero-heading"
               variants={fadeInView}
-              className="text-[clamp(3rem,5vw,5.25rem)] font-monument font-black leading-[0.92] tracking-tight md:mt-32 text-[#AAED36]"
+              className="text-[clamp(3rem,5vw,5.25rem)] font-monument font-black leading-[0.92] tracking-tight md:mt-48 text-[#AAED36]"
             >
               <span className="block text-white">Make your Brand</span>impossible to ignore.
             </motion.h1>
@@ -79,7 +79,7 @@ export function HomeHero() {
                 </span>
               </Link>
               <Link to="/contact" className="btn-neon-outline px-9 py-4 text-base">
-                Talk to a Human
+                TALK TO US
               </Link>
             </div>
           </motion.div>
