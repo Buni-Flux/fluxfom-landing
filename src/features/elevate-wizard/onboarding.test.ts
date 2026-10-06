@@ -146,4 +146,23 @@ describe("ElevateBrandWizard", () => {
     expect(screen.getByRole("heading", { name: /what.*name\?/i })).toBeTruthy();
     expect(screen.getByText(/steps left/i)).toBeTruthy();
   });
+
+  it.each([
+    ["creative", "What’s your name?"],
+    ["business", "Who should we contact?"],
+    ["personal", "What’s your name?"],
+  ])("skips customer-type selection for a %s audience entry", (type, expectedQuestion) => {
+    vi.useFakeTimers();
+    render(
+      React.createElement(
+        MemoryRouter,
+        { initialEntries: [`/start?type=${type}`] },
+        React.createElement(ElevateBrandWizard),
+      ),
+    );
+
+    expect(screen.getByRole("heading", { name: expectedQuestion })).toBeTruthy();
+    expect(screen.getByText(/just 4 steps left/i)).toBeTruthy();
+    expect(screen.queryByRole("button", { name: /i’m a creative/i })).toBeNull();
+  });
 });

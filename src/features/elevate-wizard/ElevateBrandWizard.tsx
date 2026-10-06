@@ -1,6 +1,6 @@
 ﻿import { useEffect, useLayoutEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import { ArrowRight, ArrowLeft, Loader2, Mic, Search, CheckCircle2, Building2, UserRound, type LucideIcon } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { buildProjectDeliverables, buildProjectMilestones, buildProjectPayload, getProjectOwner, type CustomerType, type ProjectFormValues } from "./onboarding";
 
@@ -56,8 +56,14 @@ const customerTypeMeta: Record<CustomerType, { label: string; summary: string; i
 
 export function ElevateBrandWizard() {
   const navigate = useNavigate();
-  const [form, setForm] = useState<ProjectFormValues>(defaultValues);
-  const [currentStep, setCurrentStep] = useState(0);
+  const location = useLocation();
+  const requestedType = new URLSearchParams(location.search).get("type");
+  const initialCustomerType: CustomerType | "" =
+    requestedType === "creative" || requestedType === "business" || requestedType === "personal"
+      ? requestedType
+      : "";
+  const [form, setForm] = useState<ProjectFormValues>(() => ({ ...defaultValues, customerType: initialCustomerType }));
+  const [currentStep, setCurrentStep] = useState(() => (initialCustomerType ? 1 : 0));
   const [typedQuestion, setTypedQuestion] = useState("");
   const [showDescription, setShowDescription] = useState(false);
   const [showAnswers, setShowAnswers] = useState(false);

@@ -40,6 +40,12 @@ const AUDIENCES = {
 
 type AudienceKey = keyof typeof AUDIENCES;
 
+const customerTypeByAudience: Record<AudienceKey, "creative" | "business" | "personal"> = {
+  creatives: "creative",
+  corporate: "business",
+  personal: "personal",
+};
+
 function getAudienceHeroBackground(audience: AudienceKey) {
   const imageByAudience: Record<AudienceKey, string> = {
     creatives: "/assets/images/creative-hero-bg.png",
@@ -108,7 +114,7 @@ export default function AudiencePage({ audience }: { audience: AudienceKey }) {
               transition={{ duration: 0.65, delay: 0.24 }}
               className="mt-9 flex flex-col items-start gap-4 sm:flex-row"
             >
-              <Link to="/start" className="btn-neon-solid inline-flex items-center gap-2 px-7 py-4 text-sm">
+              <Link to={`/start?type=${customerTypeByAudience[audience]}`} className="btn-neon-solid inline-flex items-center gap-2 px-7 py-4 text-sm">
                 Start a project <ArrowUpRight size={17} aria-hidden />
               </Link>
               <Link to="/contact" className="btn-neon-outline px-7 py-4 text-sm">
