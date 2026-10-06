@@ -2,8 +2,7 @@
 import { ArrowRight, ArrowLeft, Loader2, Mic, Search, CheckCircle2, Building2, UserRound, type LucideIcon } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
-import { useAuth } from "@/hooks/useAuth";
-import { buildProjectDeliverables, buildProjectMilestones, buildProjectPayload, type CustomerType, type ProjectFormValues } from "./onboarding";
+import { buildProjectDeliverables, buildProjectMilestones, buildProjectPayload, getProjectOwner, type CustomerType, type ProjectFormValues } from "./onboarding";
 
 const serviceOptions: Record<CustomerType, string[]> = {
   creative: [
@@ -57,7 +56,6 @@ const customerTypeMeta: Record<CustomerType, { label: string; summary: string; i
 
 export function ElevateBrandWizard() {
   const navigate = useNavigate();
-  const { user } = useAuth();
   const [form, setForm] = useState<ProjectFormValues>(defaultValues);
   const [currentStep, setCurrentStep] = useState(0);
   const [typedQuestion, setTypedQuestion] = useState("");
@@ -421,32 +419,7 @@ export function ElevateBrandWizard() {
       const payload = buildProjectPayload(form);
       setSubmitting(true);
 
-      let userId = user?.id ?? null;
-      if (!userId) {
-        if (payload.email) {
-          const temporaryPassword = `fluxfom-${crypto.randomUUID().replace(/-/g, "").slice(0, 12)}`;
-          const { data, error: signUpError } = await supabase.auth.signUp({
-            email: payload.email,
-            password: temporaryPassword,
-          });
-
-          if (signUpError && !/already|registered|exists/i.test(signUpError.message)) {
-            throw signUpError;
-          }
-
-          userId = data.user?.id ?? null;
-        }
-
-        if (!userId) {
-          const { data, error: anonymousError } = await supabase.auth.signInAnonymously();
-          if (anonymousError) throw anonymousError;
-          userId = data.user?.id ?? null;
-        }
-      }
-
-      if (!userId) {
-        throw new Error("We could not create your secure project record. Please try again.");
-      }
+      const { userId, accessToken } = await getProjectOwner(supabase.auth);
 
       const projectInsert = {
         user_id: userId,
@@ -478,7 +451,8 @@ export function ElevateBrandWizard() {
         .from("project_requests")
         .insert(projectInsert)
         .select("id, access_token")
-        .single();
+        .single()
+        .setHeader("Authorization", `Bearer ${accessToken}`);
 
       if (projectError) throw projectError;
 
@@ -492,8 +466,8 @@ export function ElevateBrandWizard() {
       }));
 
       const [milestonesResult, deliverablesResult] = await Promise.all([
-        supabase.from("project_milestones").insert(milestones),
-        supabase.from("project_deliverables").insert(deliverables),
+        supabase.from("project_milestones").insert(milestones).setHeader("Authorization", `Bearer ${accessToken}`),
+        supabase.from("project_deliverables").insert(deliverables).setHeader("Authorization", `Bearer ${accessToken}`),
       ]);
 
       if (milestonesResult.error) throw milestonesResult.error;

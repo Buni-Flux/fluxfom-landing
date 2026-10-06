@@ -35,6 +35,36 @@ export type ProjectPayload = {
   summary: string;
 };
 
+type ProjectAuth = {
+  getSession: () => Promise<{
+    data: { session: { access_token: string; user: { id: string } } | null };
+    error: Error | null;
+  }>;
+  signInAnonymously: () => Promise<{
+    data: {
+      user: { id: string } | null;
+      session: { access_token: string } | null;
+    };
+    error: Error | null;
+  }>;
+};
+
+export const getProjectOwner = async (auth: ProjectAuth) => {
+  const { data: sessionData, error: sessionError } = await auth.getSession();
+  if (sessionError) throw sessionError;
+  if (sessionData.session?.access_token && sessionData.session.user.id) {
+    return { userId: sessionData.session.user.id, accessToken: sessionData.session.access_token };
+  }
+
+  const { data, error } = await auth.signInAnonymously();
+  if (error) throw error;
+  if (!data.session?.access_token || !data.user?.id) {
+    throw new Error("We could not start a secure project session. Please try again.");
+  }
+
+  return { userId: data.user.id, accessToken: data.session.access_token };
+};
+
 export const projectProgressStages = [
   { key: "request_received", label: "Request received", status: "received" },
   { key: "reviewing", label: "Reviewing", status: "reviewing" },
