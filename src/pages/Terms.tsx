@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { ScrollNudge } from "@/components/marketing/ScrollNudge";
 import { PAGE_EDITORIAL_WIDE, PAGE_EDITORIAL_WIDE_ALT } from "@/lib/marketingImagery";
+import { updateSeoMeta } from "@/lib/seo";
 
 type Section = { section_title: string; content: string };
 
@@ -58,7 +59,11 @@ const Terms = () => {
   const [sections, setSections] = useState<Section[]>(fallbackSections);
 
   useEffect(() => {
-    document.title = "Terms — FluxFom";
+    updateSeoMeta({
+      title: "Terms of Service | FluxFom",
+      description: "Read the terms governing FluxFom services, client responsibilities, payments, deliverables, and intellectual property.",
+      pathname: "/terms",
+    });
     supabase
       .from("cms_terms")
       .select("*")
