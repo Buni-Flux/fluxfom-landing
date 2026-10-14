@@ -23,6 +23,7 @@ const Terms = lazy(() => import("@/pages/Terms"));
 const PrivacyPolicy = lazy(() => import("@/pages/PrivacyPolicy"));
 const Contact = lazy(() => import("@/pages/Contact"));
 const StartYourBrand = lazy(() => import("@/pages/StartYourBrand"));
+const Welcome = lazy(() => import("@/pages/Welcome"));
 const ProfileStatus = lazy(() => import("@/pages/ProfileStatus"));
 const ResetPassword = lazy(() => import("@/pages/ResetPassword"));
 const VerifyEmail = lazy(() => import("@/pages/VerifyEmail"));
@@ -68,6 +69,7 @@ const LandingApp = () => (
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/start" element={<StartYourBrand />} />
+            <Route path="/welcome" element={<Welcome />} />
             <Route path="/portfolio" element={<Navigate to="/projects" replace />} />
             <Route path="/work/:token" element={<Navigate to="/projects" replace />} />
             <Route path="/profile-status/:userId" element={<ProfileStatus />} />
