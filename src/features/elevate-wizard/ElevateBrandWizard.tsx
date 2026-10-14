@@ -1,6 +1,6 @@
 ﻿import { useEffect, useLayoutEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import { ArrowRight, ArrowLeft, Loader2, Mic, Search, CheckCircle2, Building2, UserRound, type LucideIcon } from "lucide-react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { buildProjectDeliverables, buildProjectMilestones, buildProjectPayload, getProjectOwner, type CustomerType, type ProjectFormValues } from "./onboarding";
 
@@ -70,7 +70,6 @@ export function ElevateBrandWizard() {
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState(false);
   const transitionTimeout = useRef<number | null>(null);
 
   useEffect(() => {
@@ -505,8 +504,7 @@ export function ElevateBrandWizard() {
         }
       }
 
-      setSuccess(true);
-      navigate(`/projects/${project.id}?token=${encodeURIComponent(projectToken)}`);
+      navigate("/welcome", { state: { projectId: project.id, projectToken } });
     } catch (submitError) {
       console.error("Failed to create project request", submitError);
       setError(
@@ -518,21 +516,6 @@ export function ElevateBrandWizard() {
       setSubmitting(false);
     }
   };
-
-  if (success) {
-    return (
-      <div className="min-h-screen bg-[#C9FF6B] px-4 py-10 text-[#0B2B12]">
-        <div className="mx-auto max-w-xl rounded-[2rem] border border-[#0B2B12]/10 bg-white/95 p-8 text-center shadow-[0_30px_80px_-40px_rgba(15,23,16,0.25)]">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-[#0B2B12]/60">Project started</p>
-          <h2 className="mt-4 text-3xl font-semibold">Your project is in motion.</h2>
-          <p className="mt-3 text-sm leading-6 text-[#0B2B12]/70">We’ve received your request and are setting up your workspace.</p>
-          <Link to="/" className="mt-8 inline-flex items-center justify-center rounded-full bg-[#0B2B12] px-6 py-3 text-sm font-semibold text-white">
-            Return home
-          </Link>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-[#C9FF6B] text-[#0B2B12]">
