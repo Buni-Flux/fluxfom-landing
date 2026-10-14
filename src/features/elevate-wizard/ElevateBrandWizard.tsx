@@ -1,6 +1,6 @@
 ﻿import { useEffect, useLayoutEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import { ArrowRight, ArrowLeft, Loader2, Mic, Search, CheckCircle2, Building2, UserRound, type LucideIcon } from "lucide-react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { buildProjectDeliverables, buildProjectMilestones, buildProjectPayload, getProjectOwner, type CustomerType, type ProjectFormValues } from "./onboarding";
 
