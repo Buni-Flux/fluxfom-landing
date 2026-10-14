@@ -1,5 +1,5 @@
 export const SITE_URL =
-  (import.meta.env.VITE_PUBLIC_SITE_URL as string | undefined) || "https://fluxfom.com";
+  (import.meta.env.VITE_PUBLIC_SITE_URL as string | undefined) || "https://www.fluxfom.com";
 const SITE_ICON = `${SITE_URL}/favicon.svg`;
 const GOOGLE_SITE_VERIFICATION =
   (import.meta.env.VITE_GOOGLE_SITE_VERIFICATION as string | undefined) || "";
