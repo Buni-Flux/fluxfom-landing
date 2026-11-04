@@ -69,7 +69,13 @@ const BlogArticle = () => {
               <span className="flex h-8 w-8 items-center justify-center rounded-full bg-flux-sand text-xs font-semibold text-flux-editorial">
                 {post.author.charAt(0)}
               </span>
-              {post.author}
+              {post.authorUrl ? (
+                <a href={post.authorUrl} className="transition hover:text-flux-growth hover:underline">
+                  {post.author}
+                </a>
+              ) : (
+                post.author
+              )}
             </span>
             <span className="inline-flex items-center gap-2">
               <Calendar className="h-4 w-4" aria-hidden="true" />

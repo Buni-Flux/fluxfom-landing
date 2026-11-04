@@ -21,10 +21,10 @@ const Blog = () => {
     <section className="bg-[#efefed] text-flux-void">
       <div className="mx-auto max-w-[1380px] px-5 pb-20 pt-8 sm:px-6 lg:px-8 lg:pt-10">
         <div className="grid gap-7 xl:grid-cols-[minmax(0,1.7fr)_minmax(0,0.9fr)]">
-          <Link to={`/blog/${featuredPost.slug}`} className="group block overflow-hidden rounded-[2rem] border border-[#e8e1dc] bg-white shadow-[0_16px_40px_-30px_rgba(10,12,12,0.7)] transition hover:-translate-y-0.5">
-            <div className="overflow-hidden">
+          <div className="group overflow-hidden rounded-[2rem] border border-[#e8e1dc] bg-white shadow-[0_16px_40px_-30px_rgba(10,12,12,0.7)] transition hover:-translate-y-0.5">
+            <Link to={`/blog/${featuredPost.slug}`} className="block overflow-hidden">
               <img src={featuredPost.image} alt={featuredPost.title} className="h-[340px] w-full object-cover transition duration-500 group-hover:scale-[1.02] sm:h-[420px]" />
-            </div>
+            </Link>
 
             <div className="p-5 sm:p-6">
               <div className="flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.24em] text-flux-clay">
@@ -33,7 +33,7 @@ const Blog = () => {
               </div>
 
               <h1 className="mt-5 text-3xl font-semibold leading-[0.96] tracking-[-0.05em] text-flux-editorial sm:text-5xl">
-                {featuredPost.title}
+                <Link to={`/blog/${featuredPost.slug}`}>{featuredPost.title}</Link>
               </h1>
 
               <p className="mt-5 max-w-[58ch] text-base leading-relaxed text-flux-editorial/75">{featuredPost.summary}</p>
@@ -43,7 +43,13 @@ const Blog = () => {
                   <span className="flex h-8 w-8 items-center justify-center rounded-full bg-flux-sand text-[11px] font-semibold text-flux-editorial">
                     {featuredPost.author.charAt(0)}
                   </span>
-                  {featuredPost.author}
+                  {featuredPost.authorUrl ? (
+                    <a href={featuredPost.authorUrl} className="transition hover:text-flux-growth hover:underline">
+                      {featuredPost.author}
+                    </a>
+                  ) : (
+                    featuredPost.author
+                  )}
                 </span>
                 <span className="inline-flex items-center gap-2">
                   <Calendar className="h-4 w-4" aria-hidden="true" />
@@ -51,7 +57,7 @@ const Blog = () => {
                 </span>
               </div>
             </div>
-          </Link>
+          </div>
 
           <aside className="space-y-4">
             <div className="rounded-[1.8rem] bg-flux-void p-5 text-white shadow-[0_18px_45px_-35px_rgba(25,15,30,0.9)] sm:p-6">

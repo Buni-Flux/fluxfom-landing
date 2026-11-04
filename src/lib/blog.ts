@@ -8,11 +8,37 @@ export type BlogPost = {
   readTime: string;
   image: string;
   author: string;
+  authorUrl?: string;
   tag: string;
   paragraphs: string[];
 };
 
 export const BLOG_POSTS: BlogPost[] = [
+  {
+    slug: "the-psychology-of-trust-in-second-hand-online-selling",
+    category: "Customer Experience",
+    title: "The Psychology of Trust in Second-Hand Online Selling",
+    summary:
+      "Selling my PlayStation 4 showed me that buyers are weighing more than price. Clear proof, specific details, and an honest experience can make the difference.",
+    excerpt:
+      "When I listed my PlayStation 4, I realised I was not only competing with other sellers. I was competing with the doubts a buyer might have about whether the console would really work.",
+    date: "October 29, 2026",
+    readTime: "5 min read",
+    image:
+      "https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?auto=format&fit=crop&w=1200&q=80",
+    author: "Daino Otieno",
+    authorUrl: "https://daino.fluxfom.com",
+    tag: "Trust is the UX of selling online",
+    paragraphs: [
+      "When I was selling my PlayStation 4 online, I realised something interesting: I was not just competing with other sellers on price. I was competing with the doubts a buyer might have. Will this console actually work? Is it really in the condition described? Is the seller being straight with me?",
+      "A listing has to answer those questions before a buyer feels comfortable reaching out. Start with clear photos from different angles: the console, controller, ports, cables, and any visible wear. Good photos let people see what they are considering instead of asking them to take your word for it.",
+      "Specific descriptions build credibility. Instead of writing “good condition, serious buyers only,” explain what you checked and what the buyer can expect. Mention how it performs, what is included, and any flaws. If you have made modifications, say exactly what they are and why you made them. Details make the listing more useful and help set honest expectations.",
+      "Show the product doing its job, too. A short photo or video of you actually gaming on the console gives a buyer a more direct sense that it powers on and works. It also makes the listing feel like a real person is behind it, not just a generic sales post.",
+      "Price deserves the same transparency. Check the current market range for similar consoles, then explain why your price is competitive. If your bundle includes extra controllers or games, say so. If the price reflects a small cosmetic issue, be upfront about that. Buyers are more likely to trust a price when they can understand it.",
+      "None of this guarantees a sale. But it gives a cautious buyer fewer reasons to hesitate and makes the whole exchange feel more straightforward. Trust is the UX of selling online.",
+      "If you are selling on Jiji, do not just list it. Design the experience that helps someone feel safe buying.",
+    ],
+  },
   {
     slug: "boring-doesnt-sell-why-your-marketing-needs-a-reason-to-be-noticed",
     category: "Marketing Strategy",
